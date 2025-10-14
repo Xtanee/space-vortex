@@ -49,6 +49,7 @@ using Content.Server.Power.Components;
 using Content.Server.Radio.Components;
 using Content.Shared.Chat;
 using Content.Shared.Database;
+using Content.Shared._CorvaxGoob.CCCVars;
 using Content.Shared._EinsteinEngines.Language;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
@@ -63,11 +64,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
-using Content.Shared.Access.Systems; // Goobstation
-using Content.Shared.Chat.RadioIconsEvents; // Goobstation
-using Content.Shared.Whitelist; // Goobstation
-using Content.Shared.StatusIcon; // Goobstation
-using Content.Goobstation.Shared.Radio; // Goobstation
+using Content.Shared.Whitelist;
+using Robust.Shared.Configuration;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -86,6 +84,7 @@ public sealed partial class RadioSystem : EntitySystem
     [Dependency] private readonly LanguageSystem _language = default!; // Einstein Engines - Language
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!; // Goobstation - Whitelisted radio channels
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -214,7 +213,7 @@ public sealed partial class RadioSystem : EntitySystem
         var headsetColor = TryComp(radioSource, out HeadsetComponent? headset) ? headset.Color : channel.Color;
 
         var job = String.Empty;
-        if (_inventory.HasSlot(messageSource, "id"))
+        if (_cfg.GetCVar(CCCVars.RadioJobTitlesEnabled) && _inventory.HasSlot(messageSource, "id"))
         {
             job = Loc.GetString("chat-radio-source-unknown");
 
