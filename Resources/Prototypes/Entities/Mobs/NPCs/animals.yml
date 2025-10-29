@@ -1835,7 +1835,6 @@
       path: /Audio/Animals/monkey_scream.ogg
   - type: DnaModifier
     upper: MobHuman
-    lowest: MobMonkey
 
 - type: entity
   name: monkey
