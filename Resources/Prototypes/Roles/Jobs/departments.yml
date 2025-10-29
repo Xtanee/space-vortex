@@ -265,6 +265,7 @@
   weight: 10
   roles:
   - RadioHost # Goobstation
+  - Geneticist # Corvax-Wega
   - Boxer
   - Reporter
   - Zookeeper
