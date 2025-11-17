@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/24/2025 16:29:06
-  entityCount: 10697
+  time: 11/17/2025 03:51:19
+  entityCount: 10696
 maps: []
 grids:
 - 1
@@ -12827,38 +12827,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 28.5,69.5
       parent: 1
-- proto: BaseComputer
-  entities:
-  - uid: 361
-    components:
-    - type: Transform
-      pos: 23.5,101.5
-      parent: 1
-- proto: BaseComputerAiAccess
-  entities:
-  - uid: 362
-    components:
-    - type: Transform
-      pos: 83.5,91.5
-      parent: 1
-- proto: Basketball
-  entities:
-  - uid: 364
-    components:
-    - type: Transform
-      parent: 363
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-- proto: BeachBall
-  entities:
-  - uid: 365
-    components:
-    - type: Transform
-      parent: 363
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: Beaker
   entities:
   - uid: 430
@@ -28912,23 +28880,13 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 18.321312,61.585743
       parent: 1
-- proto: CentcomAgentSkirt
+- proto: CentcommCommsComputerCircuitboard
   entities:
-  - uid: 3462
+  - uid: 8461
     components:
     - type: Transform
-      parent: 3461
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-- proto: CentcomIDCardNavyOfficer
-  entities:
-  - uid: 3478
-    components:
-    - type: Transform
-      parent: 3477
-    - type: Physics
-      canCollide: False
+      pos: 92.57809,58.5747
+      parent: 1
 - proto: CentcommComputerComms
   entities:
   - uid: 3479
@@ -29077,6 +29035,18 @@ entities:
     components:
     - type: Transform
       pos: 91.599754,72.25261
+      parent: 1
+- proto: CentcommConsole
+  entities:
+  - uid: 359
+    components:
+    - type: Transform
+      pos: 23.5,101.5
+      parent: 1
+  - uid: 360
+    components:
+    - type: Transform
+      pos: 91.5,70.5
       parent: 1
 - proto: Chair
   entities:
@@ -40085,6 +40055,68 @@ entities:
       parent: 5122
     - type: Physics
       canCollide: False
+- proto: EncryptionKeyDSO
+  entities:
+  - uid: 7111
+    components:
+    - type: Transform
+      parent: 4416
+    - type: Physics
+      canCollide: False
+  - uid: 7112
+    components:
+    - type: Transform
+      parent: 4416
+    - type: Physics
+      canCollide: False
+  - uid: 7276
+    components:
+    - type: Transform
+      parent: 4416
+    - type: Physics
+      canCollide: False
+  - uid: 7425
+    components:
+    - type: Transform
+      parent: 4416
+    - type: Physics
+      canCollide: False
+  - uid: 7553
+    components:
+    - type: Transform
+      parent: 4416
+    - type: Physics
+      canCollide: False
+  - uid: 7640
+    components:
+    - type: Transform
+      parent: 4416
+    - type: Physics
+      canCollide: False
+  - uid: 8138
+    components:
+    - type: Transform
+      parent: 4416
+    - type: Physics
+      canCollide: False
+  - uid: 8139
+    components:
+    - type: Transform
+      parent: 4416
+    - type: Physics
+      canCollide: False
+  - uid: 8140
+    components:
+    - type: Transform
+      parent: 4416
+    - type: Physics
+      canCollide: False
+  - uid: 8246
+    components:
+    - type: Transform
+      parent: 4416
+    - type: Physics
+      canCollide: False
 - proto: ERTSpawnerCBURN
   entities:
   - uid: 5127
@@ -40208,6 +40240,22 @@ entities:
     - type: Transform
       pos: 23.5,55.5
       parent: 1
+- proto: FaxMachineBase
+  entities:
+  - uid: 7116
+    components:
+    - type: Transform
+      pos: 24.5,99.5
+      parent: 1
+    - type: FaxMachine
+      name: Офицер СпецОпераций
+  - uid: 8626
+    components:
+    - type: Transform
+      pos: 74.5,87.5
+      parent: 1
+    - type: FaxMachine
+      name: Офис НШЦК
 - proto: FaxMachineCentcom
   entities:
   - uid: 5147
@@ -40530,26 +40578,54 @@ entities:
     - type: Transform
       pos: 21.5,101.5
       parent: 1
-  - uid: 5213
-    components:
-    - type: Transform
-      pos: 94.5,74.5
-      parent: 1
-  - uid: 5214
-    components:
-    - type: Transform
-      pos: 83.5,76.5
-      parent: 1
-  - uid: 5215
-    components:
-    - type: Transform
-      pos: 79.5,76.5
-      parent: 1
-  - uid: 5216
-    components:
-    - type: Transform
-      pos: 79.5,69.5
-      parent: 1
+    - type: Storage
+      storedItems:
+        7111:
+          position: 0,0
+          _rotation: South
+        7112:
+          position: 1,0
+          _rotation: South
+        7276:
+          position: 2,0
+          _rotation: South
+        7425:
+          position: 3,0
+          _rotation: South
+        7553:
+          position: 4,0
+          _rotation: South
+        7640:
+          position: 4,2
+          _rotation: South
+        8138:
+          position: 3,2
+          _rotation: South
+        8139:
+          position: 2,2
+          _rotation: South
+        8140:
+          position: 0,2
+          _rotation: South
+        8246:
+          position: 1,2
+          _rotation: South
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 7111
+          - 7112
+          - 7276
+          - 7425
+          - 7553
+          - 8246
+          - 8140
+          - 8139
+          - 8138
+          - 7640
 - proto: filingCabinetRandom
   entities:
   - uid: 4429
@@ -89727,6 +89803,113 @@ entities:
       location: Станция ЦентКом
     missingComponents:
     - WizardTeleportWarpPoint
+  - uid: 6898
+    components:
+    - type: Transform
+      pos: 10.5,53.5
+      parent: 1
+    - type: WarpPoint
+      location: ЦентКом - Крио
+  - uid: 6936
+    components:
+    - type: Transform
+      pos: 74.5,49.5
+      parent: 1
+    - type: WarpPoint
+      location: ЦентКом - Карго
+    missingComponents:
+    - WizardTeleportWarpPoint
+  - uid: 6937
+    components:
+    - type: Transform
+      pos: 21.5,67.5
+      parent: 1
+    - type: WarpPoint
+      location: ЦентКом - Мед. Отсек
+  - uid: 6963
+    components:
+    - type: Transform
+      pos: 9.5,78.5
+      parent: 1
+    - type: WarpPoint
+      location: ЦентКом - Жилая зона
+  - uid: 7046
+    components:
+    - type: Transform
+      pos: 47.5,68.5
+      parent: 1
+    - type: WarpPoint
+      location: ЦентКом - Зал
+  - uid: 7054
+    components:
+    - type: Transform
+      pos: 33.5,99.5
+      parent: 1
+    - type: WarpPoint
+      location: ЦентКом - Силы ДСО
+  - uid: 7055
+    components:
+    - type: Transform
+      pos: 22.5,99.5
+      parent: 1
+    - type: WarpPoint
+      location: ЦентКом - Факс ОСО
+  - uid: 7105
+    components:
+    - type: Transform
+      pos: 29.5,84.5
+      parent: 1
+    - type: WarpPoint
+      location: ЦентКом - Спавн ОБР
+  - uid: 7106
+    components:
+    - type: Transform
+      pos: 21.5,84.5
+      parent: 1
+    - type: WarpPoint
+      location: ЦентКом - РХБЗЗ
+  - uid: 7107
+    components:
+    - type: Transform
+      pos: 63.5,78.5
+      parent: 1
+    - type: WarpPoint
+      location: ЦентКом - Конференц-зал
+  - uid: 7108
+    components:
+    - type: Transform
+      pos: 29.5,47.5
+      parent: 1
+    - type: WarpPoint
+      location: ЦентКом - Инженерная
+  - uid: 7109
+    components:
+    - type: Transform
+      pos: 81.5,84.5
+      parent: 1
+    - type: WarpPoint
+      location: ЦентКом - Каюта НШЦК
+  - uid: 7110
+    components:
+    - type: Transform
+      pos: 73.5,86.5
+      parent: 1
+    - type: WarpPoint
+      location: ЦентКом - ПЦК
+  - uid: 8955
+    components:
+    - type: Transform
+      pos: 68.5,81.5
+      parent: 1
+    - type: WarpPoint
+      location: ЦентКом - Комната ОСО
+  - uid: 9868
+    components:
+    - type: Transform
+      pos: 72.5,81.5
+      parent: 1
+    - type: WarpPoint
+      location: ЦентКом - Комната ГБЦК
 - proto: WaterCooler
   entities:
   - uid: 11901
