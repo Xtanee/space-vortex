@@ -16,6 +16,9 @@ namespace Content.Client._Vortex.Communications.UI
 
         private CentcommManifestWindow? _manifestWindow;
 
+        // Track the currently selected tab to avoid resetting it on UI updates
+        private int _currentTabIndex = 0;
+
         public CentcommConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
@@ -31,6 +34,7 @@ namespace Content.Client._Vortex.Communications.UI
             _menu.OnCreateFTLDisk += CreateFTLDisk;
             _menu.OnToggleFTLCorridor += ToggleFTLCorridor;
             _menu.OnApplyThreatCode += ApplyThreatCode;
+            _menu.OnTabChanged += tabIndex => _currentTabIndex = tabIndex;
 
             // Request initial FTL state
             SendMessage(new CentcommConsoleRequestFTLStateMessage());
@@ -95,10 +99,10 @@ namespace Content.Client._Vortex.Communications.UI
             {
                 _menu.CountdownStarted = centcommState.CountdownStarted;
                 _menu.CountdownEnd = centcommState.ExpectedCountdownEnd;
+                _menu.CanCallShuttle = centcommState.CanCallShuttle;
+                _menu.CanRecallShuttle = centcommState.CanRecallShuttle;
 
                 _menu.UpdateCountdown();
-                _menu.CallShuttleButton.Disabled = !centcommState.CanCallShuttle;
-                _menu.RecallShuttleButton.Disabled = !centcommState.CanRecallShuttle;
                 _menu.ViewManifestButton.Disabled = !centcommState.CanViewManifest;
                 _menu.CreateFTLDiskButton.Disabled = !centcommState.CanCreateFTLDisk;
                 _menu.ToggleFTLCorridorButton.Disabled = !centcommState.CanToggleFTLCorridor;
@@ -131,18 +135,42 @@ namespace Content.Client._Vortex.Communications.UI
             _menu.SetTabVisible(1, state.EvacuationTabEnabled);
             _menu.SetTabVisible(2, state.FTLTabEnabled);
 
-            // Set the main tab to the first enabled tab
-            int mainTabIndex = -1;
-            if (state.CommunicationTabEnabled)
-                mainTabIndex = 0;
-            else if (state.EvacuationTabEnabled)
-                mainTabIndex = 1;
-            else if (state.FTLTabEnabled)
-                mainTabIndex = 2;
-
-            if (mainTabIndex >= 0)
+            // Check if current tab is still available
+            bool currentTabAvailable = false;
+            switch (_currentTabIndex)
             {
-                _menu.SetCurrentTab(mainTabIndex);
+                case 0:
+                    currentTabAvailable = state.CommunicationTabEnabled;
+                    break;
+                case 1:
+                    currentTabAvailable = state.EvacuationTabEnabled;
+                    break;
+                case 2:
+                    currentTabAvailable = state.FTLTabEnabled;
+                    break;
+            }
+
+            // If current tab is not available, switch to the first available tab
+            if (!currentTabAvailable)
+            {
+                int newTabIndex = -1;
+                if (state.CommunicationTabEnabled)
+                    newTabIndex = 0;
+                else if (state.EvacuationTabEnabled)
+                    newTabIndex = 1;
+                else if (state.FTLTabEnabled)
+                    newTabIndex = 2;
+
+                if (newTabIndex >= 0)
+                {
+                    _currentTabIndex = newTabIndex;
+                    _menu.SetCurrentTab(newTabIndex);
+                }
+            }
+            else
+            {
+                // Current tab is still available, ensure it's selected
+                _menu.SetCurrentTab(_currentTabIndex);
             }
         }
 

@@ -20,6 +20,14 @@ namespace Content.Client._Vortex.Communications.UI
 
         public bool CountdownStarted { get; set; }
         public TimeSpan? CountdownEnd { get; set; }
+        public bool CanCallShuttle { get; set; }
+        public bool CanRecallShuttle { get; set; }
+
+        // Optimization: track last button states to avoid unnecessary updates
+        private bool _lastCallShuttleDisabled = true;
+        private bool _lastRecallShuttleDisabled = true;
+        private TimeSpan _lastCountdownUpdate;
+        private const float CountdownUpdateInterval = 0.1f; // Update countdown every 100ms
 
         private TimeSpan? _errorRevertTime;
         private string? _originalLabelText;
@@ -33,6 +41,7 @@ namespace Content.Client._Vortex.Communications.UI
         public event Action? OnCreateFTLDisk;
         public event Action? OnToggleFTLCorridor;
         public event Action<NetEntity, string>? OnApplyThreatCode;
+        public event Action<int>? OnTabChanged;
 
         public CentcommConsoleMenu()
         {
@@ -59,6 +68,15 @@ namespace Content.Client._Vortex.Communications.UI
             // Handle dropdown selections
             StationSelector.OnItemSelected += OnStationSelected;
             ThreatCodeSelector.OnItemSelected += OnThreatCodeSelected;
+
+            // Handle tab changes
+            MainTabContainer.OnTabChanged += tabIndex => OnTabChanged?.Invoke(tabIndex);
+        }
+
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+            UpdateCountdown();
         }
 
         private void ApplyCentcommTabStyling()
@@ -100,11 +118,19 @@ namespace Content.Client._Vortex.Communications.UI
                 return;
             }
 
+            // Immediately disable call button and enable recall button for user feedback
+            CallShuttleButton.Disabled = true;
+            RecallShuttleButton.Disabled = false;
+
             OnCallShuttle?.Invoke(arrivalTime);
         }
 
         private void RecallShuttlePressed()
         {
+            // Immediately disable recall button and enable call button for user feedback
+            RecallShuttleButton.Disabled = true;
+            CallShuttleButton.Disabled = false;
+
             OnRecallShuttle?.Invoke();
         }
 
@@ -115,6 +141,9 @@ namespace Content.Client._Vortex.Communications.UI
 
         private void CreateFTLDiskPressed()
         {
+            // Immediately disable button to prevent spam clicking during cooldown
+            CreateFTLDiskButton.Disabled = true;
+
             OnCreateFTLDisk?.Invoke();
         }
 
@@ -273,8 +302,10 @@ namespace Content.Client._Vortex.Communications.UI
 
         public void UpdateCountdown()
         {
+            var currentTime = _timing.CurTime;
+
             // Handle error message revert
-            if (_errorRevertTime.HasValue && _timing.CurTime >= _errorRevertTime.Value)
+            if (_errorRevertTime.HasValue && currentTime >= _errorRevertTime.Value)
             {
                 ArrivalTimeLabel.Text = _originalLabelText;
                 ArrivalTimeLabel.FontColorOverride = null; // reset to default
@@ -282,11 +313,33 @@ namespace Content.Client._Vortex.Communications.UI
             }
 
             // Handle success message revert
-            if (_successMessageTimer.HasValue && _timing.CurTime >= _successMessageTimer.Value)
+            if (_successMessageTimer.HasValue && currentTime >= _successMessageTimer.Value)
             {
                 ApplyThreatCodeButton.Text = "Применить";
                 _successMessageTimer = null;
             }
+
+            // Update shuttle button states only if they changed
+            var callDisabled = !CanCallShuttle;
+            var recallDisabled = !CanRecallShuttle;
+
+            if (_lastCallShuttleDisabled != callDisabled)
+            {
+                CallShuttleButton.Disabled = callDisabled;
+                _lastCallShuttleDisabled = callDisabled;
+            }
+
+            if (_lastRecallShuttleDisabled != recallDisabled)
+            {
+                RecallShuttleButton.Disabled = recallDisabled;
+                _lastRecallShuttleDisabled = recallDisabled;
+            }
+
+            // Update countdown only every 100ms to avoid excessive updates
+            if ((currentTime - _lastCountdownUpdate).TotalSeconds < CountdownUpdateInterval)
+                return;
+
+            _lastCountdownUpdate = currentTime;
 
             if (!CountdownStarted || CountdownEnd == null)
             {
@@ -294,7 +347,7 @@ namespace Content.Client._Vortex.Communications.UI
                 return;
             }
 
-            var timeLeft = CountdownEnd.Value - _timing.CurTime;
+            var timeLeft = CountdownEnd.Value - currentTime;
             if (timeLeft.TotalSeconds <= 0)
             {
                 CountdownLabel.SetMessage(Loc.GetString("centcomm-console-shuttle-has-arrived"));
