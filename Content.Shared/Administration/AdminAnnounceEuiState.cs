@@ -9,6 +9,7 @@
 // SPDX-License-Identifier: MIT
 
 using Content.Shared.Eui;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration
@@ -17,6 +18,7 @@ namespace Content.Shared.Administration
     {
         AllStations, // Vortex-PlayableCentCom
         SpecificStation, // Vortex-PlayableCentCom
+        SpecificMap, // Vortex-MapAnnounce
         Server,
     }
 
@@ -24,6 +26,7 @@ namespace Content.Shared.Administration
     public sealed class AdminAnnounceEuiState : EuiStateBase
     {
         public Dictionary<NetEntity, string> Stations = new(); // Vortex-PlayableCentCom
+        public Dictionary<MapId, string> Maps = new(); // Vortex-MapAnnounce
     }
 
     public static class AdminAnnounceEuiMsg
@@ -36,6 +39,7 @@ namespace Content.Shared.Administration
             public string Announcement = default!;
             public AdminAnnounceType AnnounceType;
             public NetEntity? SelectedStation; // Vortex-PlayableCentCom
+            public MapId? SelectedMap; // Vortex-MapAnnounce
             public string Voice = default!; // CorvaxGoob-TTS
             public string? ColorHex;
             public string? SoundPath;

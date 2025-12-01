@@ -5,6 +5,7 @@ admin-announce-announcer-default = Центральное командовани
 admin-announce-button = Сделать объявление
 admin-announce-type-all-stations = Все станции
 admin-announce-type-specific-station = Конкретная станция
+admin-announce-type-specific-map = Конкретная карта
 admin-announce-type-server = Сервер
 admin-announce-keep-open = Держать открытым
 cmd-announceui-desc = Открывает меню объявлений.

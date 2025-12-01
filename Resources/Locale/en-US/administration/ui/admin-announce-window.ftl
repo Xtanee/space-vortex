@@ -14,6 +14,7 @@ admin-announce-announcer-default = Central Command
 admin-announce-button = Announce
 admin-announce-type-all-stations = All Stations
 admin-announce-type-specific-station = Specific Station
+admin-announce-type-specific-map = Specific Map
 admin-announce-type-server = Server
 admin-announce-keep-open = Keep open
 

@@ -11,6 +11,7 @@ using Content.Client.Eui;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.UI
@@ -32,6 +33,7 @@ namespace Content.Client.Administration.UI
             if (state is AdminAnnounceEuiState announceState)
             {
                 _window.SetStations(announceState.Stations);
+                _window.SetMaps(announceState.Maps); // Vortex-MapAnnounce
             }
         }
         // Vortex-PlayableCentCom-End
@@ -51,6 +53,13 @@ namespace Content.Client.Administration.UI
                 selectedStation = (NetEntity?) _window.StationSelector.GetItemMetadata(_window.StationSelector.SelectedId);
             }
             // Vortex-PlayableCentCom-End
+            // Vortex-MapAnnounce-Start
+            MapId? selectedMap = null;
+            if (_window.MapSelector.Visible && _window.MapSelector.ItemCount > 0 && _window.MapSelector.SelectedId >= 0)
+            {
+                selectedMap = (MapId?) _window.MapSelector.GetItemMetadata(_window.MapSelector.SelectedId);
+            }
+            // Vortex-MapAnnounce-End
 
             SendMessage(new AdminAnnounceEuiMsg.DoAnnounce
             {
@@ -60,6 +69,7 @@ namespace Content.Client.Administration.UI
                 AnnounceType =  (AdminAnnounceType) (_window.AnnounceMethod.SelectedMetadata ?? AdminAnnounceType.AllStations),
                 SelectedStation = selectedStation,
                 // Vortex-PlayableCentCom-Edit-End
+                SelectedMap = selectedMap, // Vortex-MapAnnounce
                 Voice = voice, // CorvaxGoob-TTS
                 CloseAfter = !_window.KeepWindowOpen.Pressed,
                 ColorHex = _window.ColorInput.Text,

@@ -19,6 +19,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Configuration;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Configuration;
@@ -51,11 +52,14 @@ namespace Content.Client.Administration.UI
             AnnounceMethod.SetItemMetadata(0, AdminAnnounceType.AllStations);
             AnnounceMethod.AddItem(_localization.GetString("admin-announce-type-specific-station"));
             AnnounceMethod.SetItemMetadata(1, AdminAnnounceType.SpecificStation);
+            AnnounceMethod.AddItem(_localization.GetString("admin-announce-type-specific-map")); // Vortex-MapAnnounce
+            AnnounceMethod.SetItemMetadata(2, AdminAnnounceType.SpecificMap); // Vortex-MapAnnounce
             AnnounceMethod.AddItem(_localization.GetString("admin-announce-type-server"));
-            AnnounceMethod.SetItemMetadata(2, AdminAnnounceType.Server);
+            AnnounceMethod.SetItemMetadata(3, AdminAnnounceType.Server);
             AnnounceMethod.OnItemSelected += AnnounceMethodOnOnItemSelected;
 
             StationSelector.OnItemSelected += args => StationSelector.SelectId(args.Id);
+            MapSelector.OnItemSelected += args => MapSelector.SelectId(args.Id); // Vortex-MapAnnounce
             Announcement.OnKeyBindUp += AnnouncementOnOnTextChanged;
             // Vortex-PlayableCentCom-Edit-End
 
@@ -103,9 +107,10 @@ namespace Content.Client.Administration.UI
             AnnounceMethod.SelectId(args.Id);
             // Vortex-PlayableCentCom-Edit-Start
             var type = (AdminAnnounceType?)args.Button.SelectedMetadata ?? AdminAnnounceType.AllStations;
-            Announcer.Editable = type == AdminAnnounceType.AllStations || type == AdminAnnounceType.SpecificStation;
+            Announcer.Editable = type == AdminAnnounceType.AllStations || type == AdminAnnounceType.SpecificStation || type == AdminAnnounceType.SpecificMap; // Vortex-MapAnnounce
             StationSelector.Visible = type == AdminAnnounceType.SpecificStation;
-            TTSContainer.Visible = _cfgManager.GetCVar(CCCVars.TTSEnabled) && (type == AdminAnnounceType.AllStations || type == AdminAnnounceType.SpecificStation); // CorvaxGoob-TTS
+            MapSelector.Visible = type == AdminAnnounceType.SpecificMap; // Vortex-MapAnnounce
+            TTSContainer.Visible = _cfgManager.GetCVar(CCCVars.TTSEnabled) && (type == AdminAnnounceType.AllStations || type == AdminAnnounceType.SpecificStation || type == AdminAnnounceType.SpecificMap); // Vortex-MapAnnounce
         }
 
         public void SetStations(Dictionary<NetEntity, string> stations)
@@ -118,6 +123,19 @@ namespace Content.Client.Administration.UI
             }
             // No default selection
         }
+
+        // Vortex-MapAnnounce-Start
+        public void SetMaps(Dictionary<MapId, string> maps)
+        {
+            MapSelector.Clear();
+            foreach (var (mapId, name) in maps)
+            {
+                MapSelector.AddItem(name);
+                MapSelector.SetItemMetadata(MapSelector.ItemCount - 1, mapId);
+            }
+            // No default selection
+        }
+        // Vortex-MapAnnounce-End
         // Vortex-PlayableCentCom-Edit-End
 
         private void OnSoundInputTextChanged(LineEdit.LineEditEventArgs args)

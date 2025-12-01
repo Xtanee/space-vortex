@@ -23,6 +23,9 @@ using Content.Shared.Chat;
 using Content.Shared.Eui;
 using Robust.Shared.Audio;
 using Robust.Shared.ContentPack;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.UI
@@ -31,6 +34,8 @@ namespace Content.Server.Administration.UI
     {
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!; // Vortex-MapAnnounce
+        [Dependency] private readonly IMapManager _mapManager = default!; // Vortex-MapAnnounce
         private StationSystem _stationSystem = default!; // Vortex-PlayableCentCom
         private readonly TTSSystem _tts; // CorvaxGoob-TTS
         private readonly ChatSystem _chatSystem;
@@ -57,6 +62,12 @@ namespace Content.Server.Administration.UI
             {
                 state.Stations[netEntity] = name;
             }
+            // Vortex-MapAnnounce-Start
+            foreach (var mapId in _mapManager.GetAllMapIds())
+            {
+                state.Maps[mapId] = $"Map {mapId}";
+            }
+            // Vortex-MapAnnounce-End
             return state;
             // Vortex-PlayableCentCom-Edit-End
         }
@@ -99,6 +110,14 @@ namespace Content.Server.Administration.UI
                                 var entityManager = IoCManager.Resolve<IEntityManager>();
                                 var stationUid = entityManager.GetEntity(doAnnounce.SelectedStation.Value);
                                 _chatSystem.DispatchStationAnnouncement(stationUid, doAnnounce.Announcement, doAnnounce.Announcer, true, sound, color);
+                                _tts.SendTTSAdminAnnouncement(doAnnounce.Announcement, doAnnounce.Voice); // CorvaxGoob-TTS
+                            }
+                            break;
+                        case AdminAnnounceType.SpecificMap: // Vortex-MapAnnounce
+                            if (doAnnounce.SelectedMap.HasValue)
+                            {
+                                var filter = Filter.Empty().AddWhereAttachedEntity(entity => _entityManager.GetComponent<TransformComponent>(entity).MapID == doAnnounce.SelectedMap.Value);
+                                _chatSystem.DispatchFilteredAnnouncement(filter, doAnnounce.Announcement, null, doAnnounce.Announcer, true, sound, color);
                                 _tts.SendTTSAdminAnnouncement(doAnnounce.Announcement, doAnnounce.Voice); // CorvaxGoob-TTS
                             }
                             break;

@@ -29,8 +29,11 @@ SPDX-License-Identifier: MIT
         </BoxContainer>
         <TextEdit Name="Announcement" Access="Public" VerticalExpand="True" MinHeight="100" />
         <!-- Vortex-PlayableCentCom-Start -->
-        <OptionButton Name="StationSelector" Access="Public" Visible="False" HorizontalExpand="True" /> 
+        <OptionButton Name="StationSelector" Access="Public" Visible="False" HorizontalExpand="True" />
         <!-- Vortex-PlayableCentCom-End -->
+        <!-- Vortex-MapAnnounce-Start -->
+        <OptionButton Name="MapSelector" Access="Public" Visible="False" HorizontalExpand="True" />
+        <!-- Vortex-MapAnnounce-End -->
         <!-- Vortex-AdminTweak-Start -->
         <LineEdit Name="ColorInput" Access="Public" PlaceHolder="{Loc admin-announce-color-placeholder}" HorizontalExpand="True" />
         <LineEdit Name="SoundInput" Access="Public" PlaceHolder="{Loc admin-announce-sound-placeholder}" HorizontalExpand="True" />
