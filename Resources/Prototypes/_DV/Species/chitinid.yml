@@ -11,6 +11,27 @@
   maleFirstNames: NamesChitinidFirstMale
   femaleFirstNames: NamesChitinidFirstFemale
   naming: First
+  # vortex start
+  category: Unusual
+  description: "/ServerInfo/ADT/SpeciesDescriptions/Unfinished.xml"
+  pros:
+  - Могут питаться сырым мясом.
+  - Получают на 80% меньше урона от радиации.
+  - Получают на 10% меньше урона от режущего оружия.
+  - Получают на 10% меньше урона от тупого оружия.
+  - Получают на 10% меньше урона от колющего оружия.
+  - Легче тянуть и переносить предметы.
+  - Тела хитинидов могут восстанавливаться от лёгких повреждений радиацией; до определённого момента после очищения они выделяют небольшой камень (он слегка радиоактивен).
+  special:
+  - Излучают био-свет.
+  - Обманчиво тяжёлые.
+  cons:
+  - Получают на 15% больше урона от электричества.
+  - Хитин не позволяет делать инъекции шприцом, нужен гипоспрей.
+  - Метаболизм на 33% быстрее, из-за чего они быстрее голодают.
+  - Более уязвимы к холоду.
+  - Кровь — насекомых.
+  # vortex end
 
 - type: speciesBaseSprites
   id: MobChitinidSprites
@@ -182,3 +203,4 @@
   baseSprite:
     sprite: _DV/Mobs/Species/Chitinid/parts.rsi
     state: r_foot
+
