@@ -28,6 +28,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Input;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using static Robust.Client.Input.Keyboard; // Vortex added
 
 namespace Content.Goobstation.Client.Research.UI;
 
@@ -88,6 +89,11 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
 
     private string? _lastSelectedTechId;
     private DateTime _lastSelectTime;
+    // Vortex added
+    private string _searchText = "";
+    private List<(TechnologyPrototype tech, ResearchAvailability availability)> _matchingTechnologies = new();
+    private int _currentMatchIndex = -1;
+    // Vortex end
 
     // UI Elements (resolved at runtime to avoid dependency on source generator)
     private readonly Control _staticSprite;
@@ -95,6 +101,7 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
     private readonly Control _dragContainer;
     private readonly Button _recenterButton;
     private readonly RichTextLabel _researchAmountLabel;
+    private readonly LineEdit _recipeSearchLineEdit; // Vortex added
     private readonly BoxContainer _disciplineTabsContainer;
     private readonly BoxContainer _disciplineProgressContainer;
     private readonly BoxContainer _infoContainer;
@@ -113,6 +120,7 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
         _dragContainer = this.FindControl<Control>("DragContainer");
         _recenterButton = this.FindControl<Button>("RecenterButton");
         _researchAmountLabel = this.FindControl<RichTextLabel>("ResearchAmountLabel");
+        _recipeSearchLineEdit = this.FindControl<LineEdit>("RecipeSearchLineEdit"); // Vortex added
         _disciplineTabsContainer = this.FindControl<BoxContainer>("DisciplineTabsContainer");
         _disciplineProgressContainer = this.FindControl<BoxContainer>("DisciplineProgressContainer");
         _infoContainer = this.FindControl<BoxContainer>("InfoContainer");
@@ -132,6 +140,10 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
         _dragContainer.OnKeyBindDown += OnKeybindDown;
         _dragContainer.OnKeyBindUp += OnKeybindUp;
         _recenterButton.OnPressed += _ => Recenter();
+        // Vortex added
+        _recipeSearchLineEdit.OnTextChanged += OnSearchTextChanged;
+        _recipeSearchLineEdit.OnTextEntered += OnSearchTextEntered;
+        // Vortex end
 
         UpdatePanels(List);
         Recenter();
@@ -204,12 +216,26 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
                 Text = Loc.GetString(discipline.Name),
                 ToggleMode = true,
                 MinWidth = 0,
-                MinHeight = 40,
+                MinHeight = 46, // Vortex edited
                 HorizontalExpand = true,
                 SizeFlagsStretchRatio = 1,
                 Margin = new Thickness(2)
             };
-            
+            // Vortex edited
+
+            // Wrap tab button in StripeBack like crew monitoring station name
+            var stripeBack = new StripeBack
+            {
+                HorizontalExpand = true,
+                VerticalExpand = true,
+                HasTopEdge = true,
+                HasBottomEdge = true,
+                HasMargins = true
+            };
+            var panelContainer = new PanelContainer();
+            panelContainer.AddChild(tabButton);
+            stripeBack.AddChild(panelContainer);
+            // Vortex end
             // Create progress control (ICON: PERCENT), left-aligned
             var percentLabel = new Label
             {
@@ -243,12 +269,12 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
                     percentLabel
                 }
             };
-            
+
             // Store controls
             _disciplineControls[disciplineId] = (tabButton, progressBox);
-            
+
             // Add to UI
-            _disciplineTabsContainer.AddChild(tabButton);
+            _disciplineTabsContainer.AddChild(stripeBack); // Vortex edited
             _disciplineProgressContainer.AddChild(progressBox);
             
             // Set up tab selection
@@ -284,7 +310,7 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
     
     private void UpdateActiveTab(string selectedDisciplineId)
     {
-        // Update tab styles
+        // Update tab styles and enable/disable based on search results
         foreach (var (disciplineId, (tab, _)) in _disciplineControls)
         {
             var isActive = disciplineId == selectedDisciplineId;
@@ -294,6 +320,13 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
             {
                 tab.StyleClasses.Add("tab-active");
             }
+            // Vortex added
+            // Disable tab if no technologies in this discipline match the search
+            var hasMatchingTechs = !string.IsNullOrEmpty(_searchText) &&
+                                   _technologiesByDiscipline.TryGetValue(disciplineId, out var disciplineTechs) &&
+                                   disciplineTechs.Any(tech => MatchesSearchFilter(tech));
+            tab.Disabled = !string.IsNullOrEmpty(_searchText) && !hasMatchingTechs;
+            // Vortex end
         }
         
         // Clear existing tech items
@@ -313,12 +346,16 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
 
                 var techItem = new FancyResearchConsoleItem(techProto, _sprite, availability);
                 techItem.SelectAction += (p, a) => SelectTech(p, a);
-                
+                // Vortex edited
+                // Apply search filtering
+                var isFiltered = !string.IsNullOrEmpty(_searchText) && !MatchesSearchFilter(techProto);
+                techItem.SetFiltered(isFiltered);
+                // Vortex end
                 // Position the technology in the research tree
                 var pos = techProto.Position * 150 * _zoom;
                 LayoutContainer.SetPosition(techItem, _position + pos);
                 techItem.SetScale(_zoom);
-                
+
                 _dragContainer.AddChild(techItem);
                 _techItems.Add(techItem);
             }
@@ -395,6 +432,86 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
     protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
         => _draggin ? DragMode.None : base.GetDragModeFor(relativeMousePos);
     #endregion
+    // Vortex added
+    private void OnSearchTextChanged(LineEdit.LineEditEventArgs args)
+    {
+        _searchText = args.Text.ToLowerInvariant();
+        _currentMatchIndex = -1; // Reset selection when search text changes
+        UpdateMatchingTechnologies();
+        if (_selectedDiscipline != null)
+        {
+            UpdateActiveTab(_selectedDiscipline);
+        }
+    }
+
+    private void OnSearchTextEntered(LineEdit.LineEditEventArgs args)
+    {
+        if (!string.IsNullOrEmpty(_searchText) && _matchingTechnologies.Count > 0)
+        {
+            _currentMatchIndex = (_currentMatchIndex + 1) % _matchingTechnologies.Count;
+            var (tech, availability) = _matchingTechnologies[_currentMatchIndex];
+            SelectTech(tech, availability);
+        }
+    }
+
+    private void UpdateMatchingTechnologies()
+    {
+        _matchingTechnologies.Clear();
+
+        foreach (var (_, technologies) in _technologiesByDiscipline)
+        {
+            foreach (var tech in technologies)
+            {
+                if (!List.TryGetValue(tech.ID, out var availability))
+                    continue;
+
+                if (MatchesSearchFilter(tech))
+                {
+                    _matchingTechnologies.Add((tech, availability));
+                }
+            }
+        }
+
+        // Sort by technology ID for consistent ordering
+        _matchingTechnologies.Sort((a, b) => string.Compare(a.tech.ID, b.tech.ID, StringComparison.Ordinal));
+    }
+
+
+    private bool MatchesSearchFilter(TechnologyPrototype techProto)
+    {
+        if (string.IsNullOrEmpty(_searchText))
+            return true;
+
+        // Check if any of the recipes unlocked by this technology contain the search text
+        foreach (var recipeId in techProto.RecipeUnlocks)
+        {
+            // Search by recipe ID (which is often the FTL key)
+            if (recipeId.ToString().ToLowerInvariant().Contains(_searchText))
+                return true;
+
+            // Search by recipe result name (the actual item/machine being crafted)
+            var recipe = _prototype.Index(recipeId);
+            if (recipe.Result is {} resultId)
+            {
+                var resultProto = _prototype.Index(resultId);
+                var resultNameString = resultProto.Name?.ToString();
+                if (!string.IsNullOrEmpty(resultNameString))
+                {
+                    // Try localized result name
+                    var localizedResultName = Loc.GetString(resultNameString).ToLowerInvariant();
+                    if (localizedResultName.Contains(_searchText))
+                        return true;
+
+                    // Also try direct result name if different
+                    if (resultNameString.ToLowerInvariant().Contains(_searchText))
+                        return true;
+                }
+            }
+        }
+
+        return false;
+    }
+    // Vortex end
 
     /// <summary>
     /// Selects a tech prototype and opens info panel
@@ -451,6 +568,10 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
     public override void Close()
     {
         base.Close();
+        // Vortex added
+        _recipeSearchLineEdit.OnTextChanged -= OnSearchTextChanged;
+        _recipeSearchLineEdit.OnTextEntered -= OnSearchTextEntered;
+        // Vortex end
 
         foreach (var item in _techItems)
         {

@@ -29,6 +29,16 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 TextureScale="2 2"
                 Stretch="KeepAspectCentered">
             </TextureRect>
+            <!-- Darkening overlay for filtered items | Vortex added -->
+            <PanelContainer Name="FilterOverlay"
+                            VerticalExpand="True"
+                            HorizontalExpand="True"
+                            Visible="False">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#000000BF"/>
+                </PanelContainer.PanelOverride>
+            </PanelContainer>
+        <!-- Vortex end -->
         </PanelContainer>
     </BoxContainer>
 </LayoutContainer>
