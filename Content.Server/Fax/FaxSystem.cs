@@ -642,6 +642,9 @@ public sealed class FaxSystem : EntitySystem
             if (meta.EntityPrototype is not null)
                 printout = new FaxPrintout("", meta.EntityName, prototypeId: meta.EntityPrototype.ID, entityUid: sendEntity);
         }
+        // Resolve content for pre-written documents
+        var content = Loc.GetString(paper.Content); // Vortex added
+
         // TODO: See comment in 'Send()' about not being able to copy whole entities
 
         if (printout is null)
@@ -727,10 +730,14 @@ public sealed class FaxSystem : EntitySystem
         {
             payload[FaxConstants.FaxPaperStampStateData] = paper.StampState;
             payload[FaxConstants.FaxPaperStampedByData] = paper.StampedBy;
-            //Vortex added
-            payload[FaxConstants.FaxPaperSignedByData] = paper.SignedBy;
-            //Vortex end
         }
+
+        //Vortex added
+        if (paper.SignedBy != null)
+        {
+            payload[FaxConstants.FaxPaperSignedByData] = paper.SignedBy;
+        }
+        //Vortex end
 
         _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
 

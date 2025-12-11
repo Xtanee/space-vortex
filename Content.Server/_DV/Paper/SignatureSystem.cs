@@ -131,21 +131,6 @@ public sealed class SignatureSystem : EntitySystem
         // If placeholders exist, add entry but avoid visual stamp sprite; also allow duplicate entries up to repeatLimit.
         var allowDuplicate = repeatLimit > 1;
         var spriteState = hasPlaceholders ? null : SignatureStampState;
-        //Vortex added
-        if (hasPlaceholders)
-        {
-            // Clear existing world overlay so only textual signatures are visible
-            // But preserve the original StampState if it was set before signing
-            if (string.IsNullOrEmpty(comp.StampState))
-            {
-                comp.StampState = null;
-                if (TryComp<AppearanceComponent>(paper, out var appearance))
-                    _appearance.SetData(paper, PaperComponent.PaperVisuals.Stamp, "", appearance);
-                Dirty(paper);
-            }
-        }
-        //Vortex end
-        //Vortex end
 
         // Add signature info to SignedBy list
         comp.SignedBy.Add(signatureInfo);
@@ -153,6 +138,17 @@ public sealed class SignatureSystem : EntitySystem
 
         if (_paper.TryAddStampInfo(paper, stampInfo, spriteState, allowDuplicate))
         {
+            // Vortex added
+            // Set StampState for signed documents to ensure consistency
+            if (string.IsNullOrEmpty(comp.StampState))
+            {
+                comp.StampState = SignatureStampState;
+                if (TryComp<AppearanceComponent>(paper, out var appearance))
+                    _appearance.SetData(paper, PaperComponent.PaperVisuals.Stamp, SignatureStampState, appearance);
+                Dirty(paper);
+            }
+            // Vortex end
+
             // Show popups and play a paper writing sound
             if (!HasComp<DevilComponent>(signer)) // Goobstation - Don't display popups for devils, it covers the others.
             {

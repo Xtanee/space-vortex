@@ -165,12 +165,24 @@ public sealed class PaperSystem : EntitySystem
                 );
             }
 
+            // Vortex added
+            // Show signatures if any
+            if (entity.Comp.SignedBy.Count > 0)
+            {
+                var commaSeparatedSigns = string.Join(", ", entity.Comp.SignedBy.Select(s => Loc.GetString(s.SignedName)));
+                args.PushMarkup(
+                    Loc.GetString(
+                        "paper-component-examine-detail-signed-by",
+                        ("paper", entity),
+                        ("signs", commaSeparatedSigns))
+                );
+            }
+            // Vortex end
+
+            // Vortex edited
             if (entity.Comp.StampedBy.Count > 0)
             {
-                // Separate stamps into signatures and actual stamps
-                var signatures = new List<string>();
                 var stamps = new List<string>();
-
                 foreach (var stamp in entity.Comp.StampedBy)
                 {
                     var isSignature = false;
@@ -183,29 +195,12 @@ public sealed class PaperSystem : EntitySystem
                         }
                     }
 
-                    if (isSignature)
-                    {
-                        signatures.Add(Loc.GetString(stamp.StampedName));
-                    }
-                    else
+                    if (!isSignature) // Vortex edited
                     {
                         stamps.Add(Loc.GetString(stamp.StampedName));
                     }
                 }
 
-                // Show signatures
-                if (signatures.Count > 0)
-                {
-                    var commaSeparatedSigns = string.Join(", ", signatures);
-                    args.PushMarkup(
-                        Loc.GetString(
-                            "paper-component-examine-detail-signed-by",
-                            ("paper", entity),
-                            ("signs", commaSeparatedSigns))
-                    );
-                }
-
-                // Show stamps (non-signatures)
                 if (stamps.Count > 0)
                 {
                     var commaSeparatedStamps = string.Join(", ", stamps);
@@ -219,6 +214,7 @@ public sealed class PaperSystem : EntitySystem
             }
         }
     }
+    // Vortex end
 
     private void OnInteractUsing(Entity<PaperComponent> entity, ref InteractUsingEvent args)
     {
