@@ -4,7 +4,7 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 11/25/2025 03:11:42
+  time: 12/11/2025 19:47:03
   entityCount: 10776
 maps: []
 grids:
@@ -36613,7 +36613,7 @@ entities:
       pos: 24.5,99.5
       parent: 1
     - type: FaxMachine
-      name: Офис НШЦК
+      name: Офис ОСО
   - uid: 8385
     components:
     - type: Transform
@@ -69307,6 +69307,8 @@ entities:
       parent: 1
     - type: MeleeWeapon
       damage:
+        woundSeverityMultipliers: {}
+        partDamageVariation: 0
         armorPenetration: 0
         groups: null
         types:
