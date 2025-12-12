@@ -85,6 +85,8 @@
     Steel: 2500
     Glass: 2000
     Silver: 1500
+    Plasteel: 1000
+    Uranium: 100
 
 - type: latheRecipe
   id: DurandArmor
@@ -95,6 +97,7 @@
   materials:
     Steel: 3000
     Silver: 900
+    Plasteel: 20000
 
 - type: latheRecipe
   id: DurandHead
@@ -103,9 +106,10 @@
   - Durand
   completetime: 10
   materials:
-    Steel: 1500
+    Steel: 2000
     Glass: 800
-    Silver: 250
+    Silver: 300
+    Plasteel: 3500
     Diamond: 100
 
 - type: latheRecipe
@@ -117,6 +121,7 @@
   materials:
     Steel: 1100
     Silver: 250
+    Plasteel: 4500
 
 - type: latheRecipe
   id: DurandLLeg
@@ -127,6 +132,7 @@
   materials:
     Steel: 1100
     Silver: 250
+    Plasteel: 4500
 
 - type: latheRecipe
   id: DurandRLeg
@@ -137,6 +143,7 @@
   materials:
     Steel: 1100
     Silver: 250
+    Plasteel: 4500
 
 - type: latheRecipe
   id: DurandRArm
@@ -147,6 +154,7 @@
   materials:
     Steel: 1100
     Silver: 250
+    Plasteel: 4500
 
 # Gygax
 - type: latheRecipe
@@ -158,6 +166,8 @@
   materials:
     Steel: 2500
     Glass: 2000
+    Gold: 1000
+    Plasteel: 5500
 
 - type: latheRecipe
   id: GygaxArmor
@@ -166,7 +176,8 @@
   - Gygax
   completetime: 10
   materials:
-    Steel: 3000
+    Steel: 2000
+    Plasteel: 12000
 
 - type: latheRecipe
   id: GygaxHead
@@ -178,6 +189,7 @@
     Steel: 1500
     Glass: 250
     Diamond: 100
+    Plasteel: 3000
 
 - type: latheRecipe
   id: GygaxLArm
@@ -187,6 +199,7 @@
   completetime: 10
   materials:
     Steel: 1100
+    Plasteel: 4500
 
 - type: latheRecipe
   id: GygaxLLeg
@@ -196,6 +209,7 @@
   completetime: 10
   materials:
     Steel: 1100
+    Plasteel: 4500
 
 - type: latheRecipe
   id: GygaxRLeg
@@ -205,6 +219,7 @@
   completetime: 10
   materials:
     Steel: 1100
+    Plasteel: 4500
 
 - type: latheRecipe
   id: GygaxRArm
@@ -214,6 +229,7 @@
   completetime: 10
   materials:
     Steel: 1100
+    Plasteel: 4500
 
 # Vim
 - type: latheRecipe
@@ -223,7 +239,7 @@
   - Vim # Goobstation
   completetime: 5
   materials:
-    Steel: 500
+    Steel: 700
     Glass: 200
 
 
@@ -235,7 +251,7 @@
   - MechEquipment
   completetime: 10
   materials:
-    Steel: 1000
+    Steel: 2000
     Glass: 250
 
 - type: latheRecipe
@@ -245,10 +261,10 @@
   - MechEquipment
   completetime: 10
   materials:
-    Steel: 1000
+    Steel: 1200
     Plastic: 150
-    Silver: 350
-    Diamond: 150
+    Silver: 500
+    Diamond: 300
 
 - type: latheRecipe
   id: MechEquipmentGrabber
@@ -257,7 +273,7 @@
   - MechEquipment
   completetime: 10
   materials:
-    Steel: 500
+    Steel: 700
     Plastic: 200
 
 
@@ -268,8 +284,8 @@
   - MechEquipment
   completetime: 10
   materials:
-    Steel: 1150
-    Bananium: 800
+    Steel: 1600
+    Bananium: 900
 
 - type: latheRecipe
   id: MechEquipmentHonkerMousetrapMortar
@@ -289,7 +305,7 @@
   - MechEquipment
   completetime: 10
   materials:
-    Steel: 1000
+    Steel: 1300
     Glass: 150
 
 - type: latheRecipe
@@ -301,3 +317,5 @@
   materials:
     Steel: 1000
     Glass: 150
+    Plasteel: 1000
+    Silver: 200
