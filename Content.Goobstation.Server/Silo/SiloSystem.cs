@@ -9,7 +9,6 @@
 using System.Linq;
 using Content.Goobstation.Common.Silo;
 using Content.Server.Lathe;
-using Content.Server.Station.Components;
 using Content.Shared._Goobstation.Silo;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Lathe;
@@ -28,7 +27,7 @@ public sealed class SiloSystem : SharedSiloSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BecomesStationComponent, MapInitEvent>(OnMapInit);
+        // SubscribeLocalEvent<BecomesStationComponent, MapInitEvent>(OnMapInit); // Vortex removed
         SubscribeLocalEvent<SiloComponent, MaterialAmountChangedEvent>(OnMaterialAmountChanged);
         SubscribeLocalEvent<SiloComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<SiloComponent, ComponentShutdown>(OnShutdown);
@@ -65,37 +64,38 @@ public sealed class SiloSystem : SharedSiloSystem
                 }
             });
     }
+    // Vortex removed
+    // private void OnMapInit(Entity<BecomesStationComponent> ent, ref MapInitEvent args)
+    // {
+    //     var siloQuery =
+    //         AllEntityQuery<SiloComponent, MaterialStorageComponent, TransformComponent, DeviceLinkSourceComponent>();
 
-    private void OnMapInit(Entity<BecomesStationComponent> ent, ref MapInitEvent args)
-    {
-        var siloQuery =
-            AllEntityQuery<SiloComponent, MaterialStorageComponent, TransformComponent, DeviceLinkSourceComponent>();
+    //     Entity<DeviceLinkSourceComponent>? silo = null;
 
-        Entity<DeviceLinkSourceComponent>? silo = null;
+    //     while (siloQuery.MoveNext(out var siloEnt, out _, out _, out var siloXform, out var source))
+    //     {
+    //         if (siloXform.GridUid != ent)
+    //             continue;
 
-        while (siloQuery.MoveNext(out var siloEnt, out _, out _, out var siloXform, out var source))
-        {
-            if (siloXform.GridUid != ent)
-                continue;
+    //         silo = (siloEnt, source);
+    //         break;
+    //     }
 
-            silo = (siloEnt, source);
-            break;
-        }
+    //     if (silo == null)
+    //         return;
 
-        if (silo == null)
-            return;
+    //     var utilizerQuery = AllEntityQuery<SiloUtilizerComponent, MaterialStorageComponent, TransformComponent,
+    //         DeviceLinkSinkComponent>();
+    //     while (utilizerQuery.MoveNext(out var utilizer, out _, out var storage, out var utilizerXform, out var sink))
+    //     {
+    //         if (!storage.ConnectToSilo)
+    //             continue;
 
-        var utilizerQuery = AllEntityQuery<SiloUtilizerComponent, MaterialStorageComponent, TransformComponent,
-            DeviceLinkSinkComponent>();
-        while (utilizerQuery.MoveNext(out var utilizer, out _, out var storage, out var utilizerXform, out var sink))
-        {
-            if (!storage.ConnectToSilo)
-                continue;
+    //         if (utilizerXform.GridUid != ent)
+    //             continue;
 
-            if (utilizerXform.GridUid != ent)
-                continue;
-
-            DeviceLink.LinkDefaults(null, silo.Value, utilizer, silo.Value.Comp, sink);
-        }
-    }
+    //         DeviceLink.LinkDefaults(null, silo.Value, utilizer, silo.Value.Comp, sink);
+    //     }
+    // }
+    // Vortex end
 }
