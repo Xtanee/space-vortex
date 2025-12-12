@@ -49,7 +49,9 @@ dna-modifier-label-no-prototypes = Нет данных
 
 dna-modifier-label-actions = Передача данных:
 dna-modifier-button-injector = Инъектор
-dna-modifier-button-inject-block = Инъектор блока
+dna-modifier-button-inject-block = Инъектор СФ
+dna-modifier-button-inject-ui-block = Инъектор УИ
+dna-modifier-ui-block-all = Все
 dna-modifier-button-subject-inject = Субъект
 
 dna-modifier-button-disk = С дискеты

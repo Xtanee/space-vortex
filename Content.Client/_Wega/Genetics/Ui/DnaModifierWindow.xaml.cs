@@ -442,6 +442,36 @@ public sealed partial class DnaModifierWindow : FancyWindow
             buttonsContainer.AddChild(blockSelectButton);
             buttonsContainer.AddChild(injectBlockButton);
         }
+        // Vortex added
+        // UI Block Inject Button
+        if (hasUniqueIdentifiers)
+        {
+            var uiBlockSelectButton = new OptionButton
+            {
+                MinWidth = 40,
+                StyleClasses = { StyleNano.ButtonOpenRight }
+            };
+            uiBlockSelectButton.AddItem(Loc.GetString("dna-modifier-ui-block-all"), 0);
+            var uiBlocks = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38 };
+            foreach (int block in uiBlocks)
+            {
+                uiBlockSelectButton.AddItem($"{block}", block);
+            }
+            uiBlockSelectButton.SelectId(0); // Default to "All"
+            uiBlockSelectButton.OnItemSelected += args => uiBlockSelectButton.SelectId(args.Id);
+
+            var injectUIBlockButton = new Button
+            {
+                Text = Loc.GetString("dna-modifier-button-inject-ui-block"),
+                StyleClasses = { StyleNano.ButtonOpenLeft },
+                Disabled = _injectorCooldown.HasValue && _gameTiming.CurTime < _injectorCooldown
+            };
+            injectUIBlockButton.OnPressed += _ => OnInjectUIBlockPressed(bufferIndex, injectUIBlockButton, uiBlockSelectButton.SelectedId);
+
+            buttonsContainer.AddChild(uiBlockSelectButton);
+            buttonsContainer.AddChild(injectUIBlockButton);
+        }
+        // Vortex end
 
         // Subject Inject Button
         var subjectInjectButton = new Button
@@ -568,6 +598,16 @@ public sealed partial class DnaModifierWindow : FancyWindow
             new DnaModifierInjectBlockEvent(_console, bufferIndex, blockId));
     }
 
+    // Vortex added
+    private void OnInjectUIBlockPressed(int bufferIndex, Button button, int blockId)
+    {
+        _updateBuffer = true;
+        button.Disabled = true;
+        _entNetworkManager.SendSystemNetworkMessage(
+            new DnaModifierInjectUIBlockEvent(_console, bufferIndex, blockId));
+    }
+    // Vortex end
+
     private void OnSubjectInjectPressed(int index, Button button)
     {
         _updateBuffer = true;
@@ -634,7 +674,11 @@ public sealed partial class DnaModifierWindow : FancyWindow
             ("7", unique.BeardColorR),
             ("8", unique.BeardColorG),
             ("9", unique.BeardColorB),
-            ("13", unique.SkinTone),
+            // Vortex edited
+            ("11", unique.SkinColorR),
+            ("12", unique.SkinColorG),
+            ("13", unique.SkinColorB),
+            // Vortex end
             ("14", unique.FurColorR),
             ("15", unique.FurColorG),
             ("16", unique.FurColorB),

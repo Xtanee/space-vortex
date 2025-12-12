@@ -135,7 +135,7 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
     private async Task InitializeDelayAsync(EntityUid uid, DnaModifierComponent component)
     {
         await Task.Delay(1);
-        InitializeUniqueIdentifiers(uid, component);
+        component.UniqueIdentifiers = InitializeUniqueIdentifiers(uid, component); // Vortex edited
 
         await Task.Delay(1);
         CheckDeviations(uid, component);
@@ -162,7 +162,7 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
     #endregion
 
     #region Initialize U.I.
-    private void InitializeUniqueIdentifiers(EntityUid uid, DnaModifierComponent component)
+    private UniqueIdentifiersPrototype InitializeUniqueIdentifiers(EntityUid uid, DnaModifierComponent component) // Vortex edited
     {
         if (TryComp<HumanoidAppearanceComponent>(uid, out var humanoid))
         {
@@ -261,12 +261,22 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
             var skinColoration = speciesProto.SkinColoration;
             switch (skinColoration)
             {
-                // Для HumanToned заполняем блок 13 (тон кожи)
+                // Для HumanToned заполняем блоки 11-13 (цвет кожи R,G,B)
                 case HumanoidSkinColor.HumanToned:
-                    uniqueIdentifiers.SkinTone = ConvertSkinToneToHexArray(humanoid.SkinColor);
+                // Vortex edited
+                    var hex = humanoid.SkinColor.ToHex();
+                    uniqueIdentifiers.SkinColorR = new[] { hex[1].ToString(), hex[2].ToString(), hex[3].ToString() };
+                    uniqueIdentifiers.SkinColorG = new[] { hex[3].ToString(), hex[4].ToString(), hex[5].ToString() };
+                    uniqueIdentifiers.SkinColorB = new[] { hex[5].ToString(), hex[6].ToString(), hex[7].ToString() };
+                    break;
+                // Vortex end
+                
+                // Для Hues заполняем блок 10 (hue)
+                case HumanoidSkinColor.Hues:
+                    // Для совместимости, если есть Hues виды
                     break;
 
-                // Для других типов заполняем блоки 14-16 (цвет меха)
+                // Для других типов заполняем блоки 13-15 (цвет меха)
                 default: // Vortex edited
                     var furColorArray = ConvertColorToHexArray(humanoid.SkinColor);
                     uniqueIdentifiers.FurColorR = new[] { furColorArray[0], furColorArray[1], furColorArray[2] };
@@ -402,7 +412,7 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
                 _ => GenerateRandomHexValues()
             };
 
-            component.UniqueIdentifiers = uniqueIdentifiers;
+            return uniqueIdentifiers; // Vortex edited
         }
         else
         {
@@ -419,7 +429,11 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
                 BeardColorR = GenerateRandomHexValues(),
                 BeardColorG = GenerateRandomHexValues(),
                 BeardColorB = GenerateRandomHexValues(),
-                SkinTone = GenerateRandomToneValues(),
+                // Vortex edited
+                SkinColorR = new[] { "0", "0", "0" },
+                SkinColorG = new[] { "0", "0", "0" },
+                SkinColorB = new[] { "0", "0", "0" },
+                // Vortex end
                 FurColorR = GenerateRandomHexValues(),
                 FurColorG = GenerateRandomHexValues(),
                 FurColorB = GenerateRandomHexValues(),
@@ -449,7 +463,7 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
                 TailMarkingStyle = empty
             };
 
-            component.UniqueIdentifiers = uniqueIdentifiers;
+            return uniqueIdentifiers; // Vortex edited
         }
     }
     #endregion
@@ -604,7 +618,21 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
 
     public void ChangeDna(Entity<DnaModifierComponent> ent, EnzymeInfo enzyme)
     {
-        if (enzyme.Identifier != null) ent.Comp.UniqueIdentifiers = enzyme.Identifier;
+        // Vortex edited
+        if (enzyme.Identifier != null)
+        {
+            if (ent.Comp.UniqueIdentifiers == null)
+            {
+                ent.Comp.UniqueIdentifiers = enzyme.Identifier;
+            }
+            else
+            {
+                // Apply only non-empty fields from enzyme to existing UI
+                var species = TryComp<HumanoidAppearanceComponent>(ent, out var humanoid) ? humanoid.Species.Id : "Human";
+                ApplyPartialUniqueIdentifiers(ent.Comp.UniqueIdentifiers, enzyme.Identifier, species);
+            }
+        }
+        // Vortex end
         if (enzyme.Info != null) ent.Comp.EnzymesPrototypes = enzyme.Info;
 
         Dirty(ent, ent.Comp);
@@ -616,8 +644,15 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
     {
         switch (type)
         {
+            // Vortex edited
             case 0: TryChangeUniqueIdentifiers(ent); break;
-            case 1: ApplyDnaChangesToEntity(ent, ent.Comp, skipEnzyme55: false); break; // Vortex edited
+            case 1:
+                ApplyDnaChangesToEntity(ent, ent.Comp, skipEnzyme55: false); // Vortex edited
+                // Update UniqueIdentifiers to match the new appearance after enzyme changes
+                if (HasComp<HumanoidAppearanceComponent>(ent))
+                    ent.Comp.UniqueIdentifiers = InitializeUniqueIdentifiers(ent, ent.Comp);
+                break;
+            // Vortex end
         }
     }
 
@@ -656,14 +691,11 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
         switch (skinColoration)
         {
             case HumanoidSkinColor.HumanToned:
-                var color = ConvertSkinToneToColor(uniqueIdentifiers.SkinTone);
-                humanoid.Comp.SkinColor = color; // Vortex-Edited
-                break;
-
-            default: // Vortex edited
-                string redHex = uniqueIdentifiers.FurColorR[0] + uniqueIdentifiers.FurColorR[1];
-                string greenHex = uniqueIdentifiers.FurColorG[0] + uniqueIdentifiers.FurColorG[1];
-                string blueHex = uniqueIdentifiers.FurColorB[0] + uniqueIdentifiers.FurColorB[1];
+                // Vortex edited
+                string redHex = uniqueIdentifiers.SkinColorR[0] + uniqueIdentifiers.SkinColorR[1];
+                string greenHex = uniqueIdentifiers.SkinColorG[0] + uniqueIdentifiers.SkinColorG[1];
+                string blueHex = uniqueIdentifiers.SkinColorB[0] + uniqueIdentifiers.SkinColorB[1];
+                // Vortex end
 
                 int red = Convert.ToInt32(redHex, 16);
                 int green = Convert.ToInt32(greenHex, 16);
@@ -673,8 +705,27 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
                 float greenNormalized = green / 255f;
                 float blueNormalized = blue / 255f;
 
+                // Vortex added
+                humanoid.Comp.SkinColor = new Color(redNormalized, greenNormalized, blueNormalized);
+                break;
+                // Vortex end
+            // Vortex added
+            default:
+                redHex = uniqueIdentifiers.FurColorR[0] + uniqueIdentifiers.FurColorR[1];
+                greenHex = uniqueIdentifiers.FurColorG[0] + uniqueIdentifiers.FurColorG[1];
+                blueHex = uniqueIdentifiers.FurColorB[0] + uniqueIdentifiers.FurColorB[1];
+
+                red = Convert.ToInt32(redHex, 16);
+                green = Convert.ToInt32(greenHex, 16);
+                blue = Convert.ToInt32(blueHex, 16);
+
+                redNormalized = red / 255f;
+                greenNormalized = green / 255f;
+                blueNormalized = blue / 255f;
+            // Vortex end
+
                 var newColor = new Color(redNormalized, greenNormalized, blueNormalized);
-                humanoid.Comp.SkinColor = newColor; // Vortex-Edited
+                humanoid.Comp.SkinColor = newColor; // Vortex edited
                 break;
         }
     }
@@ -716,22 +767,28 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
         int[] values = uniqueIdentifiers.Gender
             .Select(hex => Convert.ToInt32(hex, 16))
             .ToArray();
+        // Vortex edited
+        int combined = values[0] * 100 + values[1] * 10 + values[2];
 
-        var currentGender = (values[0], values[1], values[2]) switch
-        {
-            ( <= 0x5, <= 0x7, <= 0x3) => Gender.Female,
-            ( < 0x8, <= 0x7, < 0x9) => Gender.Male,
-            ( >= 0x8, >= 0x7, >= 0x9) => Gender.Neuter,
-            _ => Gender.Neuter
-        };
+        Gender currentGender;
+        Sex currentSex;
 
-        var currentSex = (values[0], values[1], values[2]) switch
+        if (combined <= 573)
         {
-            ( <= 0x5, <= 0x7, <= 0x3) => Sex.Female,
-            ( < 0x8, <= 0x7, < 0x9) => Sex.Male,
-            ( >= 0x8, >= 0x7, >= 0x9) => Sex.Unsexed,
-            _ => Sex.Unsexed
-        };
+            currentGender = Gender.Female;
+            currentSex = Sex.Female;
+        }
+        else if (combined >= 801)
+        {
+            currentGender = Gender.Neuter;
+            currentSex = Sex.Unsexed;
+        }
+        else
+        {
+            currentGender = Gender.Male;
+            currentSex = Sex.Male;
+        }
+        // Vortex end
 
         humanoid.Comp.Gender = currentGender;
         humanoid.Comp.Sex = currentSex;
@@ -810,6 +867,12 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
         if (string.IsNullOrEmpty(component.Upper) || string.IsNullOrEmpty(component.Lowest))
             return;
 
+        // Vortex added
+        var currentProto = MetaData(target).EntityPrototype?.ID;
+        if (component.Upper == currentProto)
+            return;
+        // Vortex end
+
         int hexValue = Convert.ToInt32(enzyme.HexCode[0], 16);
         if (hexValue < 8)
         {
@@ -852,16 +915,29 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
                 EnsureComp<DnaComponent>(child).DNA = targetDna.DNA;
 
             var childDnaModifier = EnsureComp<DnaModifierComponent>(child);
-            childDnaModifier.UniqueIdentifiers = component.UniqueIdentifiers;
+            // Vortex added
+            if (component.UniqueIdentifiers != null)
+            {
+                childDnaModifier.UniqueIdentifiers = CloneUniqueIdentifiers(component.UniqueIdentifiers);
+                childDnaModifier.UniqueIdentifiers!.TailMarkingStyle = new[] { "0", "0", "0" };
+                childDnaModifier.UniqueIdentifiers.HeadMarkingStyle = new[] { "0", "0", "0" };
+                childDnaModifier.UniqueIdentifiers.BodyMarkingStyle = new[] { "0", "0", "0" };
+                childDnaModifier.UniqueIdentifiers.HeadAccessoryStyle = new[] { "0", "0", "0" };
+                childDnaModifier.UniqueIdentifiers.HairStyle = new[] { "0", "0", "0" };
+                childDnaModifier.UniqueIdentifiers.BeardStyle = new[] { "0", "0", "0" };
+            }
+            // Vortex end
             childDnaModifier.EnzymesPrototypes = component.EnzymesPrototypes?.ToList();
             childDnaModifier.Instability = component.Instability;
             childDnaModifier.Upper = component.Upper;
             childDnaModifier.Lowest = component.Lowest;
 
             Dirty(child, childDnaModifier);
-            // Apply DNA changes to the new entity without recursion
             ApplyDnaChangesToEntity(child, childDnaModifier, skipEnzyme55: true); // Vortex edited
-
+            // Vortex added
+            if (HasComp<HumanoidAppearanceComponent>(child))
+                childDnaModifier.UniqueIdentifiers = InitializeUniqueIdentifiers(child, childDnaModifier);
+            // Vortex end
             _admin.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(target):user} gene down up a step.");
 
             // Third clearing
@@ -873,8 +949,6 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
         }
         else
         {
-            if (HasComp<HumanoidAppearanceComponent>(target))
-                return;
 
             // Minus one check parent
             if (TryComp<DnaLowestComponent>(target, out var dnaLowest) && dnaLowest.Parent != null)
@@ -918,6 +992,9 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
 
                     Dirty(parent, dnaModifier);
                     ApplyDnaChangesToEntity(parent, dnaModifier, skipEnzyme55: true); // Vortex edited
+                    // Update UniqueIdentifiers to match the new appearance after reverse evolution
+                    if (HasComp<HumanoidAppearanceComponent>(parent))
+                        dnaModifier.UniqueIdentifiers = InitializeUniqueIdentifiers(parent, dnaModifier);
                 }
 
                 var parentXform = Transform(parent);
@@ -964,7 +1041,71 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
             EnsureComp<DnaModifiedComponent>(child);
 
             var childDnaModifier = EnsureComp<DnaModifierComponent>(child);
-            childDnaModifier.UniqueIdentifiers = component.UniqueIdentifiers;
+
+            // Vortex added
+            if (TryComp<HumanoidAppearanceComponent>(child, out var childHumanoid))
+            {
+                var species = _prototype.Index<SpeciesPrototype>(childHumanoid.Species);
+                if (species.SkinColoration == HumanoidSkinColor.HumanToned && childDnaModifier.UniqueIdentifiers != null)
+                {
+
+                    float hue = _random.NextFloat(0.05f, 0.15f);
+                    float saturation = _random.NextFloat(0.1f, 0.5f);
+                    float value = _random.NextFloat(0.3f, 0.9f);
+                    var newColor = Color.FromHsv(new Vector4(hue, saturation, value, 1f));
+                    var hex = newColor.ToHex();
+                    childDnaModifier.UniqueIdentifiers.SkinColorR = new[] { hex[1].ToString(), hex[2].ToString(), hex[3].ToString() };
+                    childDnaModifier.UniqueIdentifiers.SkinColorG = new[] { hex[3].ToString(), hex[4].ToString(), hex[5].ToString() };
+                    childDnaModifier.UniqueIdentifiers.SkinColorB = new[] { hex[5].ToString(), hex[6].ToString(), hex[7].ToString() };
+                }
+            }
+            var originalUI = CloneUniqueIdentifiers(component.UniqueIdentifiers);
+            childDnaModifier.UniqueIdentifiers = InitializeUniqueIdentifiers(child, childDnaModifier);
+            if (originalUI != null && childDnaModifier.UniqueIdentifiers != null)
+            {
+                if (originalUI.HairColorR != null) childDnaModifier.UniqueIdentifiers.HairColorR = originalUI.HairColorR;
+                if (originalUI.HairColorG != null) childDnaModifier.UniqueIdentifiers.HairColorG = originalUI.HairColorG;
+                if (originalUI.HairColorB != null) childDnaModifier.UniqueIdentifiers.HairColorB = originalUI.HairColorB;
+                if (originalUI.SecondaryHairColorR != null) childDnaModifier.UniqueIdentifiers.SecondaryHairColorR = originalUI.SecondaryHairColorR;
+                if (originalUI.SecondaryHairColorG != null) childDnaModifier.UniqueIdentifiers.SecondaryHairColorG = originalUI.SecondaryHairColorG;
+                if (originalUI.SecondaryHairColorB != null) childDnaModifier.UniqueIdentifiers.SecondaryHairColorB = originalUI.SecondaryHairColorB;
+                if (originalUI.BeardColorR != null) childDnaModifier.UniqueIdentifiers.BeardColorR = originalUI.BeardColorR;
+                if (originalUI.BeardColorG != null) childDnaModifier.UniqueIdentifiers.BeardColorG = originalUI.BeardColorG;
+                if (originalUI.BeardColorB != null) childDnaModifier.UniqueIdentifiers.BeardColorB = originalUI.BeardColorB;
+                if (originalUI.FurColorR != null) childDnaModifier.UniqueIdentifiers.FurColorR = originalUI.FurColorR;
+                if (originalUI.FurColorG != null) childDnaModifier.UniqueIdentifiers.FurColorG = originalUI.FurColorG;
+                if (originalUI.FurColorB != null) childDnaModifier.UniqueIdentifiers.FurColorB = originalUI.FurColorB;
+                if (originalUI.HeadAccessoryColorR != null) childDnaModifier.UniqueIdentifiers.HeadAccessoryColorR = originalUI.HeadAccessoryColorR;
+                if (originalUI.HeadAccessoryColorG != null) childDnaModifier.UniqueIdentifiers.HeadAccessoryColorG = originalUI.HeadAccessoryColorG;
+                if (originalUI.HeadAccessoryColorB != null) childDnaModifier.UniqueIdentifiers.HeadAccessoryColorB = originalUI.HeadAccessoryColorB;
+                if (originalUI.HeadMarkingColorR != null) childDnaModifier.UniqueIdentifiers.HeadMarkingColorR = originalUI.HeadMarkingColorR;
+                if (originalUI.HeadMarkingColorG != null) childDnaModifier.UniqueIdentifiers.HeadMarkingColorG = originalUI.HeadMarkingColorG;
+                if (originalUI.HeadMarkingColorB != null) childDnaModifier.UniqueIdentifiers.HeadMarkingColorB = originalUI.HeadMarkingColorB;
+                if (originalUI.BodyMarkingColorR != null) childDnaModifier.UniqueIdentifiers.BodyMarkingColorR = originalUI.BodyMarkingColorR;
+                if (originalUI.BodyMarkingColorG != null) childDnaModifier.UniqueIdentifiers.BodyMarkingColorG = originalUI.BodyMarkingColorG;
+                if (originalUI.BodyMarkingColorB != null) childDnaModifier.UniqueIdentifiers.BodyMarkingColorB = originalUI.BodyMarkingColorB;
+                if (originalUI.TailMarkingColorR != null) childDnaModifier.UniqueIdentifiers.TailMarkingColorR = originalUI.TailMarkingColorR;
+                if (originalUI.TailMarkingColorG != null) childDnaModifier.UniqueIdentifiers.TailMarkingColorG = originalUI.TailMarkingColorG;
+                if (originalUI.TailMarkingColorB != null) childDnaModifier.UniqueIdentifiers.TailMarkingColorB = originalUI.TailMarkingColorB;
+                if (originalUI.EyeColorR != null) childDnaModifier.UniqueIdentifiers.EyeColorR = originalUI.EyeColorR;
+                if (originalUI.EyeColorG != null) childDnaModifier.UniqueIdentifiers.EyeColorG = originalUI.EyeColorG;
+                if (originalUI.EyeColorB != null) childDnaModifier.UniqueIdentifiers.EyeColorB = originalUI.EyeColorB;
+                if (originalUI.Gender != null) childDnaModifier.UniqueIdentifiers.Gender = originalUI.Gender;
+
+                if (originalUI.HairStyle != null && !originalUI.HairStyle.All(x => x == "0"))
+                    childDnaModifier.UniqueIdentifiers.HairStyle = originalUI.HairStyle;
+                if (originalUI.BeardStyle != null && !originalUI.BeardStyle.All(x => x == "0"))
+                    childDnaModifier.UniqueIdentifiers.BeardStyle = originalUI.BeardStyle;
+                if (originalUI.HeadAccessoryStyle != null && !originalUI.HeadAccessoryStyle.All(x => x == "0"))
+                    childDnaModifier.UniqueIdentifiers.HeadAccessoryStyle = originalUI.HeadAccessoryStyle;
+                if (originalUI.HeadMarkingStyle != null && !originalUI.HeadMarkingStyle.All(x => x == "0"))
+                    childDnaModifier.UniqueIdentifiers.HeadMarkingStyle = originalUI.HeadMarkingStyle;
+                if (originalUI.BodyMarkingStyle != null && !originalUI.BodyMarkingStyle.All(x => x == "0"))
+                    childDnaModifier.UniqueIdentifiers.BodyMarkingStyle = originalUI.BodyMarkingStyle;
+                if (originalUI.TailMarkingStyle != null && !originalUI.TailMarkingStyle.All(x => x == "0"))
+                    childDnaModifier.UniqueIdentifiers.TailMarkingStyle = originalUI.TailMarkingStyle;
+            }
+            // Vortex end
             childDnaModifier.EnzymesPrototypes = component.EnzymesPrototypes?.ToList();
             childDnaModifier.Instability = component.Instability;
             childDnaModifier.Upper = component.Upper;
@@ -973,10 +1114,9 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
             Dirty(child, childDnaModifier);
             ApplyDnaChangesToEntity(child, childDnaModifier, skipEnzyme55: true); // Vortex edited
 
-            _admin.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(target):user} gene went up a step."); // Vortex edited
+            _admin.Add(LogType.Action, LogImpact.High, $"gene went up a step."); // Vortex edited
 
-            // Third clearing
-            _entManager.DeleteEntity(target); // Bye
+            _entManager.DeleteEntity(target);
         }
     }
 
@@ -1014,7 +1154,10 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
     // Vortex added
     private void ApplyDnaChangesToEntity(EntityUid entity, DnaModifierComponent dnaModifier, bool skipEnzyme55)
     {
-        TryChangeUniqueIdentifiers((entity, dnaModifier));
+        // Vortex added
+        if (HasComp<HumanoidAppearanceComponent>(entity))
+            TryChangeUniqueIdentifiers((entity, dnaModifier));
+        // Vortex end
 
         if (dnaModifier.EnzymesPrototypes == null)
             return;

@@ -60,10 +60,19 @@ public sealed class UniqueIdentifiersPrototype : IPrototype
     [DataField("secondaryBeardColorB")]
     public string[] SecondaryBeardColorB { get; set; } = new[] { "0", "0", "0" };
     */
+    // Vortex edited
+    // Блок 11: Цвет кожи (R)
+    [DataField("skinColorR")]
+    public string[] SkinColorR { get; set; } = new[] { "2", "3", "2" };
 
-    // Блок 13: Тон кожи (1-220)
-    [DataField("skinTone")]
-    public string[] SkinTone { get; set; } = new[] { "0", "0", "0" };
+    // Блок 12: Цвет кожи (G)
+    [DataField("skinColorG")]
+    public string[] SkinColorG { get; set; } = new[] { "1", "9", "0" };
+
+    // Блок 13: Цвет кожи (B)
+    [DataField("skinColorB")]
+    public string[] SkinColorB { get; set; } = new[] { "1", "7", "2" };
+    // Vortex end
 
     // Блок 14: RGB значения цвета меха (R)
     [DataField("furColorR")]
@@ -179,7 +188,11 @@ public sealed class UniqueIdentifiersPrototype : IPrototype
             BeardColorR = (string[])this.BeardColorR.Clone(),
             BeardColorG = (string[])this.BeardColorG.Clone(),
             BeardColorB = (string[])this.BeardColorB.Clone(),
-            SkinTone = (string[])this.SkinTone.Clone(),
+            // Vortex edited
+            SkinColorR = (string[])this.SkinColorR.Clone(),
+            SkinColorG = (string[])this.SkinColorG.Clone(),
+            SkinColorB = (string[])this.SkinColorB.Clone(),
+            // Vortex end
             FurColorR = (string[])this.FurColorR.Clone(),
             FurColorG = (string[])this.FurColorG.Clone(),
             FurColorB = (string[])this.FurColorB.Clone(),

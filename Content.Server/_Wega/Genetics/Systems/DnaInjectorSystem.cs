@@ -3,6 +3,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.DoAfter;
 using Content.Shared.Genetics;
+using Content.Shared.Humanoid; // Vortex added
 using Content.Shared.Interaction;
 using Robust.Server.Audio;
 
@@ -80,8 +81,19 @@ public sealed partial class DnaModifierSystem
             return false;
 
         if (ent.Comp.UniqueIdentifiers != null)
+        // Vortex edited
         {
-            dnaModifier.UniqueIdentifiers = ent.Comp.UniqueIdentifiers;
+            if (dnaModifier.UniqueIdentifiers == null)
+            {
+                dnaModifier.UniqueIdentifiers = ent.Comp.UniqueIdentifiers;
+            }
+            else
+            {
+                // Apply only non-empty fields from injector to existing UI
+                var species = TryComp<HumanoidAppearanceComponent>(target, out var humanoid) ? humanoid.Species.Id : "Human";
+                ApplyPartialUniqueIdentifiers(dnaModifier.UniqueIdentifiers, ent.Comp.UniqueIdentifiers, species);
+            }
+        // Vortex end
         }
 
         if (ent.Comp.EnzymesPrototypes != null)
@@ -102,7 +114,7 @@ public sealed partial class DnaModifierSystem
         }
 
         Dirty(target, dnaModifier);
-        ChangeDna(target);
+        ChangeDna((target, dnaModifier)); // Vortex edited
 
         _audio.PlayPvs(ent.Comp.InjectSound, target);
 
@@ -113,6 +125,28 @@ public sealed partial class DnaModifierSystem
 
         return true;
     }
+
+    // Vortex added
+    private void ApplyPartialUniqueIdentifiers(UniqueIdentifiersPrototype target, UniqueIdentifiersPrototype source, string species)
+    {
+        // Use reflection to apply only non-empty fields
+        var type = typeof(UniqueIdentifiersPrototype);
+        var properties = type.GetProperties();
+
+        foreach (var prop in properties)
+        {
+            if (prop.PropertyType == typeof(string[]))
+            {
+                var sourceValue = (string[])prop.GetValue(source)!;
+                if (sourceValue != null && sourceValue.Length == 3 && !sourceValue.Contains("-"))
+                {
+                    // Apply the field
+                    prop.SetValue(target, sourceValue);
+                }
+            }
+        }
+    }
+    // Vortex end
 
     /// <summary>
     /// Generating pure SE

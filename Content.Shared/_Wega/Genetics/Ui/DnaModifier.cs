@@ -83,3 +83,20 @@ public enum DnaModifierReagentAmount
     U100 = 100,
     All,
 }
+
+// Vortex added
+[Serializable, NetSerializable]
+public sealed class DnaModifierInjectUIBlockEvent : EntityEventArgs
+{
+    public NetEntity Uid { get; }
+    public int Index { get; }
+    public int CurrentBlock { get; }
+
+    public DnaModifierInjectUIBlockEvent(NetEntity uid, int index, int currentBlock)
+    {
+        Uid = uid;
+        Index = index;
+        CurrentBlock = currentBlock;
+    }
+}
+// Vortex end
