@@ -34,7 +34,7 @@ public sealed class PatronSupportUIController : UIController, IOnStateEntered<Lo
         }
 
         _hasShownThisSession = true;
-        ShowSupportWindow();
+        // ShowSupportWindow(); // Vortex-edited
     }
 
     public void OnStateExited(LobbyState state)

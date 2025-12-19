@@ -627,14 +627,16 @@ public sealed class FaxSystem : EntitySystem
 
         if (TryComp<PaperComponent>(sendEntity, out var paper))
         {
-            printout = new FaxPrintout(paper.Content,
-                                           nameMod?.BaseName ?? metadata.EntityName,
-                                           labelComponent?.CurrentLabel,
-                                           metadata.EntityPrototype?.ID ?? component.PrintPaperId,
-                                           paper.StampState,
-                                           paper.StampedBy,
-                                           paper.EditingDisabled);
-        } 
+            var content = paper.Content;
+            printout = new FaxPrintout(content,
+                                       nameMod?.BaseName ?? metadata.EntityName,
+                                       labelComponent?.CurrentLabel,
+                                       metadata.EntityPrototype?.ID ?? component.PrintPaperId,
+                                       paper.StampState,
+                                       paper.StampedBy,
+                                       paper.SignedBy,
+                                       paper.EditingDisabled);
+        }
         else if (TryComp<PhotoCardComponent>(sendEntity, out var photo) )
         {
             var meta = MetaData(sendEntity.Value);
@@ -642,22 +644,11 @@ public sealed class FaxSystem : EntitySystem
             if (meta.EntityPrototype is not null)
                 printout = new FaxPrintout("", meta.EntityName, prototypeId: meta.EntityPrototype.ID, entityUid: sendEntity);
         }
-        // Resolve content for pre-written documents
-        var content = Loc.GetString(paper.Content); // Vortex added
-
         // TODO: See comment in 'Send()' about not being able to copy whole entities
 
         if (printout is null)
             return;
         // CorvaxGoob-PhotoCamera-End
-        var printout = new FaxPrintout(paper.Content,
-                                        nameMod?.BaseName ?? metadata.EntityName,
-                                        labelComponent?.CurrentLabel,
-                                        metadata.EntityPrototype?.ID ?? component.PrintPaperId,
-                                        paper.StampState,
-                                        paper.StampedBy,
-                                        paper.SignedBy,
-                                        paper.EditingDisabled);
 
         component.PrintingQueue.Enqueue(printout);
         component.SendTimeoutRemaining += component.SendTimeout;

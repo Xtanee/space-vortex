@@ -80,7 +80,6 @@ public sealed partial class RadioSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly RadioJobIconSystem _radioIconSystem = default!; // Goobstation - radio icons
     [Dependency] private readonly LanguageSystem _language = default!; // Einstein Engines - Language
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!; // Goobstation - Whitelisted radio channels
     [Dependency] private readonly InventorySystem _inventory = default!;
@@ -176,16 +175,6 @@ public sealed partial class RadioSystem : EntitySystem
         var evt = new TransformSpeakerNameEvent(messageSource, MetaData(messageSource).EntityName);
         RaiseLocalEvent(messageSource, evt);
 
-        // Goob - Job icons
-        if (_radioIconSystem.TryGetJobIcon(messageSource, out var jobIcon, out var jobName))
-        {
-            var iconEvent = new TransformSpeakerJobIconEvent(messageSource, jobIcon.Value, jobName);
-            RaiseLocalEvent(messageSource, iconEvent);
-
-            jobIcon = iconEvent.JobIcon;
-            jobName = iconEvent.JobName;
-        }
-
         var name = evt.VoiceName;
         name = FormattedMessage.EscapeText(name);
 
@@ -200,8 +189,6 @@ public sealed partial class RadioSystem : EntitySystem
         {
             name = AnonymizeName(name);
             speech.SpeechVerbStrings = ["chat-speech-verb-default"]; // shitcode :cat_gagaga:
-            jobIcon = "JobIconNoId";
-            jobName = Loc.GetString("generic-unknown");
         }
         // CorvaxGoob-Anonymous-Radio-End
 
