@@ -1,0 +1,12 @@
+ent-DiseaseBehaviorVomit = Рвота
+    .desc = Вызывает периодическую рвоту.
+ent-DiseaseBehaviorFeelUnwell = Недомогание
+    .desc = Вызывает слабость в теле.
+ent-DiseaseBehaviorHeadache = Головная боль
+    .desc = Вызывает головные боли, что могут затруднить работу.
+ent-DiseaseBehaviorGravitosisA = Гравитоз А
+    .desc = Редкий и экзотический симптом заболевания, при котором предметы начинают вращаться вокруг вас.
+ent-DiseaseBehaviorGravitosisB = Гравитоз Б
+    .desc = Редкий и экзотический симптом заболевания, при котором предметы летят в вашу сторону.
+ent-DiseaseBehaviorGravitosisC = Гравитоз С
+    .desc = Редкий и экзотический симптом заболевания, при котором предметы отдаляются от вас.
