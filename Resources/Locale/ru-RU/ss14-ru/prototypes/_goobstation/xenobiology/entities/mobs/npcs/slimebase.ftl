@@ -1,0 +1,9 @@
+ent-BaseMobSlimeXenobio = базовый слайм
+    .desc = Выглядит очень похоже на желе. Интересно, какой у него вкус?
+ent-MobSlimeXenobioBaby = слайм
+    .desc = { ent-BaseMobSlimeXenobio.desc }
+    .suffix = Ребенок
+ent-MobSlimeXenobioAdult = слайм
+    .desc = { ent-BaseMobSlimeXenobio.desc }
+    .suffix = Взрослый
+ent-MobSlimeXenobioBabyPending = слайм

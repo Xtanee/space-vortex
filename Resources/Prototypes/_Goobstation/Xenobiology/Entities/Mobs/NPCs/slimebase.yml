@@ -194,7 +194,7 @@
   abstract: true
   parent: MarkerBase
   id: MobSlimeXenobioBabyPending
-  name: undetermined slime
+  name: неопределенная слизь
   components:
   - type: PendingSlimeSpawn
   - type: Sprite
