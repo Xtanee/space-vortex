@@ -10,6 +10,7 @@
 
 guide-entry-space-law = Корпоративный Закон
 guide-entry-medpatches = Медицинские пластыри
+guide-entry-virology = Вирусология
 guide-entry-rules-nrp = Правила NRP
 guide-entry-sm = Суперматерия
 guide-entry-automation = Автоматизация
