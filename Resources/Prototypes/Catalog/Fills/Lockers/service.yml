@@ -192,6 +192,7 @@
     - id: HandLabeler
     - id: ClothingUniformOveralls
     - id: ClothingHeadHatTrucker
+    - id: ADTPlantAnalyzer # ADT-Tweak
       prob: 0.1
 
 - type: entity
