@@ -8,6 +8,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using System.Text;
 using Content.Goobstation.Shared.Disease.Components;
+using Content.Shared.Ghost;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
@@ -181,6 +182,10 @@ public sealed partial class VirologyMachinesSystem : EntitySystem
     private void AddAltVerb(Entity<VirologyMachineComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!ent.Comp.Vaccinator || HasComp<ActiveVirologyMachineComponent>(ent))
+            return;
+
+        // Only allow living players and admin ghosts to switch modes
+        if (TryComp<GhostComponent>(args.User, out var ghost) && !ghost.CanGhostInteract)
             return;
 
         AlternativeVerb verb = new()
