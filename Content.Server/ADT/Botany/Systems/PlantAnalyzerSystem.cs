@@ -27,6 +27,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
         SubscribeLocalEvent<PlantAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<PlantAnalyzerComponent, PlantAnalyzerDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<PlantAnalyzerComponent, PlantAnalyzerSetMode>(OnModeSelected);
+        SubscribeLocalEvent<PlantAnalyzerComponent, PlantAnalyzerRequestData>(OnRequestData);
     }
 
     private void OnAfterInteract(Entity<PlantAnalyzerComponent> ent, ref AfterInteractEvent args)
@@ -95,20 +96,17 @@ public sealed class PlantAnalyzerSystem : EntitySystem
 
     public void UpdateScannedUser(Entity<PlantAnalyzerComponent> ent, EntityUid target)
     {
-        if (!_uiSystem.HasUi(ent, PlantAnalyzerUiKey.Key))
-            return;
-
         if (TryComp<SeedComponent>(target, out var seedComp))
         {
             if (seedComp.Seed != null)
             {
                 var state = ObtainingGeneDataSeed(seedComp.Seed, target, false, ent.Comp.Settings.AdvancedScan);
-                _uiSystem.ServerSendUiMessage(ent.Owner, PlantAnalyzerUiKey.Key, state);
+                ent.Comp.LastScannedData = state;
             }
             else if (seedComp.SeedId != null && _prototypeManager.TryIndex(seedComp.SeedId, out SeedPrototype? protoSeed))
             {
                 var state = ObtainingGeneDataSeed(protoSeed, target, false, ent.Comp.Settings.AdvancedScan);
-                _uiSystem.ServerSendUiMessage(ent.Owner, PlantAnalyzerUiKey.Key, state);
+                ent.Comp.LastScannedData = state;
             }
         }
         else if (TryComp<PlantHolderComponent>(target, out var plantComp))
@@ -116,7 +114,7 @@ public sealed class PlantAnalyzerSystem : EntitySystem
             if (plantComp.Seed != null)
             {
                 var state = ObtainingGeneDataSeed(plantComp.Seed, target, true, ent.Comp.Settings.AdvancedScan);
-                _uiSystem.ServerSendUiMessage(ent.Owner, PlantAnalyzerUiKey.Key, state);
+                ent.Comp.LastScannedData = state;
             }
         }
     }
@@ -248,6 +246,12 @@ public sealed class PlantAnalyzerSystem : EntitySystem
     private void OnModeSelected(Entity<PlantAnalyzerComponent> ent, ref PlantAnalyzerSetMode args)
     {
         SetMode(ent, args.AdvancedScan);
+    }
+
+    private void OnRequestData(Entity<PlantAnalyzerComponent> ent, ref PlantAnalyzerRequestData args)
+    {
+        if (ent.Comp.LastScannedData is not null)
+            _uiSystem.ServerSendUiMessage(ent.Owner, PlantAnalyzerUiKey.Key, ent.Comp.LastScannedData);
     }
 
     public void SetMode(Entity<PlantAnalyzerComponent> ent, bool isAdvMode)

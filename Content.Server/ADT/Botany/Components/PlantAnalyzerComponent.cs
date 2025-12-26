@@ -30,4 +30,7 @@ public sealed partial class PlantAnalyzerComponent : Component
 
     [DataField]
     public SoundSpecifier? ScanningEndSound;
+
+    [DataField]
+    public Content.Shared.ADT.PlantAnalyzer.PlantAnalyzerScannedSeedPlantInformation? LastScannedData;
 }

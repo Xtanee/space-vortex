@@ -16,6 +16,7 @@ public sealed class PlantAnalyzerBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
+        SendMessage(new PlantAnalyzerRequestData());
         _window = new PlantAnalyzerWindow(this)
         {
             Title = Loc.GetString("plant-analyzer-interface-title"),

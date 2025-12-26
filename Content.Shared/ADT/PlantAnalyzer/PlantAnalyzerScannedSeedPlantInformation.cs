@@ -91,3 +91,8 @@ public sealed class PlantAnalyzerSetMode : BoundUserInterfaceMessage
         AdvancedScan = advancedScan;
     }
 }
+
+[Serializable, NetSerializable]
+public sealed class PlantAnalyzerRequestData : BoundUserInterfaceMessage
+{
+}
