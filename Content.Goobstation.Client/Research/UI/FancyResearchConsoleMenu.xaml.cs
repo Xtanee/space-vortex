@@ -362,6 +362,9 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
         }
         
         // Don't auto-recenter to preserve user's scroll/zoom position
+
+        // Force UI update to ensure search results are displayed immediately
+        _dragContainer.InvalidateMeasure();
     }
 
     
@@ -482,13 +485,14 @@ public sealed partial class FancyResearchConsoleMenu : FancyWindow
         if (string.IsNullOrEmpty(_searchText))
             return true;
 
+        // Check technology name
+        var techName = Loc.GetString(techProto.Name).ToLowerInvariant();
+        if (techName.Contains(_searchText))
+            return true;
+
         // Check if any of the recipes unlocked by this technology contain the search text
         foreach (var recipeId in techProto.RecipeUnlocks)
         {
-            // Search by recipe ID (which is often the FTL key)
-            if (recipeId.ToString().ToLowerInvariant().Contains(_searchText))
-                return true;
-
             // Search by recipe result name (the actual item/machine being crafted)
             var recipe = _prototype.Index(recipeId);
             if (recipe.Result is {} resultId)

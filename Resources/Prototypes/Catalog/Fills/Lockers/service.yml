@@ -192,8 +192,9 @@
     - id: HandLabeler
     - id: ClothingUniformOveralls
     - id: ClothingHeadHatTrucker
-    - id: ADTPlantAnalyzer # ADT-Tweak
       prob: 0.1
+    - id: ADTPlantAnalyzer # ADT-Tweak
+      prob: 1.0
 
 - type: entity
   id: LockerBotanistLoot

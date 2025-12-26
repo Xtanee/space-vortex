@@ -21,7 +21,6 @@
   id: ServiceStatic
   recipes:
   #ADT-Tweak-Start
-  - ADTWateringCan 
   - Mousetrap
   - ADTPlantAnalyzer
   - ADTBotanicalSeedDNADisk
