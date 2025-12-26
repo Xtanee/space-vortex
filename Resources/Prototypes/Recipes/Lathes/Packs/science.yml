@@ -106,6 +106,7 @@
   - AnomalyVesselCircuitboard
   - AnomalyVesselExperimentalCircuitboard
   - AnomalySynchronizerCircuitboard
+  - ADTBotanicalSeedDNAManipulatorCircuitboard #ADT-Tweak
   - APECircuitboard
   - ArtifactAnalyzerMachineCircuitboard
   - ArtifactCrusherMachineCircuitboard
