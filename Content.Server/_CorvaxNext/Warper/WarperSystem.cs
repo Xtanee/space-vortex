@@ -34,7 +34,7 @@ public class WarperSystem : EntitySystem
         }
 
         var dest = _warpPointSystem.FindWarpPoint(component.ID);
-        if (dest is null)
+        if (dest is null || !Exists(dest.Value))
         {
             Logger.DebugS("warper", String.Format("Warp destination '{0}' not found", component.ID));
             _popupSystem.PopupEntity(Loc.GetString("warper-goes-nowhere", ("warper", args.Target)), args.User, Filter.Entities(args.User), true);
@@ -43,8 +43,7 @@ public class WarperSystem : EntitySystem
 
         var entMan = IoCManager.Resolve<IEntityManager>();
         TransformComponent? destXform;
-        entMan.TryGetComponent<TransformComponent>(dest.Value, out destXform);
-        if (destXform is null)
+        if (!entMan.TryGetComponent<TransformComponent>(dest.Value, out destXform))
         {
             Logger.DebugS("warper", String.Format("Warp destination '{0}' has no transform", component.ID));
             _popupSystem.PopupEntity(Loc.GetString("warper-goes-nowhere", ("warper", args.Target)), args.User, Filter.Entities(args.User), true);
