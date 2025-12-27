@@ -1,4 +1,4 @@
-bounty-item-extract-any-three = Любые три экстракта
+bounty-item-extract-any-three = Любые экстракты
 bounty-item-grey-extract = Серый экстракт
 bounty-item-orange-extract = Оранжевый экстракт
 bounty-item-purple-extract = Фиолетовый экстракт
