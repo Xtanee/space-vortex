@@ -177,9 +177,9 @@
     - id: MothroachSpawn # DeltaV
     # - id: DerelictCyborgSyndicateSpawn - Vortex disabled
     - id: MalignRiftSpawn # DeltaV
-    - id: FloorGoblinMidRound # Goobstation
-    - id: ClownGoblinMigration # Goobstation - New Midrounds
-    - id: SantaClausSpawn # Goobstation, remove after new year
+    # - id: FloorGoblinMidRound # Goobstation | Vortex removed
+    # - id: ClownGoblinMigration # Goobstation - New Midrounds | Vortex removed
+    # - id: SantaClausSpawn # Goobstation, remove after new year | Vortex removed
 
 - type: entityTable
   id: BasicAntagEventsTable
@@ -200,8 +200,8 @@
     - id: BlobSpawn # Goobstation - Blob
     - id: LoneAbductorSpawn # Shitmed - Starlight Abductors
     - id: DuoAbductorSpawn # Shitmed - Starlight Abductors
-    - id: BingleSpawn #Goobstation - Bingle
-    - id: SlaughterDemonMidround # Goobstation - Slaughter Demon
+    # - id: BingleSpawn #Goobstation - Bingle | Vortex removed
+    # - id: SlaughterDemonMidround # Goobstation - Slaughter Demon | Vortex removed
     - id: XenomorphsInfestation # WD EDIT
     #- id: GreyTideAntagMidround # Goobstation - New Midrounds
     #- id: SingulothKnightsMidround # Goobstation - New Midrounds
