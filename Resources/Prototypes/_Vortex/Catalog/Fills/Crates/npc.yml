@@ -1,0 +1,29 @@
+- type: entity
+  id: CrateNPCGreySlime
+  parent: CrateLivestock
+  name: grey slime crate
+  description: A crate containing a single grey slime.
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobSlimeXenobioBabyGrey
+
+- type: entity
+  id: CrateNPCBlueSlime
+  parent: CrateLivestock
+  name: blue slime crate
+  description: A crate containing a single blue slime.
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobSlimeXenobioBabyBlue
+
+- type: entity
+  id: CrateNPCPurpleSlime
+  parent: CrateLivestock
+  name: purple slime crate
+  description: A crate containing a single purple slime.
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobSlimeXenobioBabyPurple
