@@ -91,3 +91,10 @@
       uiWindowPos: 0,1
       strippingWindowPos: 1,1
       displayName: Mask
+    - name: eyes # Vortex - For HUD's
+      slotTexture: glasses
+      slotFlags: EYES
+      stripTime: 3
+      uiWindowPos: 0,4
+      strippingWindowPos: 0,0
+      displayName: Eyes
