@@ -21,3 +21,15 @@
   id: EngineeringTechFabCircuitboardRecipe
   icon: Structures/Machines/techfab.rsi/icon.png
   result: EngineeringTechFabCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseResearchComputerRecipeCategory ]
+  id: MedicalTechFabCircuitboardRecipe
+  icon: Structures/Machines/techfab.rsi/icon.png
+  result: MedicalTechFabCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseResearchComputerRecipeCategory ]
+  id: SecurityTechFabCircuitboardRecipe
+  icon: Structures/Machines/techfab.rsi/icon.png
+  result: SecurityTechFabCircuitboard
