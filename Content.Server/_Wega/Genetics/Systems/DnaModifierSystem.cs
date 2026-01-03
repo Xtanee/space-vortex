@@ -258,26 +258,20 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
             }
 
             // Тон кожи или цвет меха (блоки 13-16)
-            var skinColoration = speciesProto.SkinColoration;
-            switch (skinColoration)
+            switch (speciesProto.SkinColoration)
             {
                 // Для HumanToned заполняем блоки 11-13 (цвет кожи R,G,B)
                 case HumanoidSkinColor.HumanToned:
                 // Vortex edited
-                    var hex = humanoid.SkinColor.ToHex();
-                    uniqueIdentifiers.SkinColorR = new[] { hex[1].ToString(), hex[2].ToString(), hex[3].ToString() };
-                    uniqueIdentifiers.SkinColorG = new[] { hex[3].ToString(), hex[4].ToString(), hex[5].ToString() };
-                    uniqueIdentifiers.SkinColorB = new[] { hex[5].ToString(), hex[6].ToString(), hex[7].ToString() };
+                    var hex = ConvertColorToHexArray(humanoid.SkinColor);
+                    uniqueIdentifiers.SkinColorR = new[] { hex[0], hex[1], hex[2] };
+                    uniqueIdentifiers.SkinColorG = new[] { hex[3], hex[4], hex[5] };
+                    uniqueIdentifiers.SkinColorB = new[] { hex[6], hex[7], hex[8] };
                     break;
                 // Vortex end
                 
-                // Для Hues заполняем блок 10 (hue)
-                case HumanoidSkinColor.Hues:
-                    // Для совместимости, если есть Hues виды
-                    break;
-
                 // Для других типов заполняем блоки 13-15 (цвет меха)
-                default: // Vortex edited
+                default:
                     var furColorArray = ConvertColorToHexArray(humanoid.SkinColor);
                     uniqueIdentifiers.FurColorR = new[] { furColorArray[0], furColorArray[1], furColorArray[2] };
                     uniqueIdentifiers.FurColorG = new[] { furColorArray[3], furColorArray[4], furColorArray[5] };
@@ -1072,6 +1066,9 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
                 if (originalUI.BeardColorR != null) childDnaModifier.UniqueIdentifiers.BeardColorR = originalUI.BeardColorR;
                 if (originalUI.BeardColorG != null) childDnaModifier.UniqueIdentifiers.BeardColorG = originalUI.BeardColorG;
                 if (originalUI.BeardColorB != null) childDnaModifier.UniqueIdentifiers.BeardColorB = originalUI.BeardColorB;
+                if (originalUI.SkinColorR != null) childDnaModifier.UniqueIdentifiers.SkinColorR = originalUI.SkinColorR;
+                if (originalUI.SkinColorG != null) childDnaModifier.UniqueIdentifiers.SkinColorG = originalUI.SkinColorG;
+                if (originalUI.SkinColorB != null) childDnaModifier.UniqueIdentifiers.SkinColorB = originalUI.SkinColorB;
                 if (originalUI.FurColorR != null) childDnaModifier.UniqueIdentifiers.FurColorR = originalUI.FurColorR;
                 if (originalUI.FurColorG != null) childDnaModifier.UniqueIdentifiers.FurColorG = originalUI.FurColorG;
                 if (originalUI.FurColorB != null) childDnaModifier.UniqueIdentifiers.FurColorB = originalUI.FurColorB;
