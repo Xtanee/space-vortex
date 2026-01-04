@@ -93,6 +93,8 @@ using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Preferences;
+using Content.Server.Voting.Managers; // <--> Vortex <-->
+using Content.Shared.Voting; // <--> Vortex <-->
 using JetBrains.Annotations;
 using Prometheus;
 using Robust.Shared.Asynchronous;
@@ -118,6 +120,7 @@ namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker
     {
+        [Dependency] private readonly IVoteManager _voteManager = default!;// <--> Vortex - Automatic vote after restart if enabled <-->
         [Dependency] private readonly DiscordWebhook _discord = default!;
         [Dependency] private readonly RoleSystem _role = default!;
         [Dependency] private readonly ITaskManager _taskManager = default!;
@@ -783,6 +786,21 @@ namespace Content.Server.GameTicking
             RunLevel = GameRunLevel.PreRoundLobby;
             RandomizeLobbyBackground();
             ResettingCleanup();
+
+            // <--> Vortex - Automatic map vote after restart if enabled <-->
+            if (_cfg.GetCVar(CCVars.VoteMapAutoAfterRestart))
+            {
+                _voteManager.CreateStandardVote(null, StandardVoteType.Map);
+            }
+            // <--> Vortex end <-->
+
+            // <--> Vortex - Automatic preset vote after restart if enabled <-->
+            if (_cfg.GetCVar(CCVars.VotePresetAutoAfterRestart ))
+            {
+                _voteManager.CreateStandardVote(null, StandardVoteType.Preset);
+            }
+            // <--> Vortex end <-->
+
             IncrementRoundNumber();
             SendRoundStartingDiscordMessage();
 
