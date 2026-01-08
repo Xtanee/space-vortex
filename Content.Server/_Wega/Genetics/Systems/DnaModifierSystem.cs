@@ -5,6 +5,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.Inventory;
 using Content.Server.Prayer;
 using Content.Shared.Buckle;
+using Content.Shared.CCVar;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -20,6 +21,8 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -32,6 +35,7 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
     [Dependency] private readonly IAdminLogManager _admin = default!;
     [Dependency] private readonly SharedBuckleSystem _buckle = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly EnsureMarkingSystem _ensureMarking = default!;
@@ -1290,6 +1294,11 @@ public sealed partial class DnaModifierSystem : SharedDnaModifierSystem
 
         if (component.EnzymesPrototypes == null)
             return;
+
+        // < Vortex > added
+        if (!_cfg.GetCVar(CCVars.RadiationEnableMutations))
+            return;
+        // < Vortex > end
 
         if (_random.Prob(0.05f))
         {
