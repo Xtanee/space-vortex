@@ -194,6 +194,7 @@ namespace Content.IntegrationTests.Tests
             "/Maps/_Goobstation/Shuttles/retort_engineering.yml",
             "/Maps/_Goobstation/Shuttles/retort_janitorial.yml",
             "/Maps/_Goobstation/Shuttles/retort_cburn.yml",
+            "/Maps/_Goobstation/prison.yml"
         };
 
         private static readonly string[] GameMaps =
@@ -201,43 +202,44 @@ namespace Content.IntegrationTests.Tests
             // Goobstation edit:
             // order this list alphabetically, mark dev maps
             // if upstreaming take ours here and edit manually.
-              "Amber",
-              //"Atlas", // Corvax-Goob-Maps-deleted
-              "Bagel",
-              //"Barratry", // Corvax-Goob-Maps-deleted
-              "Box",            // Not in pool
-              "CentComm",       // CentComm
-              //"Chloris", // Corvax-Goob-Maps-deleted
-              //"Cluster", // Corvax-Goob-Maps-deleted
-              "Cog",
-              "Core",           // Not in pool.
-              //"Delta", // Corvax-Goob-Maps-deleted
-              "Dev",            // Dev map
-              "dm01-entryway",  // Deathmatch
-              //"Europa",         // Not in pool. // Corvax-Goob-Maps-deleted
-              "Fland",
-              //"FlandHighPop", // Corvax-Goob-Maps-deleted
-              //"Gate",           // Not in pool // Corvax-Goob-Maps-deleted
-              //"Kettle", // Corvax-Goob-Maps-deleted
-              //"Lambda",         // Not in pool // Corvax-Goob-Maps-deleted
-              "Lavatest",       //Dev map
-              //"Leonid", // Corvax-Goob-Maps-deleted
-              "Loop",
-              "Marathon",
-              "Meta",
-              "MeteorArena",    // Deathmatch
-              "Oasis",
-              "OasisHighPop",
-              "Omega",
-              //"Origin", // Corvax-Goob-Maps-deleted
-              "OriginHighPop",  //Not in pool
-              "TestTeg",        //Dev map
-              "Train",          //Not in pool
-              "Packed",
-              "Reach",
-              "Saltern",
-              "Serpentcrest",
-              //"Submarine", // Corvax-Goob-Maps-deleted
+            "Amber",
+            "Atlas",
+            "Bagel",
+            "Barratry",
+            "Box",            // Not in pool
+            "CentComm",       // CentComm
+            "Chloris",
+            "Cluster",
+            "Cog",
+            "Core",           // Not in pool.
+            "Delta",
+            "Dev",            // Dev map
+            "dm01-entryway",  // Deathmatch
+            "Europa",         // Not in pool.
+            "Fland",
+            "FlandHighPop",
+            "Gate",           // Not in pool
+            "Kettle",
+            "Lambda",         // Not in pool
+            "Lavatest",       // Dev map
+            "Leonid",
+            "Loop",
+            "Marathon",
+            "Meta",
+            "MeteorArena",    // Deathmatch
+            "Oasis",
+            "OasisHighPop",
+            "Omega",
+            "Origin",
+            "OriginHighPop",  // Not in pool
+            "Packed",
+            "Prison",
+            "Reach",
+            "Saltern",
+            "Serpentcrest",
+            "Submarine",
+            "TestTeg",        // Dev map
+            "Train"           // Not in pool
             // Goob end
 
             // Corvax-Goob-Maps-start
