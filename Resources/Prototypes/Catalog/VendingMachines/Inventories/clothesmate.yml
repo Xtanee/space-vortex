@@ -180,6 +180,13 @@
     ADTClothingUnderwearBottomPantiesWhite: 5
     ADTClothingUnderwearBottomPantiesComfyWhite: 3
     ADTClothingUnderwearTopBraComfyWhite: 3
+    ADTClothingUniformSwimBlack: 3
+    ADTClothingUniformSwimBlue: 3
+    ADTClothingUniformSwimDarkGreen: 3
+    ADTClothingUniformSwimGreen: 3
+    ADTClothingUniformSwimPurple: 3
+    ADTClothingUniformSwimRed: 3
+    ADTClothingUniformSwimsuitWinth: 3
   contrabandInventory:
     ClothingMaskNeckGaiter: 2
     ClothingUniformJumpsuitTacticool: 2 # +1 Goobstation
