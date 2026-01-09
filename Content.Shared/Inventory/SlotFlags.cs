@@ -40,8 +40,9 @@ public enum SlotFlags
     FEET = 1 << 14,
     SUITSTORAGE = 1 << 15,
     RING = 1 << 16,
-    WATCH = 1 << 17,
-    SOCKS = 1 << 18,
+    UNDERWEART = 1 << 17, // ADT
+    UNDERWEARB = 1 << 18, // ADT
+    SOCKS = 1 << 19, // <Vortex>
     All = ~NONE,
 
     WITHOUT_POCKET = All & ~POCKET

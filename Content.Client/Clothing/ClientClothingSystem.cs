@@ -82,8 +82,9 @@ public sealed class ClientClothingSystem : ClothingSystem
         {"pocket1", "POCKET1"},
         {"pocket2", "POCKET2"},
         {"suitstorage", "SUITSTORAGE"},
-        {"ring", "RING"},
-        {"watch", "WATCH"},
+        {"ring", "RING"}, // <Vortex>
+        {"underweart", "UNDERWEART"}, // ADT-TWEAK
+        {"underwearb", "UNDERWEARB"}, // ADT-TWEAK
     };
 
     [Dependency] private readonly IResourceCache _cache = default!;

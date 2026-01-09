@@ -16,6 +16,11 @@
   - Animals
   - SurvivalMedical
   - GroupSpeciesBreathToolMedical
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobWardenHelper
@@ -37,6 +42,11 @@
   - WardenEnvirohelm
   - WardenEnvirosuit
   - WardenEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobPilot
@@ -57,3 +67,8 @@
   - SecurityOfficerEnvirohelm
   - SecurityOfficerEnvirosuit
   - SecurityOfficerEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end

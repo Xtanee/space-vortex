@@ -135,6 +135,11 @@
   - CaptainEnvirosuit
   - CaptainEnvirogloves
   - CaptainGloves
+  # ADT underwear tweak start
+  - ADTTopCap
+  - ADTBottomCap
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobHeadOfPersonnel
@@ -156,6 +161,11 @@
   - HoPEnvirosuit
   - HoPEnvirogloves
   - HoPGloves
+  # ADT underwear tweak start
+  - ADTTopHOP
+  - ADTBottomHOP
+  - ADTSocks
+  # ADT underwear tweak end
 # Silicons
 - type: roleLoadout
   id: JobBorg
@@ -189,6 +199,11 @@
   - AssistantEnvirohelm
   - AssistantEnvirosuit
   - AssistantEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobBartender
@@ -208,6 +223,11 @@
   - BartenderEnvirohelm
   - BartenderEnvirosuit
   - BartenderEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobServiceWorker
@@ -225,6 +245,11 @@
   - ServiceWorkerEnvirohelm
   - ServiceWorkerEnvirosuit
   - ServiceWorkerEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobChef
@@ -245,6 +270,11 @@
   - ChefEnvirohelm
   - ChefEnvirosuit
   - ChefEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobLibrarian
@@ -262,6 +292,11 @@
   - LibrarianEnvirohelm
   - LibrarianEnvirosuit
   - LibrarianEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobLawyer
@@ -280,6 +315,11 @@
   - LawyerEnvirohelm
   - LawyerEnvirosuit
   - LawyerEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobChaplain
@@ -301,6 +341,11 @@
   - ChaplainEnvirohelm
   - ChaplainEnvirosuit
   - ChaplainEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobJanitor
@@ -322,6 +367,11 @@
   - JanitorEnvirohelm
   - JanitorEnvirosuit
   - JanitorEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobBotanist
@@ -341,6 +391,11 @@
   - BotanistEnvirohelm
   - BotanistEnvirosuit
   - BotanistEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobClown
@@ -361,6 +416,11 @@
   - ClownEnvirohelm
   - ClownEnvirosuit
   - ClownEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobMime
@@ -383,6 +443,11 @@
   - MimeEnvirosuit
   - MimeEnvirogloves
   - MimeGloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobMusician
@@ -402,6 +467,11 @@
   - MusicianEnvirohelm
   - MusicianEnvirosuit
   - MusicianEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 # Cargo
 - type: roleLoadout
@@ -424,6 +494,11 @@
   - QuartermasterEnvirohelm
   - QuartermasterEnvirosuit
   - QuartermasterEnvirogloves
+  # ADT underwear tweak start
+  - ADTTopQM
+  - ADTBottomQM
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobCargoTechnician
@@ -444,6 +519,11 @@
   - CargoTechnicianEnvirohelm
   - CargoTechnicianEnvirosuit
   - CargoTechnicianEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobSalvageSpecialist
@@ -463,6 +543,11 @@
   - SalvageEnvirohelm
   - SalvageEnvirosuit
   - SalvageEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 # Engineering
 - type: roleLoadout
@@ -484,6 +569,11 @@
   - ChiefEngineerEnvirohelm
   - ChiefEngineerEnvirosuit
   - ChiefEngineerEnvirogloves
+  # ADT underwear tweak start
+  - ADTTopCE
+  - ADTBottomCE
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobTechnicalAssistant
@@ -500,6 +590,11 @@
   - TechnicalAssistantEnvirohelm
   - TechnicalAssistantEnvirosuit
   - TechnicalAssistantEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobStationEngineer
@@ -520,6 +615,11 @@
   - StationEngineerEnvirohelm
   - StationEngineerEnvirosuit
   - StationEngineerEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobAtmosphericTechnician
@@ -539,6 +639,11 @@
   - AtmosEnvirohelm
   - AtmosEnvirosuit
   - AtmosEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 # Science
 - type: roleLoadout
@@ -562,6 +667,11 @@
   - ResearchDirectorEnvirosuit
   - ResearchDirectorEnvirohelm
   - ResearchDirectorEnvirogloves
+  # ADT underwear tweak start
+  - ADTTopRD
+  - ADTBottomRD
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobScientist
@@ -585,6 +695,11 @@
   - ScientistEnvirohelm
   - ScientistEnvirosuit
   - ScientistEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobResearchAssistant
@@ -602,6 +717,11 @@
   - ResearchAssistantEnvirohelm
   - ResearchAssistantEnvirosuit
   - ResearchAssistantEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 # Security
 - type: roleLoadout
@@ -626,6 +746,11 @@
   - HeadofSecurityEnvirosuit
   - HeadofSecurityEnvirogloves
   - HeadofSecurityGloves
+  # ADT underwear tweak start
+  - ADTTopHOS
+  - ADTBottomHOS
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobWarden
@@ -648,6 +773,11 @@
   - WardenEnvirohelm
   - WardenEnvirosuit
   - WardenEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobSecurityOfficer
@@ -671,6 +801,11 @@
   - SecurityOfficerEnvirohelm
   - SecurityOfficerEnvirosuit
   - SecurityOfficerEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobDetective
@@ -692,6 +827,11 @@
   - DetectiveEnvirosuit
   - DetectiveEnvirogloves
   - DetectiveGloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobSecurityCadet
@@ -710,6 +850,11 @@
   - SecurityCadetEnvirohelm
   - SecurityCadetEnvirosuit
   - SecurityCadetEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 # Medical
 - type: roleLoadout
@@ -734,6 +879,11 @@
   - ChiefMedicalOfficerEnvirohelm
   - ChiefMedicalOfficerEnvirosuit
   - ChiefMedicalOfficerEnvirogloves
+  # ADT underwear tweak start
+  - ADTTopCMO
+  - ADTBottomCMO
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobMedicalDoctor
@@ -757,6 +907,11 @@
   - MedicalDoctorEnvirohelm
   - MedicalDoctorEnvirosuit
   - MedicalDoctorEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobMedicalIntern
@@ -774,6 +929,11 @@
   - MedicalInternEnvirohelm
   - MedicalInternEnvirosuit
   - MedicalInternEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobChemist
@@ -795,6 +955,11 @@
   - ChemistEnvirohelm
   - ChemistEnvirosuit
   - ChemistEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobParamedic
@@ -817,6 +982,11 @@
   - ParamedicEnvirohelm
   - ParamedicEnvirosuit
   - ParamedicEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 # Wildcards
 - type: roleLoadout
@@ -836,6 +1006,11 @@
   - ZookeeperEnvirohelm
   - ZookeeperEnvirosuit
   - ZookeeperEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobReporter
@@ -854,6 +1029,11 @@
   - ReporterEnvirohelm
   - ReporterEnvirosuit
   - ReporterEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobPsychologist
@@ -871,6 +1051,11 @@
   - PsychologistEnvirohelm
   - PsychologistEnvirosuit
   - PsychologistEnvirogloves
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 - type: roleLoadout
   id: JobBoxer
@@ -888,6 +1073,11 @@
   # Goobstation - EE Plasmeme Change.
   - BoxerEnvirohelm
   - BoxerEnvirosuit
+  # ADT underwear tweak start
+  - ADTTop
+  - ADTBottom
+  - ADTSocks
+  # ADT underwear tweak end
 
 # These loadouts are used for non-crew spawns, like off-station antags and event mobs
 # They will be used without player configuration, thus they will only ever apply what is forced by MinLimit

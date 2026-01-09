@@ -7,7 +7,7 @@
   description: job-description-centcommoperator
   playTimeTracker: JobCentralCommandOperator
   setPreference: true
-  weight: 100
+  weight: 125
   startingGear: CentcomOperatorGear
   icon: "JobIconCentCommOperator"
   supervisors: job-supervisors-centcom
@@ -44,6 +44,7 @@
     ears: ClothingHeadsetAltCentCom
     pocket1: BoxFolderCentCom
     pocket2: WeaponDisablerAdvanced
+    underwearb: ADTClothingUnderwearBottomBoxersWhite
   storage:
     back:
     - BoxSurvivalSlotsMedical

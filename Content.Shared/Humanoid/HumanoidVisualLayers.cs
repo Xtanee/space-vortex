@@ -43,8 +43,6 @@ namespace Content.Shared.Humanoid
         UndergarmentTop,
         UndergarmentBottom,
         Chest,
-        Underwear,
-        Undershirt,
         Groin,
         Head,
         Snout,

@@ -130,3 +130,11 @@
       uiWindowPos: 3,0
       strippingWindowPos: 0,5
       displayName: Back
+
+    - name: ring
+      slotTexture: ring
+      slotFlags: RING
+      stripTime: 2
+      uiWindowPos: 2,0
+      strippingWindowPos: 0,3
+      displayName: Ring

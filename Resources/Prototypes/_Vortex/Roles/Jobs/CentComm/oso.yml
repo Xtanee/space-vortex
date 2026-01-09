@@ -7,7 +7,7 @@
   description: job-description-centcommoso
   playTimeTracker: JobCentralCommandOSO
   setPreference: false
-  weight: 100
+  weight: 150
   startingGear: CentcomOSOGear
   icon: "JobIconCentCommOSO"
   supervisors: job-supervisors-centcomchieft 
@@ -46,6 +46,7 @@
     ears: ClothingHeadsetAltCentComOSO
     pocket1: WeaponRevolverMateba 
     pocket2: WeaponPulsePistol
+    underwearb: ADTClothingUnderwearBottomBoxersWhite
   storage:
     back:
     - BoxSurvivalSlotsMedical

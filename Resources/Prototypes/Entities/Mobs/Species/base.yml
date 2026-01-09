@@ -271,8 +271,10 @@
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
     - map: [ "enum.HumanoidVisualLayers.RLeg" ]
     - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-    - map: [ "enum.HumanoidVisualLayers.Underwear" ] # Goob 3370
-    - map: [ "enum.HumanoidVisualLayers.Undershirt" ] # Goob 3370
+    # - map: [ "enum.HumanoidVisualLayers.Underwear" ] # Vortex-removed
+    # - map: [ "enum.HumanoidVisualLayers.Undershirt" ] # Vortex-removed
+    - map: [ "underwearb" ]
+    - map: [ "underweart" ]
     - map: ["enum.HumanoidVisualLayers.LFoot"]
     - map: ["enum.HumanoidVisualLayers.RFoot"]
     - map: [ "socks" ] # Vortex
@@ -626,8 +628,10 @@
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
     - map: [ "enum.HumanoidVisualLayers.RLeg" ]
     - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-    - map: [ "enum.HumanoidVisualLayers.Underwear" ] # Goob 3370
-    - map: [ "enum.HumanoidVisualLayers.Undershirt" ] # Goob 3370
+    # - map: [ "enum.HumanoidVisualLayers.Underwear" ] # Vortex-removed
+    # - map: [ "enum.HumanoidVisualLayers.Undershirt" ] # Vortex-removed
+    - map: [ "underwearb" ]
+    - map: [ "underweart" ]
     - map: ["enum.HumanoidVisualLayers.LFoot"]
     - map: ["enum.HumanoidVisualLayers.RFoot"]
     - map: [ "socks" ] # Vortex

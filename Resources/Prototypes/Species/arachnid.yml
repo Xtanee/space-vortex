@@ -56,8 +56,6 @@
   sprites:
     Head: MobArachnidHead
     Snout: MobHumanoidAnyMarking
-    Underwear: MobHumanoidAnyMarking
-    Undershirt: MobHumanoidAnyMarking
     Chest: MobArachnidChest
     Groin: MobArachnidGroin
     Hair: MobHumanoidAnyMarking # imp, arachnid hair arachnid hair!
@@ -100,12 +98,6 @@
       defaultMarkings: [ ArachnidCheliceraeDownwards ]
     Chest:
       points: 10
-      required: false
-    Underwear:
-      points: 1
-      required: false
-    Undershirt:
-      points: 1
       required: false
     RightLeg:
       points: 2

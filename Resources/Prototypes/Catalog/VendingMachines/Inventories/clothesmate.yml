@@ -167,6 +167,19 @@
     ClothingNeckPonchoSmallBlack: 3 # Monolith
     ClothingNeckPonchoSmallWhite: 3 # Monolith
     # DO NOT ADD MORE, USE UNIFORM DYING
+    # Vortex
+    ADTClothingUnderwearSocksNormal: 5
+    ADTClothingUnderwearSocksHigh: 5
+    ADTClothingUnderwearSocksStockingsWhite: 5
+    ADTClothingUnderwearSocksThigh: 5
+    ADTClothingUnderwearSocksThighBlack: 5
+    ADTClothingUnderwearSocksBlack: 5
+    ADTClothingUnderwearSocksThighPantyhose: 5
+    ADTClothingUnderwearSocksFullFishnet: 5
+    ADTClothingUnderwearBottomBoxersWhite: 5
+    ADTClothingUnderwearBottomPantiesWhite: 5
+    ADTClothingUnderwearBottomPantiesComfyWhite: 3
+    ADTClothingUnderwearTopBraComfyWhite: 3
   contrabandInventory:
     ClothingMaskNeckGaiter: 2
     ClothingUniformJumpsuitTacticool: 2 # +1 Goobstation

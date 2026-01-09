@@ -23,7 +23,7 @@
   - type: Clothing
     sprite: Objects/Devices/wristwatch.rsi
     slots:
-    - WATCH
+    - gloves
   - type: Appearance
   - type: Damageable
     damageContainer: Inorganic
