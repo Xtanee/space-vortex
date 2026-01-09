@@ -32,7 +32,7 @@ highlights-medical-intern = Интерн, Доктор, "Док", Медбей, 
 highlights-paramedic = Парамедик, "Парамед", Доктор, "Док", "Медик", Медбей, "Мед", Медицинский
 # Science
 highlights-scientist = Ученый, Наука, "РНД", Робототехника, Робототехник, "Робо"
-highlights-research-assistant = Научный Ассистент, Ученый, Наука, "НИО", "РНД", Робототехника, Робототехник, "Робо"
+highlights-research-assistant = Лаборант, Ученый, Наука, "НИО", "РНД", Робототехника, Робототехник, "Робо"
 # Civilian
 highlights-bartender = Бармен, "Бар"
 highlights-botanist = Ботаник, Ботаника, Гидропоника
@@ -54,4 +54,4 @@ highlights-psychologist = Психолог, Психология
 # Silicon
 highlights-personal-ai = Персональный ИИ, "пИИ"
 highlights-cyborg = Киборг, Борг, Силикон, Закон 2
-highlights-station-ai = Станционный ИИ, "ИИ", "СИИ", Силикон, Закон 2, Закон 3
+highlights-station-ai = ИИ Станции, "ИИ", "СИИ", Силикон, Закон 2, Закон 3

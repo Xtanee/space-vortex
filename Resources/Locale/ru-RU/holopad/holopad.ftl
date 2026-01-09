@@ -17,7 +17,7 @@ holopad-window-controls-unlock-countdown = Оно автоматически р�
 # Buttons
 holopad-window-answer-call = Ответить на звонок
 holopad-window-end-call = Завершить звонок
-holopad-window-request-station-ai = Запросить станционный ИИ
+holopad-window-request-station-ai = Запросить ИИ станции
 holopad-window-activate-projector = Активировать проектор
 holopad-window-emergency-broadcast = Экстренная трансляция
 holopad-window-emergency-broadcast-with-countdown = Экстренная трансляция ({ $countdown })

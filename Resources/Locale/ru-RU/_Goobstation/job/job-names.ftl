@@ -40,6 +40,7 @@ job-name-governmentman = G-Man
 
 job-name-conquest = конквест
 job-name-mercenarycaptain = капитан Наёмников
+job-name-radiohost = радио-ведущий
 
 # Role timers - Make these alphabetical or I cut you (dont listen to upstream, i copied and pasted this, make it very un-alphabetical :godo:)
 

@@ -17,3 +17,5 @@ ent-ClothingHeadsetAltBlueshield = полноразмерная гарнитур
     .desc = { ent-ClothingHeadsetAlt.desc }
 ent-ClothingHeadsetCommandService = полноразмерная гарнитура сервиса
     .desc = Гарнитура с командный и сервисным каналом.
+ent-ClothingHeadsetAltRadioHost = полноразмерная гарнитура радио-ведущего
+    .desc = Полноразмерная гарнитура с дополнительной мягкой пеной вокруг ушей.
