@@ -112,21 +112,23 @@
       displayName: Head
     - name: pocket1
       slotTexture: pocket
+      fullTextureName: template_small
       slotFlags: POCKET
       slotGroup: MainHotbar
       stripTime: 3
       uiWindowPos: 0,3
-      strippingWindowPos: 0,4
+      strippingWindowPos: 0,6 # # Vortex-Tweak
       dependsOn: jumpsuit
       displayName: Pocket 1
       stripHidden: true
     - name: pocket2
       slotTexture: pocket
+      fullTextureName: template_small
       slotFlags: POCKET
       slotGroup: MainHotbar
       stripTime: 3
       uiWindowPos: 2,3
-      strippingWindowPos: 1,4
+      strippingWindowPos: 1,6 # Vortex-Tweak
       dependsOn: jumpsuit
       displayName: Pocket 2
       stripHidden: true
