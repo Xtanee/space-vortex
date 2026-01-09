@@ -123,6 +123,14 @@ namespace Content.Shared.Preferences
         [DataField]
         public string FlavorText { get; set; } = string.Empty;
 
+        // <Vortex-OOCNotex>
+        /// <summary>
+        /// Out-of-character notes that can appear for the character if <see cref="CCVars.OOCNotes"/> is enabled.
+        /// </summary>
+        [DataField]
+        public string OOCNotes { get; set; } = string.Empty;
+        // </Vortex-OOCNotex>
+
         /// <summary>
         /// Associated <see cref="SpeciesPrototype"/> for this profile.
         /// </summary>
@@ -197,6 +205,7 @@ namespace Content.Shared.Preferences
         public HumanoidCharacterProfile(
             string name,
             string flavortext,
+            string oocNotes, // <Vortex-OOCNotex>
             string species,
             string voice, // CorvaxGoob-TTS
             int age,
@@ -217,6 +226,7 @@ namespace Content.Shared.Preferences
         {
             Name = name;
             FlavorText = flavortext;
+            OOCNotes = oocNotes;
             Species = species;
             Voice = voice; // CorvaxGoob-TTS
             Age = age;
@@ -254,6 +264,7 @@ namespace Content.Shared.Preferences
         public HumanoidCharacterProfile(HumanoidCharacterProfile other)
             : this(other.Name,
                 other.FlavorText,
+                other.OOCNotes, // <Vortex-OOCNotex>
                 other.Species,
                 other.Voice, // CorvaxGoob-TTS
                 other.Age,
@@ -383,6 +394,13 @@ namespace Content.Shared.Preferences
         {
             return new(this) { FlavorText = flavorText };
         }
+
+        // <Vortex-OOCNotex>
+        public HumanoidCharacterProfile WithOOCNotes(string oocNotes)
+        {
+            return new(this) { OOCNotes = oocNotes };
+        }
+        // </Vortex-OOCNotex>
 
         public HumanoidCharacterProfile WithAge(int age)
         {
@@ -609,6 +627,7 @@ namespace Content.Shared.Preferences
             if (!_traitPreferences.SequenceEqual(other._traitPreferences)) return false;
             if (!Loadouts.SequenceEqual(other.Loadouts)) return false;
             if (FlavorText != other.FlavorText) return false;
+            if (OOCNotes != other.OOCNotes) return false; // <Vortex-OOCNotex>
             if (Height != other.Height) return false; // Vortex - Height & Weight
             if (Width != other.Width) return false; // Vortex - Height & Weight
             return Appearance.MemberwiseEquals(other.Appearance);
@@ -702,6 +721,19 @@ namespace Content.Shared.Preferences
                 flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText);
             }
 
+            // <Vortex-OOCNotex>
+            string oocnotes;
+            var maxOOCNotesLength = configManager.GetCVar(CCVars.MaxOOCNotesLength);
+            if (OOCNotes.Length > maxOOCNotesLength)
+            {
+                oocnotes = FormattedMessage.RemoveMarkupOrThrow(OOCNotes)[..maxOOCNotesLength];
+            }
+            else
+            {
+                oocnotes = FormattedMessage.RemoveMarkupOrThrow(OOCNotes);
+            }
+            // </Vortex-OOCNotex>
+
             // Begin Vortex - Height & Weight
             var height = Height;
             if (speciesPrototype != null)
@@ -760,6 +792,7 @@ namespace Content.Shared.Preferences
 
             Name = name;
             FlavorText = flavortext;
+            OOCNotes = oocnotes; // <Vortex-OOCNotex>
             Age = age;
             // Height = height; // Goobstation: port EE height/width sliders // CorvaxGoob-Clearing
             // Width = width; // Goobstation: port EE height/width sliders // CorvaxGoob-Clearing
@@ -885,6 +918,7 @@ namespace Content.Shared.Preferences
             hashCode.Add(_loadouts);
             hashCode.Add(Name);
             hashCode.Add(FlavorText);
+            hashCode.Add(OOCNotes); // <Vortex-OOCNotex>
             hashCode.Add(Species);
             // hashCode.Add(Height); // Goobstation: port EE height/width sliders // CorvaxGoob-Clearing
             // hashCode.Add(Width); // Goobstation: port EE height/width sliders // CorvaxGoob-Clearing

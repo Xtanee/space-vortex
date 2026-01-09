@@ -195,6 +195,8 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
 using Direction = Robust.Shared.Maths.Direction;
 using Content.Client._CorvaxGoob.TTS;
+using Content.Client._Vortex.Description;
+using Content.Client.OOCNotes;
 using Content.Shared._CorvaxGoob; // CorvaxGoob-TTS
 using System.Globalization;
 
@@ -220,9 +222,9 @@ namespace Content.Client.Lobby.UI
         // CCvar.
         private int _maxNameLength;
         private bool _allowFlavorText;
+        private bool _allowOOCNotes; // <Vortex-OOCNotex>
 
-        private FlavorText.FlavorText? _flavorText;
-        private TextEdit? _flavorTextEdit;
+        private DescriptionTab? _descriptionTab;
 
         // One at a time.
         private LoadoutWindow? _loadoutWindow;
@@ -306,6 +308,7 @@ namespace Content.Client.Lobby.UI
 
             _maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
             _allowFlavorText = _cfgManager.GetCVar(CCVars.FlavorText);
+            _allowOOCNotes = _cfgManager.GetCVar(CCVars.OOCNotes); // <Vortex-OOCNotex>
 
             ImportButton.OnPressed += args =>
             {
@@ -686,7 +689,7 @@ namespace Content.Client.Lobby.UI
 
             #endregion Markings
 
-            RefreshFlavorText();
+            RefreshDescription(); // <Vortex-OOCNotex>
 
             RefreshVoiceTab(); // CorvaxGoob-TTS
 
@@ -805,35 +808,41 @@ namespace Content.Client.Lobby.UI
         }
 
         /// <summary>
-        /// Refreshes the flavor text editor status.
+        /// Refreshes the description editor status.
         /// </summary>
-        public void RefreshFlavorText()
+        /// // <Vortex-OOCNotex>
+        public void RefreshDescription()
         {
-            if (_allowFlavorText)
+            if (_allowFlavorText || _allowOOCNotes)
             {
-                if (_flavorText != null)
+                if (_descriptionTab != null)
+                {
+                    _descriptionTab.SetFlavorTextVisible(_allowFlavorText);
+                    _descriptionTab.SetOOCNotesVisible(_allowOOCNotes);
                     return;
+                }
 
-                _flavorText = new FlavorText.FlavorText();
-                TabContainer.AddChild(_flavorText);
+                _descriptionTab = new DescriptionTab();
+                TabContainer.AddChild(_descriptionTab);
                 TabContainer.SetTabTitle(TabContainer.ChildCount - 1, Loc.GetString("humanoid-profile-editor-flavortext-tab"));
-                _flavorTextEdit = _flavorText.CFlavorTextInput;
-
-                _flavorText.OnFlavorTextChanged += OnFlavorTextChange;
+                _descriptionTab.OnFlavorTextChanged += OnFlavorTextChange;
+                _descriptionTab.OnOOCNotesChanged += OnOOCNotesChange;
+                _descriptionTab.SetFlavorTextVisible(_allowFlavorText);
+                _descriptionTab.SetOOCNotesVisible(_allowOOCNotes);
             }
             else
             {
-                if (_flavorText == null)
+                if (_descriptionTab == null)
                     return;
 
-                TabContainer.RemoveChild(_flavorText);
-                _flavorText.OnFlavorTextChanged -= OnFlavorTextChange;
-                _flavorText.Dispose();
-                _flavorTextEdit?.Dispose();
-                _flavorTextEdit = null;
-                _flavorText = null;
+                TabContainer.RemoveChild(_descriptionTab);
+                _descriptionTab.OnFlavorTextChanged -= OnFlavorTextChange;
+                _descriptionTab.OnOOCNotesChanged -= OnOOCNotesChange;
+                _descriptionTab.Dispose();
+                _descriptionTab = null;
             }
         }
+        // </Vortex-OOCNotex-edited>
 
         //CorvaxGoob-TTS-Start
         #region Voice
@@ -1180,6 +1189,7 @@ namespace Content.Client.Lobby.UI
 
             UpdateNameEdit();
             UpdateFlavorTextEdit();
+            UpdateOOCNotesEdit(); // <Vortex-OOCNotex>
             UpdateSexControls();
             UpdateGenderControls();
             UpdateSkinColor();
@@ -1203,7 +1213,7 @@ namespace Content.Client.Lobby.UI
             RefreshLoadouts();
             RefreshSpecies();
             RefreshTraits();
-            RefreshFlavorText();
+            RefreshDescription();
             ReloadPreview();
 
             if (Profile != null)
@@ -1505,6 +1515,17 @@ namespace Content.Client.Lobby.UI
             SetDirty();
         }
 
+        // <Vortex-OOCNotex>
+        private void OnOOCNotesChange(string content)
+        {
+            if (Profile is null)
+                return;
+
+            Profile = Profile.WithOOCNotes(content);
+            SetDirty();
+        }
+        // </Vortex-OOCNotex>
+
         private void OnMarkingChange(MarkingSet markings)
         {
             if (Profile is null)
@@ -1742,13 +1763,17 @@ namespace Content.Client.Lobby.UI
             NameEdit.Text = Profile?.Name ?? "";
         }
 
+        // <Vortex-OOCNotex>
         private void UpdateFlavorTextEdit()
         {
-            if (_flavorTextEdit != null)
-            {
-                _flavorTextEdit.TextRope = new Rope.Leaf(Profile?.FlavorText ?? "");
-            }
+            _descriptionTab?.UpdateFlavorText(Profile?.FlavorText ?? "");
         }
+
+        private void UpdateOOCNotesEdit()
+        {
+            _descriptionTab?.UpdateOOCNotes(Profile?.OOCNotes ?? "");
+        }
+        // </Vortex-OOCNotex-edited>
 
         private void UpdateAgeEdit()
         {

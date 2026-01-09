@@ -1,0 +1,22 @@
+<Control Name="CDescriptionTab" xmlns="https://spacestation14.io" xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="10">
+        <PanelContainer VerticalExpand="True">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#1a1a1a"/>
+            </PanelContainer.PanelOverride>
+            <BoxContainer Orientation="Vertical" Margin="8">
+                <Label Text="{Loc 'flavor-text-label'}" StyleClasses="LabelHeading" Margin="0 0 0 5"/>
+                <TextEdit Name="CFlavorTextInput" Access="Public" MinSize="220 100" Margin="0" HorizontalExpand="True" VerticalExpand="True" />
+            </BoxContainer>
+        </PanelContainer>
+        <PanelContainer VerticalExpand="True">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#1a1a1a"/>
+            </PanelContainer.PanelOverride>
+            <BoxContainer Orientation="Vertical" Margin="8">
+                <Label Text="{Loc 'ooc-notes-label'}" StyleClasses="LabelHeading" Margin="0 0 0 5"/>
+                <TextEdit Name="COOCNotesInput" Access="Public" MinSize="220 100" Margin="0" HorizontalExpand="True" VerticalExpand="True" />
+            </BoxContainer>
+        </PanelContainer>
+    </BoxContainer>
+</Control>

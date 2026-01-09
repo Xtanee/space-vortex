@@ -406,6 +406,7 @@ namespace Content.Server.Database
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
                 profile.FlavorText,
+                profile.OOCNotes, // <Vortex-OOCNotex>
                 profile.Species,
                 voice, // CorvaxGoob-TTS
                 profile.Age,
@@ -445,6 +446,7 @@ namespace Content.Server.Database
 
             profile.CharacterName = humanoid.Name;
             profile.FlavorText = humanoid.FlavorText;
+            profile.OOCNotes = humanoid.OOCNotes; // <Vortex-OOCNotex>
             profile.Species = humanoid.Species;
             profile.Voice = humanoid.Voice; // CorvaxGoob-TTS
             profile.Age = humanoid.Age;

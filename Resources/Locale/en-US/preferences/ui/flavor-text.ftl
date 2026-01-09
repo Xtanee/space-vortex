@@ -4,4 +4,8 @@
 #
 # SPDX-License-Identifier: MIT
 
+flavor-text-label = Flavor Text
 flavor-text-placeholder = An outer description of your character that others can get by looking at them...
+
+ooc-notes-label = OOC Notes
+ooc-notes-placeholder = Out-of-character notes about your character...
