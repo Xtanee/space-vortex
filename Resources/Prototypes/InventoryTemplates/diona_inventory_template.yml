@@ -128,7 +128,7 @@
       slotGroup: SecondHotbar
       stripTime: 6
       uiWindowPos: 2,1
-      strippingWindowPos: 2,4
+      strippingWindowPos: 2,3 # Vortex-Tweak
       dependsOn: jumpsuit
       displayName: ID
     - name: belt
