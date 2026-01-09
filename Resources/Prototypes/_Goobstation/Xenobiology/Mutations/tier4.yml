@@ -1,5 +1,5 @@
 - type: breed
-  breedName: oil slime
+  breedName: Маслянистый слайм
   id: OilMutation
   producedExtract: OilSlimeExtract
   components:
@@ -14,7 +14,7 @@
     - OilMutation
 
 - type: breed
-  breedName: light pink slime
+  breedName: Светло-розовый слайм
   id: LightPinkMutation
   producedExtract: LightPinkSlimeExtract
   components:
@@ -27,7 +27,7 @@
     - LightPinkMutation
 
 - type: breed
-  breedName: black slime
+  breedName: Чёрный слайм
   id: BlackMutation
   producedExtract: BlackSlimeExtract
   components:
@@ -40,7 +40,7 @@
     - BlackMutation
 
 - type: breed
-  breedName: adamantine slime
+  breedName: Адамантитовый слайм
   id: AdamantineMutation
   producedExtract: AdamantineSlimeExtract
   components:

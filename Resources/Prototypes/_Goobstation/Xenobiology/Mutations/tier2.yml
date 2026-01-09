@@ -1,5 +1,5 @@
 - type: breed
-  breedName: yellow slime
+  breedName: Желтый слайм
   id: YellowMutation
   producedExtract: YellowSlimeExtract
   components:
@@ -14,7 +14,7 @@
     - BluespaceMutation
 
 - type: breed
-  breedName: dark purple slime
+  breedName: Темно-фиолетовый слайм
   id: DarkPurpleMutation
   producedExtract: DarkPurpleSlimeExtract
   components:
@@ -29,7 +29,7 @@
     - SepiaMutation
 
 - type: breed
-  breedName: dark blue slime
+  breedName: Синий слайм
   id: DarkBlueMutation
   producedExtract: DarkBlueSlimeExtract
   components:
@@ -44,7 +44,7 @@
     - CeruleanMutation
 
 - type: breed
-  breedName: silver slime
+  breedName: Серебряный слайм
   id: SilverMutation
   producedExtract: SilverSlimeExtract
   components:
@@ -62,7 +62,7 @@
 
 # These don't upgrade anymore so might consider it tier 2.5
 - type: breed
-  breedName: bluespace slime
+  breedName: Блюспейс слайм
   id: BluespaceMutation
   producedExtract: BluespaceSlimeExtract
   components:
@@ -77,7 +77,7 @@
     - BluespaceMutation
 
 - type: breed
-  breedName: sepia slime
+  breedName: Сепия слайм
   id: SepiaMutation
   producedExtract: SepiaSlimeExtract
   components:
@@ -92,7 +92,7 @@
     - SepiaMutation
 
 - type: breed
-  breedName: cerulean slime
+  breedName: Лазурный слайм
   id: CeruleanMutation
   producedExtract: CeruleanSlimeExtract
   components:
@@ -105,7 +105,7 @@
     - CeruleanMutation
 
 - type: breed
-  breedName: pyrite slime
+  breedName: Пиритовый слайм
   id: PyriteMutation
   producedExtract: PyriteSlimeExtract
   components:
