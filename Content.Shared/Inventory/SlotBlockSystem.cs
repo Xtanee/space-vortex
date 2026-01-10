@@ -1,4 +1,5 @@
 using Content.Shared.Inventory.Events;
+using Content._Vortex.Shared.Inventory;
 using Content.Shared.Popups;
 
 namespace Content.Shared.Inventory;
@@ -25,6 +26,11 @@ public sealed partial class SlotBlockSystem : EntitySystem
             return;
 
         // <Vortex>
+        if (HasComp<StopBlockBypassComponent>(args.Args.Equipee))
+            return;
+        // </Vortex>
+
+        // <Vortex>
         var message = Loc.GetString("slot-block-component-blocked", ("item", ent));
         args.Args.Reason = message;
         _popup.PopupClient(message, args.Args.Equipee, args.Args.Equipee);
@@ -36,6 +42,11 @@ public sealed partial class SlotBlockSystem : EntitySystem
     {
         if (args.Args.Cancelled || (args.Args.SlotFlags & ent.Comp.Slots) == 0)
             return;
+            
+        // <Vortex>
+        if (HasComp<StopBlockBypassComponent>(args.Args.Unequipee))
+            return;
+        // </Vortex>
 
         // <Vortex>
         var message = Loc.GetString("slot-block-component-blocked", ("item", ent));

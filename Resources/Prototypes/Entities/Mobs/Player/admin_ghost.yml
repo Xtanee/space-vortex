@@ -270,6 +270,7 @@
     allowedVerbs: []
   - type: ExplosionResistance
     damageCoefficient: 0
+  - type: StopBlockBypass
 
 - type: entity
   abstract: true
