@@ -46,6 +46,7 @@ using Content.Shared.Preferences;
 using Content.Shared._EinsteinEngines.HeightAdjust;
 using Content.Goobstation.Common.Barks; // Goob Station - Barks
 using Robust.Shared;
+using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Network;
@@ -749,15 +750,15 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     // Goob Station - Barks End
 
     // ADT Barks start
-    public void SetBarkData(EntityUid uid, string sound, float pitch, float lowVar, float highVar)
+    public void SetBarkData(EntityUid uid, SoundSpecifier sound, float pitch, float lowVar, float highVar)
     {
         if (!TryComp<SpeechBarksComponent>(uid, out var comp))
             return;
 
-        comp.Sound = sound;
-        comp.BarkPitch = pitch;
-        comp.BarkLowVar = lowVar;
-        comp.BarkHighVar = highVar;
+        comp.Data.Sound = sound;
+        comp.Data.Pitch = pitch;
+        comp.Data.MinVar = lowVar;
+        comp.Data.MaxVar = highVar;
     }
     // ADT Barks end
 

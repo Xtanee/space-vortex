@@ -181,6 +181,11 @@
   - type: TypingIndicator
     proto: skeleton
   - type: FacehuggerImmune # Goobstation - Xenomorphs
+  - type: SpeechBarks
+    data:
+      proto: SkeletonBarkOne
+      sound:
+        collection: ADTSkeletonBark
 
 - type: entity
   parent: BaseSpeciesDummy

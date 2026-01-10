@@ -21,6 +21,7 @@ using Content.Shared.ADT.SpeechBarks;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects.Components.Localization;
 
 namespace Content.Server.Humanoid;
@@ -64,7 +65,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         targetHumanoid.MarkingSet = new(sourceHumanoid.MarkingSet);
         SetTTSVoice(target, sourceHumanoid.Voice, targetHumanoid); // Corvax-TTS
         if (TryComp<SpeechBarksComponent>(source, out var barks))
-            SetBarkData(target, barks.Sound, barks.BarkPitch, barks.BarkLowVar, barks.BarkHighVar); // ADT Barks
+            SetBarkData(target, barks.Data.Sound ?? new SoundPathSpecifier("/Audio/Voice/Human/male1.ogg"), barks.Data.Pitch, barks.Data.MinVar, barks.Data.MaxVar); // ADT Barks
 
         targetHumanoid.Gender = sourceHumanoid.Gender;
         if (TryComp<GrammarComponent>(target, out var grammar))

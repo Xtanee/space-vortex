@@ -85,6 +85,11 @@ public sealed partial class HumanoidProfileEditor
         if (Profile is null)
             return;
 
-        _entManager.System<SpeechBarksSystem>().PlayDataPrewiew(Profile.BarkProto, Profile.BarkPitch, Profile.BarkLowVar, Profile.BarkHighVar);
+        _entManager.System<SpeechBarksSystem>().PlayDataPreview(
+            Profile.BarkProto,
+            Profile.BarkPitch,
+            Profile.BarkLowVar,
+            Profile.BarkHighVar
+        );
     }
 }

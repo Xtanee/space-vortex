@@ -11,8 +11,10 @@ using Content.Shared.ADT.SpeechBarks;
 using Content.Server.Chat.Systems;
 using Robust.Shared.Configuration;
 using Content.Shared.ADT.CCVar;
-using Robust.Shared.Utility;
-using System.Threading.Tasks;
+using Content.Server.Mind;
+using Robust.Shared.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.ADT.SpeechBarks;
 
@@ -20,7 +22,11 @@ public sealed class SpeechBarksSystem : SharedSpeechBarksSystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     private bool _isEnabled = false;
 
     public override void Initialize()
@@ -29,17 +35,7 @@ public sealed class SpeechBarksSystem : SharedSpeechBarksSystem
 
         _cfg.OnValueChanged(ADTCCVars.BarksEnabled, v => _isEnabled = v, true);
 
-        SubscribeLocalEvent<SpeechBarksComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SpeechBarksComponent, EntitySpokeEvent>(OnEntitySpoke);
-
-    }
-    private void OnMapInit(EntityUid uid, SpeechBarksComponent comp, MapInitEvent args)
-    {
-        if (comp.BarkPrototype != null && comp.BarkPrototype != String.Empty)
-        {
-            var proto = _proto.Index(comp.BarkPrototype.Value);
-            comp.Sound = proto.Sound;
-        }
     }
 
     private void OnEntitySpoke(EntityUid uid, SpeechBarksComponent component, EntitySpokeEvent args)
@@ -47,16 +43,29 @@ public sealed class SpeechBarksSystem : SharedSpeechBarksSystem
         if (!_isEnabled)
             return;
 
-        var ev = new TransformSpeakerBarkEvent(uid, component.Sound, component.BarkPitch);
+        var ev = new TransformSpeakerBarkEvent(uid, component.Data.Sound?.ToString() ?? string.Empty, component.Data.Pitch);
         RaiseLocalEvent(uid, ev);
 
-        RaiseNetworkEvent(new PlaySpeechBarksEvent(
-            GetNetEntity(uid),
-            args.Message,
-            ev.Sound,
-            ev.Pitch,
-            component.BarkLowVar,
-            component.BarkHighVar,
-            args.IsWhisper));
+        var message = args.Message;
+        var soundSpecifier = component.Data.Sound;
+        if (soundSpecifier == null && !string.IsNullOrEmpty(ev.Sound) && _proto.TryIndex<BarkPrototype>(ev.Sound, out var barkPrototype))
+        {
+            soundSpecifier = barkPrototype.Sound;
+        }
+
+        foreach (var ent in _lookup.GetEntitiesInRange(Transform(uid).Coordinates, 10f))
+        {
+            if (!_mind.TryGetMind(ent, out _, out var mind) || mind.UserId == null || !_player.TryGetSessionById(mind.UserId, out var session))
+                continue;
+
+            RaiseNetworkEvent(new PlaySpeechBarksEvent(
+                        GetNetEntity(uid),
+                        message,
+                        soundSpecifier ?? new SoundPathSpecifier("/Audio/Voice/Human/male1.ogg"),
+                        ev.Pitch,
+                        component.Data.MinVar,
+                        component.Data.MaxVar,
+                        args.IsWhisper), session);
+        }
     }
 }
