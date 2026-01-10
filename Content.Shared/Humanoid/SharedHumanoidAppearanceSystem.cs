@@ -44,7 +44,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared._EinsteinEngines.HeightAdjust;
-using Content.Goobstation.Common.Barks; // Goob Station - Barks
 using Robust.Shared;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
@@ -720,34 +719,6 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         if (sync)
             Dirty(uid, humanoid);
     }
-
-    //  Goob Station - Barks Start
-    #region Goob - Barks
-    public void SetBarkVoice(EntityUid uid, string? barkvoiceId, HumanoidAppearanceComponent humanoid)
-    {
-        var voicePrototypeId = DefaultBark;
-
-        if (barkvoiceId != null &&
-            _proto.TryIndex<Content.Shared.ADT.SpeechBarks.BarkPrototype>(barkvoiceId, out var bark) &&
-            bark.RoundStart)
-        {
-            voicePrototypeId = barkvoiceId;
-        }
-        else
-        {
-            var barks = _proto.EnumeratePrototypes<Content.Shared.ADT.SpeechBarks.BarkPrototype>()
-                .Where(o => o.RoundStart)
-                .ToList();
-
-            voicePrototypeId = barks.Count > 0 ? barks[0].ID : DefaultBark;
-        }
-
-        EnsureComp<SpeechSynthesisComponent>(uid, out var comp);
-        comp.VoicePrototypeId = voicePrototypeId;
-        Dirty(uid, comp);
-    }
-    #endregion
-    // Goob Station - Barks End
 
     // ADT Barks start
     public void SetBarkData(EntityUid uid, SoundSpecifier sound, float pitch, float lowVar, float highVar)

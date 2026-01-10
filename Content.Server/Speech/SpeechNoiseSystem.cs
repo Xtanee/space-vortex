@@ -15,7 +15,6 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using Content.Goobstation.Common.Speech;
 using Robust.Shared.Audio;
 using Content.Server.Chat.Systems;
 using Content.Shared.Speech;
@@ -23,11 +22,10 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Random;
-
-// Goob Station
- using Content.Goobstation.Common.Barks;
-using Content.Goobstation.Common.CCVar;
 using Robust.Shared.Configuration;
+using Content.Shared.ADT.SpeechBarks;
+using Content.Shared.ADT.CCVar;
+using Content.Goobstation.Common.Speech;
 
 
 namespace Content.Server.Speech
@@ -94,11 +92,11 @@ namespace Content.Server.Speech
 
         private void OnEntitySpoke(EntityUid uid, SpeechComponent component, EntitySpokeEvent args)
         {
-            // Goob station - Barks
+            // ADT Barks - Check if barks are enabled and entity has bark component
             if (component.SpeechSounds == null
                 || !args.Language.SpeechOverride.RequireSpeech
-                || _cfg.GetCVar(GoobCVars.BarksEnabled) // Goob Station - Barks
-                && HasComp<SpeechSynthesisComponent>(uid))
+                || (_cfg.GetCVar(ADTCCVars.BarksEnabled) // ADT Barks
+                && HasComp<SpeechBarksComponent>(uid)))
                 return;
             // END
 
