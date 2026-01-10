@@ -114,6 +114,10 @@
   name: winter coat
   description: A heavy jacket made from 'synthetic' animal furs.
   components:
+  # <Vortex>
+  - type: SlotBlock
+    slots: [innerclothing, underwearb]
+  # </Vortex>
   - type: Sprite
     sprite: _CorvaxGoob/Clothing/OuterClothing/WinterCoats/coat.rsi # CorvaxGoob-Resprite
   - type: Clothing

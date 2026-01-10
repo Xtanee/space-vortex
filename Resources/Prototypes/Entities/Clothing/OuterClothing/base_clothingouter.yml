@@ -167,6 +167,10 @@
   # Goobstation edit end
   - type: Sprite
     state: icon
+  # <Vortex>
+  - type: SlotBlock
+    slots: [innerclothing, underweart, underwearb]
+  # </Vortex>
 
 - type: entity
   abstract: true

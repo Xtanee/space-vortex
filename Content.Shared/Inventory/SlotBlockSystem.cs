@@ -1,4 +1,5 @@
 using Content.Shared.Inventory.Events;
+using Content.Shared.Popups;
 
 namespace Content.Shared.Inventory;
 
@@ -7,6 +8,9 @@ namespace Content.Shared.Inventory;
 /// </summary>
 public sealed partial class SlotBlockSystem : EntitySystem
 {
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -20,7 +24,11 @@ public sealed partial class SlotBlockSystem : EntitySystem
         if (args.Args.Cancelled || (args.Args.SlotFlags & ent.Comp.Slots) == 0)
             return;
 
-        args.Args.Reason = Loc.GetString("slot-block-component-blocked", ("item", ent));
+        // <Vortex>
+        var message = Loc.GetString("slot-block-component-blocked", ("item", ent));
+        args.Args.Reason = message;
+        _popup.PopupClient(message, args.Args.Equipee, args.Args.Equipee);
+        // </Vortex edited> 
         args.Args.Cancel();
     }
 
@@ -29,7 +37,11 @@ public sealed partial class SlotBlockSystem : EntitySystem
         if (args.Args.Cancelled || (args.Args.SlotFlags & ent.Comp.Slots) == 0)
             return;
 
-        args.Args.Reason = Loc.GetString("slot-block-component-blocked", ("item", ent));
+        // <Vortex>
+        var message = Loc.GetString("slot-block-component-blocked", ("item", ent));
+        args.Args.Reason = message;
+        _popup.PopupClient(message, args.Args.Unequipee, args.Args.Unequipee);
+        // </Vortex edited>
         args.Args.Cancel();
     }
 }
