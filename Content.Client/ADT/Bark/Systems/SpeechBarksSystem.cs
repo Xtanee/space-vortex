@@ -26,7 +26,7 @@ public sealed class SpeechBarksSystem : EntitySystem
 
     private const float MinimalVolume = -10f;
     private const float WhisperFade = 4f;
-    private float _volume = 0.0f;
+    private float _volume = 1.0f;
 
     private List<ActiveBark> _activeBarks = new();
 
