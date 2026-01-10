@@ -35,7 +35,6 @@ using Content.Shared.Preferences;
 using Content.Shared.Roles.Jobs; // Goobstation
 using Content.Shared.Speech;
 using Content.Shared.VoiceMask;
-using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.VoiceMask;
@@ -44,7 +43,6 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 {
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
@@ -62,7 +60,9 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskSetNameEvent>(OpenUI);
         InitializeTTS(); // CorvaxGoob-TTS
 
-        Subs.CVar(_cfgManager, CCVars.MaxNameLength, value => _maxNameLength = value, true);
+        Subs.CVar(_cfg, CCVars.MaxNameLength, value => _maxNameLength = value, true);
+        // SubscribeLocalEvent<VoiceMaskerComponent, GetVerbsEvent<AlternativeVerb>>(GetVerbs);
+        InitializeBarks(); // ADT Barks
     }
 
     private void OnTransformSpeakerName(Entity<VoiceMaskComponent> entity, ref InventoryRelayedEvent<TransformSpeakerNameEvent> args)
@@ -99,6 +99,8 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-success"), entity, message.Actor);
 
         UpdateUI(entity);
+        if (_uiSystem.HasUi(entity.Owner, VoiceMaskUIKey.Key))
+            _uiSystem.SetUiState(entity.Owner, VoiceMaskUIKey.Key, new VoiceMaskBuiState(GetCurrentVoiceName(entity), entity.Comp.VoiceId, entity.Comp.VoiceMaskSpeechVerb, entity.Comp.JobIconProtoId));
     }
 
     #endregion

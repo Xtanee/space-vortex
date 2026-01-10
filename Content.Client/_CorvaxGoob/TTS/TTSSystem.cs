@@ -12,6 +12,7 @@ using Content.Shared._CorvaxGoob;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Audio.Components;
 using Robust.Shared.Spawners;
+using Content.Shared.ADT.CCVar;
 
 namespace Content.Client._CorvaxGoob.TTS;
 
@@ -81,6 +82,9 @@ public sealed partial class TTSSystem : EntitySystem
 
     private void OnPlayTTS(PlayTTSEvent ev)
     {
+        if (_cfg.GetCVar(ADTCCVars.ReplaceTTSWithBarks) == true)    // ADT Barks
+            return;
+
         _sawmill.Verbose($"Play TTS audio {ev.Data.Length} bytes from {ev.SourceUid} entity");
 
         var filePath = new ResPath($"{_fileIdx++}.ogg");

@@ -40,52 +40,6 @@ public sealed partial class VoiceMaskNameChangeWindow
         _jobIcons = icons.Select(icon => (ProtoId<JobIconPrototype>) icon.ID).ToList();
     }
 
-    public void AddJobIcons()
-    {
-        IconGrid.DisposeAllChildren();
-
-        for (var i = 0; i < _jobIcons.Count; i++)
-        {
-            var jobIcon = _protoManager.Index(_jobIcons[i]);
-
-            var styleBase = StyleBase.ButtonOpenBoth;
-            var mod = i % JobIconColumnCount;
-
-            if (mod == 0)
-                styleBase = StyleBase.ButtonOpenRight;
-            else if (mod == JobIconColumnCount - 1)
-                styleBase = StyleBase.ButtonOpenLeft;
-
-            var jobIconButton = new Button
-            {
-                Access = AccessLevel.Public,
-                StyleClasses = { styleBase },
-                MaxSize = new Vector2(42, 28),
-                Group = _jobIconButtonGroup,
-                Pressed = jobIcon.ID == _currentJobIconId,
-                ToolTip = jobIcon.LocalizedJobName
-            };
-
-            var jobIconTexture = new TextureRect
-            {
-                Texture = _spriteSystem.Frame0(jobIcon.Icon),
-                TextureScale = new Vector2(2.5f, 2.5f),
-                Stretch = TextureRect.StretchMode.KeepCentered,
-            };
-
-            _jobIconButtons.Add(jobIcon.ID, jobIconButton);
-
-            jobIconButton.AddChild(jobIconTexture);
-            jobIconButton.OnPressed += _ =>
-            {
-                _currentJobIconId = jobIcon.ID;
-                OnJobIconChanged?.Invoke(jobIcon.ID);
-            };
-
-            IconGrid.AddChild(jobIconButton);
-        }
-    }
-
     public void SetCurrentJobIcon(ProtoId<JobIconPrototype>? jobIconProtoId)
     {
         _currentJobIconId = jobIconProtoId;

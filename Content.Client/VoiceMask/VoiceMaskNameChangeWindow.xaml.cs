@@ -20,6 +20,8 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using System.Linq;
 using Robust.Client.GameObjects;
+using Content.Shared.ADT.CCVar;
+using Content.Shared.ADT.SpeechBarks;
 
 namespace Content.Client.VoiceMask;
 
@@ -35,6 +37,9 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
 
     private List<(string, string)> _verbs = new();
     private List<TTSVoicePrototype> _voices = new(); // CorvaxGoob-TTS
+    public Action<string>? OnBarkChange; // Corvax-TTS
+    public Action<string>? OnPitchChange; // Corvax-TTS
+    private List<BarkPrototype> _barks = new(); // ADT Barks
 
     private string? _verb;
 
@@ -62,7 +67,16 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
             TTSContainer.Visible = true;
             ReloadVoices(IoCManager.Resolve<IPrototypeManager>());
         }
-        // CorvaxGoob-TTS-End
+        // Corvax-TTS-End
+        // ADT Barks start
+        if (IoCManager.Resolve<IConfigurationManager>().GetCVar(ADTCCVars.BarksEnabled))
+        {
+            BarksContainer.Visible = true;
+            ReloadBarks(IoCManager.Resolve<IPrototypeManager>());
+        }
+        // ADT Barks end
+
+        AddVerbs();
     }
 
     public void ReloadVerbs(IPrototypeManager proto)
@@ -119,7 +133,40 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
             SpeechVerbSelector.SelectId(id);
     }
 
-    public void UpdateState(string name, string voice, string? verb) // CorvaxGoob-TTS
+
+    // ADT Barks start
+    private void ReloadBarks(IPrototypeManager proto)
+    {
+        BarkSelector.OnItemSelected += args =>
+        {
+            BarkSelector.SelectId(args.Id);
+            if (BarkSelector.SelectedMetadata != null)
+                OnBarkChange!((string)BarkSelector.SelectedMetadata);
+        };
+        PitchSelector.OnTextEntered += args =>
+        {
+            if (float.TryParse(args.Text, out var newMsg))
+            {
+                OnPitchChange!(args.Text);
+                PitchSelector.SetText(args.Text);
+            }
+        };
+
+        _barks = proto
+            .EnumeratePrototypes<BarkPrototype>()
+            .Where(o => o.RoundStart)
+            .OrderBy(o => Loc.GetString(o.Name))
+            .ToList();
+        for (var i = 0; i < _barks.Count; i++)
+        {
+            var name = Loc.GetString(_barks[i].Name);
+            BarkSelector.AddItem(name);
+            BarkSelector.SetItemMetadata(i, _barks[i].ID);
+        }
+    }
+    // ADT Barks end
+
+    public void UpdateState(string name, string voice, string barkId, float barkPitch, string? verb) // Corvax-TTS
     {
         NameSelector.Text = name;
         _verb = verb;
@@ -138,5 +185,12 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
         if (voiceIdx != -1)
             VoiceSelector.Select(voiceIdx);
         // CorvaxGoob-TTS-End
+
+        // ADT Barks start
+        var barkIdx = _barks.FindIndex(b => b.ID == barkId);
+        if (barkIdx != -1)
+            BarkSelector.Select(barkIdx);
+        PitchSelector.SetText(barkPitch.ToString());
+        // ADT Barks end
     }
 }

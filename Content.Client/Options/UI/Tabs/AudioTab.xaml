@@ -32,6 +32,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 <!-- CorvaxGoob-Announcements-Volume-Start -->
                 <ui:OptionSlider Name="SliderVolumeAnnouncements" Title="{Loc 'ui-options-announcements-sounds'}" />
                 <!-- CorvaxGoob-Announcements-Volume-End -->
+                <!-- ADT Barks start -->
+                <ui:OptionSlider Name="SliderVolumeBarks" Title="{Loc 'ui-options-barks-volume'}" />
+                <!-- ADT Barks end -->
                 <ui:OptionSlider Name="SliderVolumeMidi" Title="{Loc 'ui-options-midi-volume'}" />
                 <ui:OptionSlider Name="SliderVolumeAmbientMusic" Title="{Loc 'ui-options-ambient-music-volume'}" />
                 <ui:OptionSlider Name="SliderVolumeAmbience" Title="{Loc 'ui-options-ambience-volume'}" />
@@ -42,13 +45,15 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 -->
                 <ui:OptionSlider Name="SliderMaxAmbienceSounds" Title="{Loc 'ui-options-ambience-max-sounds'}"
                                  Margin="0 0 0 8" />
-                <!-- Deleted by CorvaxGoob
-                <ui:OptionSlider Name="SliderVolumeBarks" Title="{Loc 'ui-options-barks-volume'}" />-->
                 <ui:OptionSlider Name="SliderHighlightVolume" Title="{Loc 'ui-options-highlight-volume'}" /> <!-- Goobstation - Highlight chat Ping/Audio! -->
                 <!--<CheckBox Name="HearSelfCheckBox" Text="{Loc 'ui-options-hear-self'}" />-->
                 <!-- CorvaxGoob-CombatMode-Sound-Start -->
                 <CheckBox Name="CombatModeSoundCheckBox" Text="{Loc 'ui-options-combat-mode-sound'}" />
                 <!-- CorvaxGoob-CombatMode-Sound-End -->
+                <!-- ADT Barks start -->
+                <ui:OptionDropDown Name="DropDownBarksOrTTS" Title="{Loc 'ui-options-barks-or-tts'}"
+                                 Margin="0 0 0 8" />
+                <!-- ADT Barks end -->
                 <CheckBox Name="LobbyMusicCheckBox" Text="{Loc 'ui-options-lobby-music'}" />
                 <CheckBox Name="RestartSoundsCheckBox" Text="{Loc 'ui-options-restart-sounds'}" />
                 <CheckBox Name="EventMusicCheckBox" Text="{Loc 'ui-options-event-music'}" />

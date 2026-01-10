@@ -514,6 +514,7 @@
   - type: Sprinter # Goobstation
   - type: MindControllable # Goobstation
   - type: VisibleContraband # Goobstation
+  - type: SpeechBarks
 
 - type: entity
   save: false

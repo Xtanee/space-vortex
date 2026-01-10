@@ -37,6 +37,17 @@ public sealed class VoiceMaskBuiState : BoundUserInterfaceState
         Voice = voice;  // CorvaxGoob-TTS
         JobIcon = jobIcon; // GabyStation -> Radio icons
     }
+    public readonly string? Bark; // ADT Barks
+    public readonly float Pitch; // ADT Barks
+
+    public VoiceMaskBuiState(string name, string voice, string bark, float pitch, string? verb)
+    {
+        Name = name;
+        Verb = verb;
+        Voice = voice;  // Corvax-TTS
+        Bark = bark; // ADT Barks
+        Pitch = pitch; // ADT Barks
+    }
 }
 
 [Serializable, NetSerializable]

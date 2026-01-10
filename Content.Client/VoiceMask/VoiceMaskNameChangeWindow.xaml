@@ -26,12 +26,18 @@ SPDX-License-Identifier: MIT
             <OptionButton Name="VoiceSelector" />
             <!-- Populated in LoadVerbs -->
         </BoxContainer>
-        <!-- CorvaxGoob-TTS-End -->
-        <!-- GabyStation -> Radio icons start -->
-		<Label Text="{Loc 'voice-mask-icon-label'}"/>
-		<GridContainer Name="IconGrid" Columns="10">
-			<!-- Job icon buttons are generated in the code -->
-		</GridContainer>
-        <!-- GabyStation -> Radio icons end -->
+        <!-- Corvax-TTS-End -->
+        <!-- ADT Barks start -->
+        <BoxContainer Orientation="Horizontal" Margin="5" Visible="False" Name="BarksContainer">
+            <Label Text="{Loc 'voice-mask-voice-change-info'}" />
+            <OptionButton Name="BarkSelector" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" Margin="5" Visible="False" Name="BarksPitchContainer">
+            <Label Text="{Loc 'voice-mask-pitch-change-info'}" />
+            <LineEdit Name="PitchSelector" HorizontalExpand="True" HorizontalAlignment="Right" MaxSize="15 5"/>
+            <!-- Populated in LoadVerbs -->
+        </BoxContainer>
+        <!-- ADT Barks end -->
+
     </BoxContainer>
 </controls:FancyWindow>

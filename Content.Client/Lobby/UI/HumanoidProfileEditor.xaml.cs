@@ -167,6 +167,8 @@ using Content.Client.Sprite;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared._CorvaxGoob.CCCVars;
+using Content.Shared.ADT.CCVar;
+using Content.Shared.ADT.SpeechBarks;
 using Content.Shared.CCVar;
 using Content.Shared.Clothing;
 using Content.Shared.GameTicking;
@@ -404,6 +406,20 @@ namespace Content.Client.Lobby.UI
             }*/
 
             #endregion
+
+            // ADT Barks Start
+            #region Voice
+
+            if (configurationManager.GetCVar(ADTCCVars.BarksEnabled))
+            {
+                BarksContainer.Visible = true;
+                BarksPitchContainer.Visible = true;
+                BarksDelayContainer.Visible = true;
+                InitializeBarks();
+            }
+
+            #endregion
+            // ADT Barks End
 
             RefreshSpecies();
 
@@ -718,6 +734,7 @@ namespace Content.Client.Lobby.UI
             SpeciesInfoButton.OnPressed += OnSpeciesInfoButtonPressed;
 
             UpdateSpeciesGuidebookIcon();
+            ReloadPreview();
             IsDirty = false;
 
             #region CDWidth
@@ -1198,9 +1215,8 @@ namespace Content.Client.Lobby.UI
             UpdateEyePickers();
             UpdateSaveButton();
             UpdateMarkings();
-            UpdateTTSVoicesControls(); // CorvaxGoob-TTS
-            // CorvaxGoob-Revert : DB conflicts
-            // UpdateBarkVoice(); // Goob Station - Barks
+            UpdateTTSVoicesControls(); // Corvax-TTS
+            UpdateBarkVoicesControls(); // ADT Barks
             UpdateHairPickers();
             UpdateCMarkingsHair();
             UpdateCMarkingsFacialHair();
@@ -1697,6 +1713,34 @@ namespace Content.Client.Lobby.UI
             IsDirty = true;
         }
         // CorvaxGoob-TTS-End
+
+        private void SetBarkProto(string prototype)
+        {
+            Profile = Profile?.WithBarkProto(prototype);
+            ReloadPreview();
+            SetDirty();
+        }
+
+        private void SetBarkPitch(float pitch)
+        {
+            Profile = Profile?.WithBarkPitch(Math.Clamp(pitch, _cfgManager.GetCVar(ADTCCVars.BarksMinPitch), _cfgManager.GetCVar(ADTCCVars.BarksMaxPitch)));
+            ReloadPreview();
+            SetDirty();
+        }
+
+        private void SetBarkMinVariation(float variation)
+        {
+            Profile = Profile?.WithBarkMinVariation(Math.Clamp(variation, _cfgManager.GetCVar(ADTCCVars.BarksMinDelay), Profile.BarkHighVar));
+            ReloadPreview();
+            SetDirty();
+        }
+
+        private void SetBarkMaxVariation(float variation)
+        {
+            Profile = Profile?.WithBarkMaxVariation(Math.Clamp(variation, Profile.BarkLowVar, _cfgManager.GetCVar(ADTCCVars.BarksMaxDelay)));
+            ReloadPreview();
+            SetDirty();
+        }
 
         private void SetSpecies(string newSpecies)
         {
