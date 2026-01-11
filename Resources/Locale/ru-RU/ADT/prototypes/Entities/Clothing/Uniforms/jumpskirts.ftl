@@ -12,3 +12,6 @@ ent-ADTClothingUniformSwimPurple = фиолетовый купальник
 
 ent-ADTClothingUniformSwimRed = красный купальник
     .desc = Потрясающий красный купальник, который привлекает взгляды.
+
+ent-ADTClothingUniformSwimBlack = чёрный купальник
+    .desc = Стильный черный купальник для пляжа или бассейна.
