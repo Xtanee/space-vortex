@@ -185,7 +185,7 @@
   components:
   # <Vortex>
   - type: SlotBlock
-    slots: [hands]
+    slots: [gloves]
   # </Vortex>
   - type: StaticPrice
     price: 300
@@ -197,8 +197,8 @@
   description: Looks slightly less valuable than a gold one.
   components:
   # <Vortex>
-  - type: SlotBlock
-    slots: [hands]
+    - type: SlotBlock
+      slots: [gloves]
   # </Vortex>
     - type: PhysicalComposition
       materialComposition:
