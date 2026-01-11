@@ -91,10 +91,6 @@
   parent: Clothing
   id: ClothingHandsBase
   components:
-  # <Vortex>
-  - type: SlotBlock
-    slots: [ring]
-  # </Vortex>
   - type: Sprite
     state: icon
   - type: Clothing
