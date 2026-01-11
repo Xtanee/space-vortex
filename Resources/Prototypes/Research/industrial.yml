@@ -29,7 +29,8 @@
   cost: 5000
   recipeUnlocks:
     - RadarConsoleCircuitboard
-  position: 0,-1
+    - HandHeldMassScanner
+  position: 0,-3
   technologyPrerequisites:
     - PowerGeneration
 - type: technology

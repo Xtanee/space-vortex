@@ -43,6 +43,7 @@ public abstract partial class SharedDiseaseSystem : EntitySystem
         SubscribeLocalEvent<DiseaseCarrierComponent, ComponentStartup>(OnDiseaseCarrierStartup);
 
         SubscribeLocalEvent<DiseaseComponent, MapInitEvent>(OnDiseaseInit);
+        SubscribeLocalEvent<DiseaseComponent, ComponentInit>(OnDiseaseCompInit);
         SubscribeLocalEvent<DiseaseComponent, DiseaseUpdateEvent>(OnUpdateDisease);
 
         EffectQuery = GetEntityQuery<DiseaseEffectComponent>();
@@ -114,6 +115,11 @@ public abstract partial class SharedDiseaseSystem : EntitySystem
         ent.Comp.Complexity = complexity;
 
         Dirty(ent);
+    }
+
+    private void OnDiseaseCompInit(Entity<DiseaseComponent> ent, ref ComponentInit args)
+    {
+        ent.Comp.Effects = ContainerSystem.EnsureContainer<Container>(ent.Owner, DiseaseComponent.EffectContainerId);
     }
 
     private void OnDiseaseCured(Entity<DiseaseCarrierComponent> ent, ref DiseaseCuredEvent args)
