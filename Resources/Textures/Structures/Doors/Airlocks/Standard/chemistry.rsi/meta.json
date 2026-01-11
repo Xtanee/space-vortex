@@ -1,64 +1,33 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprited by Discord: neyran.official For Space Vortex: https://github.com/Space-Vortex/space-vortex",
+  "copyright": "Taken from TauCetiClassic at commit https://github.com/TauCetiStation/TauCetiClassic/commit/fd5cfd76acdf5bda9e46413c11006a6e825d51a9. Modified by Ko4erga (discord)",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "assembly",
-	  "directions": 4
+      "name": "assembly"
     },
     {
-      "name": "bolted_unlit",
-	  "directions": 4
+      "name": "bolted_unlit"
     },
     {
-      "name": "bolted_open_unlit",
-	  "directions": 4
+      "name": "bolted_open_unlit"
     },
     {
-      "name": "closed",
-	  "directions": 4
+      "name": "closed"
     },
     {
-      "name": "closed_unlit",
-	  "directions": 4
+      "name": "closed_unlit"
     },
     {
-      "name": "open_unlit",
-	  "directions": 4
+      "name": "open_unlit"
     },
     {
       "name": "closing",
-	  "directions": 4,
       "delays": [
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ],
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ],
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ],
         [
           0.1,
           0.1,
@@ -71,32 +40,7 @@
     },
     {
       "name": "closing_unlit",
-	  "directions": 4,
       "delays": [
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ],
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ],
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ],
         [
           0.1,
           0.1,
@@ -109,58 +53,22 @@
     },
     {
       "name": "deny_unlit",
-	  "directions": 4,
       "delays": [
         [
-          1.2,
-		  1.2
-        ],
-        [
-          1.2,
-		  1.2
-        ],
-        [
-          1.2,
-		  1.2
-        ],
-        [
-          1.2,
-		  1.2
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
         ]
       ]
     },
     {
-      "name": "open",
-	  "directions": 4
+      "name": "open"
     },
     {
       "name": "opening",
-	  "directions": 4,
       "delays": [
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ],
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ],
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ],
         [
           0.1,
           0.1,
@@ -173,32 +81,7 @@
     },
     {
       "name": "opening_unlit",
-	  "directions": 4,
       "delays": [
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ],
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ],
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ],
         [
           0.1,
           0.1,
@@ -211,32 +94,7 @@
     },
     {
       "name": "panel_closing",
-	  "directions": 4,
       "delays": [
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ],
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ],
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ],
         [
           0.1,
           0.1,
@@ -252,32 +110,7 @@
     },
     {
       "name": "panel_opening",
-	  "directions": 4,
       "delays": [
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ],
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ],
-        [
-          0.1,
-          0.1,
-          0.07,
-          0.07,
-          0.07,
-          0.2
-        ],
         [
           0.1,
           0.1,
@@ -290,12 +123,10 @@
     },
 
     {
-      "name": "panel_open",
-	  "directions": 4
+      "name": "panel_open"
     },
     {
       "name": "sparks",
-	  "directions": 4,
       "delays": [
         [
           0.1,
@@ -303,63 +134,15 @@
           0.1,
           0.1,
           0.1,
-          1.7
-        ],
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          1.7
-        ],
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          1.7
-        ],
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          1.7
+          0.1
         ]
       ]
     },
     {
       "name": "sparks_broken",
-	  "directions": 4,
       "delays": [
         [
           0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          1.7
-        ],
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          1.7
-        ],
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          1.7
-        ],
-        [
           0.1,
           0.1,
           0.1,
@@ -371,7 +154,6 @@
     },
     {
       "name": "sparks_damaged",
-	  "directions": 4,
       "delays": [
         [
           0.1,
@@ -379,58 +161,29 @@
           0.1,
           0.1,
           0.1,
-          1.7
-        ],
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          1.7
-        ],
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          1.7
-        ],
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          1.7
+          0.1
         ]
       ]
     },
     {
       "name": "sparks_open",
-	  "directions": 4
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
     },
     {
-      "name": "welded",
-	  "directions": 4
+      "name": "welded"
     },
     {
       "name": "emergency_unlit",
-	  "directions": 4,
       "delays": [
-        [
-          1.2,
-          1.2
-        ],
-        [
-          1.2,
-          1.2
-        ],
-        [
-          1.2,
-          1.2
-        ],
         [
           1.2,
           1.2
@@ -438,8 +191,7 @@
       ]
     },
     {
-      "name": "emergency_open_unlit",
-	  "directions": 4
+      "name": "emergency_open_unlit"
     }
   ]
 }
