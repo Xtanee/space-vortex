@@ -91,7 +91,7 @@
   components:
   # <Vortex>
   - type: SlotBlock
-    slots: [underweart, underwearb]
+    slots: [underweart, underwearb, neck]
   # </Vortex>
   - type: SuitSensor
   - type: DeviceNetwork
@@ -115,7 +115,7 @@
     femaleMask: UniformTop
   # <Vortex>
   - type: SlotBlock
-    slots: [underwearb]
+    slots: [underweart]
   # </Vortex>
   - type: Tag
     tags:
