@@ -277,9 +277,10 @@
   id: ClothingOuterHardsuitBase
   name: base hardsuit
   components:
-# SlotBlocker blocked until UI change
-#  - type: SlotBlock
-#    slots: [innerclothing, feet]
+  # <Vortex>
+  - type: SlotBlock
+    slots: [innerclothing, feet, underweart, underwearb]
+  # </Vortex>
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
