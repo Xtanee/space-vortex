@@ -91,7 +91,7 @@
   components:
   # <Vortex>
   - type: SlotBlock
-    slots: [underweart, underwearb, neck]
+    slots: [underweart, underwearb]
   # </Vortex>
   - type: SuitSensor
   - type: DeviceNetwork
