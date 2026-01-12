@@ -38,10 +38,10 @@ public sealed partial class HumanoidProfileEditor
         
         var barkTab = new BarkTab();
         barkTab.SetSelectedBark(
-            Profile.BarkProto,
-            Profile.BarkPitch,
-            Profile.BarkLowVar,
-            Profile.BarkHighVar);
+            Profile.Bark.Proto,
+            Profile.Bark.Pitch,
+            Profile.Bark.MinVar,
+            Profile.Bark.MaxVar);
         
         barkTab.OnBarkSelected += OnBarkSelected;
         barkTab.OnPitchChanged += OnBarkPitchChanged;
@@ -99,10 +99,10 @@ public sealed partial class HumanoidProfileEditor
             if (barkTab != null)
             {
                 barkTab.SetSelectedBark(
-                    Profile.BarkProto,
-                    Profile.BarkPitch,
-                    Profile.BarkLowVar,
-                    Profile.BarkHighVar);
+                    Profile.Bark.Proto,
+                    Profile.Bark.Pitch,
+                    Profile.Bark.MinVar,
+                    Profile.Bark.MaxVar);
             }
         }
     }
@@ -112,7 +112,7 @@ public sealed partial class HumanoidProfileEditor
         if (Profile is null)
             return;
 
-        var bark = _barkList.FirstOrDefault(b => b.ID == Profile.BarkProto);
+        var bark = _barkList.FirstOrDefault(b => b.ID == Profile.Bark.Proto);
         if (bark != null)
         {
             BarkProtoButton.Text = Loc.GetString(bark.Name);
@@ -129,10 +129,10 @@ public sealed partial class HumanoidProfileEditor
             return;
 
         _entManager.System<SpeechBarksSystem>().PlayDataPreview(
-            Profile.BarkProto,
-            Profile.BarkPitch,
-            Profile.BarkLowVar,
-            Profile.BarkHighVar
+            Profile.Bark.Proto,
+            Profile.Bark.Pitch,
+            Profile.Bark.MinVar,
+            Profile.Bark.MaxVar
         );
     }
 }

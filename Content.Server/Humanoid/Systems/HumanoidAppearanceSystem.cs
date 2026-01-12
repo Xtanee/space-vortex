@@ -64,8 +64,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
         targetHumanoid.MarkingSet = new(sourceHumanoid.MarkingSet);
         SetTTSVoice(target, sourceHumanoid.Voice, targetHumanoid); // Corvax-TTS
-        if (TryComp<SpeechBarksComponent>(source, out var barks))
-            SetBarkData(target, barks.Data.Sound ?? new SoundPathSpecifier("/Audio/Voice/Human/male1.ogg"), barks.Data.Pitch, barks.Data.MinVar, barks.Data.MaxVar); // ADT Barks
+        SetBarkData(targetHumanoid.Owner, sourceHumanoid.Bark, targetHumanoid);  // ADT Barks
 
         targetHumanoid.Gender = sourceHumanoid.Gender;
         if (TryComp<GrammarComponent>(target, out var grammar))

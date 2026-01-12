@@ -1,3 +1,5 @@
+using Content.Shared.Humanoid;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Audio;
@@ -43,28 +45,28 @@ public sealed partial class BarkData
     public float Pitch = 1f;
     public BarkData WithProto(string proto)
     {
-        var data = this;
+        var data = Copy();
         data.Proto = proto;
         return data;
     }
 
     public BarkData WithPitch(float pitch)
     {
-        var data = this;
+        var data = Copy();
         data.Pitch = pitch;
         return data;
     }
 
     public BarkData WithMinVar(float var)
     {
-        var data = this;
+        var data = Copy();
         data.MinVar = var;
         return data;
     }
 
     public BarkData WithMaxVar(float var)
     {
-        var data = this;
+        var data = Copy();
         data.MaxVar = var;
         return data;
     }

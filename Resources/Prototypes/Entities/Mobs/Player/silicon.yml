@@ -498,6 +498,9 @@
   - type: StartingMindRole
     mindRole: "MindRoleSiliconBrain"
     silent: true
+  - type: SpeechBarks
+    data:
+      proto: CanineVoice
 
 - type: entity
   id: PlayerBorgSyndicateAssaultBattery

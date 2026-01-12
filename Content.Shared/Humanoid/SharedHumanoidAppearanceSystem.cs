@@ -34,8 +34,6 @@
 using System.IO;
 using System.Linq;
 using System.Numerics;
-using Content.Shared.CCVar;
-using Content.Shared.Decals;
 using Content.Shared.Examine;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared._Shitmed.Humanoid.Events; // Shitmed Change
@@ -583,8 +581,10 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         EnsureDefaultMarkings(uid, humanoid);
         SetTTSVoice(uid, profile.Voice, humanoid); // CorvaxGoob-TTS
-        var bark = _proto.Index<Content.Shared.ADT.SpeechBarks.BarkPrototype>(profile.BarkProto); // ADT Barks
-        SetBarkData(uid, bark.Sound, profile.BarkPitch, profile.BarkLowVar, profile.BarkHighVar); // ADT Barks
+        // ADT Start
+        SetBarkData(uid, profile.Bark, humanoid);
+        // ADT End
+
         humanoid.Gender = profile.Gender;
         if (TryComp<GrammarComponent>(uid, out var grammar))
         {
@@ -594,18 +594,6 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         humanoid.Age = profile.Age;
         humanoid.Height = profile.Height; // Vortex - Height & Weight
         humanoid.Width = profile.Width; // Vortex - Height & Weight
-
-        // CorvaxGoob-Clearing
-/*        // begin Goobstation: port EE height/width sliders
-        var species = _proto.Index(humanoid.Species);
-
-        if (profile.Height <= 0 || profile.Width <= 0)
-            SetScale(uid, new Vector2(species.DefaultWidth, species.DefaultHeight), true, humanoid);
-        else
-            SetScale(uid, new Vector2(profile.Width, profile.Height), true, humanoid);
-
-        _heightAdjust.SetScale(uid, new Vector2(humanoid.Width, humanoid.Height));
-        // end Goobstation: port EE height/width sliders*/
 
         RaiseLocalEvent(uid, new ProfileLoadFinishedEvent()); // Shitmed Change
         Dirty(uid, humanoid);
@@ -721,15 +709,14 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     }
 
     // ADT Barks start
-    public void SetBarkData(EntityUid uid, SoundSpecifier sound, float pitch, float lowVar, float highVar)
+    public void SetBarkData(EntityUid uid, BarkData data, HumanoidAppearanceComponent humanoid)
     {
         if (!TryComp<SpeechBarksComponent>(uid, out var comp))
             return;
 
-        comp.Data.Sound = sound;
-        comp.Data.Pitch = pitch;
-        comp.Data.MinVar = lowVar;
-        comp.Data.MaxVar = highVar;
+        comp.Data = data;
+        comp.Data.Sound = _proto.Index(comp.Data.Proto).Sound;
+        humanoid.Bark = data;
     }
     // ADT Barks end
 

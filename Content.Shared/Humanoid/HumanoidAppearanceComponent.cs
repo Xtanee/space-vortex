@@ -51,10 +51,6 @@ public sealed partial class HumanoidAppearanceComponent : Component
     [DataField, AutoNetworkedField]
     public int Age = 18;
 
-    // CorvaxGoob-Revert : DB conflicts
-    // [DataField] // Goob Station - Barks
-    // public ProtoId<BarkPrototype> BarkVoice { get; set; } = SharedHumanoidAppearanceSystem.DefaultBarkVoice; // Goob Station - Barks
-
     /// <summary>
     ///     Any custom base layers this humanoid might have. See:
     ///     limb transplants (potentially), robotic arms, etc.
@@ -78,6 +74,16 @@ public sealed partial class HumanoidAppearanceComponent : Component
     [DataField("voice")]
     public ProtoId<TTSVoicePrototype> Voice { get; set; } = SharedHumanoidAppearanceSystem.DefaultVoice;
     // CorvaxGoob-TTS-End
+
+    // ADT Barks start
+
+    /// <summary>
+    ///     Current voice. Used for correct cloning.
+    /// </summary>
+
+    [DataField("bark")]
+    public BarkData Bark = new();
+    // ADT Barks end
 
     /// <summary>
     ///     The initial profile and base layers to apply to this humanoid.
