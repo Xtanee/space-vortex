@@ -4,6 +4,10 @@
   id: ClothingHeadEnvirohelmBase
   name: base envirosuit helmet
   components:
+  # <Vortex>
+  - type: SlotBlock
+    slots: [ears, eyes, mask]
+  # </Vortex>
   - type: Sprite
     layers:
     - state: icon

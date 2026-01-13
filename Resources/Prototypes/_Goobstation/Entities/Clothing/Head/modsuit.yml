@@ -22,6 +22,10 @@
   name: base modsuit helmet
   categories: [ HideSpawnMenu ]
   components:
+  # <Vortex>
+  - type: SlotBlock
+    slots: [ears, eyes, mask]
+  # </Vortex>
   - type: Sprite
     state: icon
   - type: Clickable
