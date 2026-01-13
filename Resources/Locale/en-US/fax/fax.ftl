@@ -36,3 +36,5 @@ fax-machine-ui-paper-not-inserted = No paper
 fax-machine-chat-notify = Received new fax message from "{$fax}" fax
 
 fax-machine-printed-paper-name = printed paper
+
+fax-alert-message = Received fax from: { $sender } on fax: { $receiver }

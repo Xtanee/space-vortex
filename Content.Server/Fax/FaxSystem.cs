@@ -149,6 +149,13 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Fax;
 
+// <Vortex>
+/// <summary>
+/// Event raised when a fax machine receives a fax
+/// </summary>
+[ByRefEvent]
+public record struct FaxReceivedEvent(string? FromAddress);
+// </Vortex>
 public sealed class FaxSystem : EntitySystem
 {
     [Dependency] private readonly IChatManager _chat = default!;
@@ -770,6 +777,12 @@ public sealed class FaxSystem : EntitySystem
 
         if (printout != null) // Goobstation
             component.PrintingQueue.Enqueue(printout);
+
+        // <Vortex>
+        // Raise event for FaxAlertSystem
+        var faxReceivedEvent = new FaxReceivedEvent(fromAddress);
+        RaiseLocalEvent(uid, ref faxReceivedEvent);
+        // </Vortex>
     }
 
     private void SpawnPaperFromQueue(EntityUid uid, FaxMachineComponent? component = null)
