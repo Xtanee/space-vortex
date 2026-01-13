@@ -30,7 +30,7 @@
   recipeUnlocks:
     - RadarConsoleCircuitboard
     - HandHeldMassScanner
-  position: 0,-3
+  position: 0,-1
   technologyPrerequisites:
     - PowerGeneration
 - type: technology
