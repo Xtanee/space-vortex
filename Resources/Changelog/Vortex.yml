@@ -444,4 +444,13 @@ Entries:
     type: Add
   id: 43
   time: '2026-01-13T08:00:00.000Z'
-
+- author: Neyran
+  changes:
+  - message: "Добавлена новая карта - Керберос."
+    type: Add
+  - message: "Добавлен факс мостика с оповещением."
+    type: Add
+  - message: "Боргам добавлен барк."
+    type: Tweak
+  id: 44
+  time: '2026-01-14T05:00:00.000Z'
