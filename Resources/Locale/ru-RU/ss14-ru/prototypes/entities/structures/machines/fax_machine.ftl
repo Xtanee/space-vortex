@@ -12,4 +12,3 @@ ent-FaxMachineCaptain = факс дальнего действия капита�
 ent-FaxMachineBridge = факс дальнего действия мостика
     .suffix = Мостик
     .desc = { ent-FaxMachineBase.desc }
-fax-bridge = Мостик

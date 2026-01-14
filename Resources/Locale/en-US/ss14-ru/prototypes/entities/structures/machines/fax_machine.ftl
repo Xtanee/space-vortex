@@ -12,4 +12,3 @@ ent-FaxMachineCaptain = captain long range fax machine
 ent-FaxMachineBridge = bridge long range fax machine
     .suffix = Bridge
     .desc = { ent-FaxMachineBase.desc }
-fax-bridge = Bridge

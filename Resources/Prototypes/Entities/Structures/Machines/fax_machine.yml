@@ -229,7 +229,7 @@
   suffix: Bridge
   components:
     - type: FaxMachine
-      name: "fax-bridge"
+      name: "Bridge"
     - type: StealTarget
       stealGroup: FaxMachineCaptain
     - type: FaxAlert
