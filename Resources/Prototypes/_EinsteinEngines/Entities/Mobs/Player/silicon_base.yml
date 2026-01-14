@@ -352,3 +352,5 @@
       canDisarm: true
     - type: ExaminableCharacter # WWDP
     - type: SpeechBarks
+      data:
+        sound: /Audio/ADT/Voice/Vocal-Barks/bloop.ogg

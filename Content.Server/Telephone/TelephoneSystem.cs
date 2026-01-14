@@ -30,6 +30,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using System.Linq;
 using Content.Shared._CorvaxGoob.TTS;
+using Content.Shared.ADT.SpeechBarks;
 
 namespace Content.Server.Telephone;
 
@@ -124,19 +125,24 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         var range = args.TelephoneSource.Comp.LinkedTelephones.Count > 1 ? ChatTransmitRange.HideChat : ChatTransmitRange.GhostRangeLimit;
         var volume = entity.Comp.SpeakerVolume == TelephoneVolume.Speak ? InGameICChatType.Speak : InGameICChatType.Whisper;
 
-        // CorvaxGoob-TTS-Start
+        // Corvax-TTS-Start
         // If speaker entity has TTS, the telephone will speak with the same voice
-        if (TryComp<TTSComponent>(args.MessageSource, out var ttsSpeaker))
+        if(TryComp<TTSComponent>(args.MessageSource, out var ttsSpeaker))
         {
-            EntityManager.EnsureComponent<TTSComponent>(entity, out var ttsTelephone);
+            EnsureComp<TTSComponent>(speaker, out var ttsTelephone);
             ttsTelephone.VoicePrototypeId = ttsSpeaker.VoicePrototypeId;
+        }
+        else if(TryComp<SpeechBarksComponent>(args.MessageSource, out var barkSpeaker))
+        {
+            EnsureComp<SpeechBarksComponent>(speaker, out var barkTelephone);
+            barkTelephone.Data = barkSpeaker.Data;
         }
         else // Remove TTS if the speaker has no TTS
         {
-            EntityManager.RemoveComponent<TTSComponent>(entity);
+            RemComp<TTSComponent>(speaker);
+            RemComp<SpeechBarksComponent>(speaker);
         }
-        // CorvaxGoob-TTS-End
-
+        // Corvax-TTS-End
         _chat.TrySendInGameICMessage(speaker, args.Message, volume, range, nameOverride: name, checkRadioPrefix: false, languageOverride: args.Language); // Eisntein Engines - Language
     }
 
