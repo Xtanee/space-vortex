@@ -9,3 +9,7 @@ ent-FaxMachineSyndie = факс дальнего действия Синдика
 ent-FaxMachineCaptain = факс дальнего действия капитана
     .suffix = ЯдерныеКоды
     .desc = { ent-FaxMachineBase.desc }
+ent-FaxMachineBridge = факс дальнего действия мостика
+    .suffix = Мостик
+    .desc = { ent-FaxMachineBase.desc }
+fax-bridge = Мостик

@@ -9,3 +9,7 @@ ent-FaxMachineSyndie = syndicate long range fax machine
 ent-FaxMachineCaptain = captain long range fax machine
     .suffix = NukeCodes
     .desc = { ent-FaxMachineBase.desc }
+ent-FaxMachineBridge = bridge long range fax machine
+    .suffix = Bridge
+    .desc = { ent-FaxMachineBase.desc }
+fax-bridge = Bridge

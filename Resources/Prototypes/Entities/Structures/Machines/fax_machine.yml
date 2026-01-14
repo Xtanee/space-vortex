@@ -220,3 +220,18 @@
     - type: FaxAlert
       alertChannel: Command
     # </Vortex>
+
+  # <Vortex>
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineBridge
+  name: bridge long range fax machine
+  suffix: Bridge
+  components:
+    - type: FaxMachine
+      name: "fax-bridge"
+    - type: StealTarget
+      stealGroup: FaxMachineCaptain
+    - type: FaxAlert
+      alertChannel: Command
+# </Vortex>
