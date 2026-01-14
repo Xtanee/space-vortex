@@ -1,0 +1,22 @@
+- type: gameMapPool
+  id: VortexMapPool
+  maps:
+  # Highpop 50+
+  - CorvaxAstra
+  - CorvaxBox
+  - CorvaxGlacier
+  - VortexKerberos
+
+  # Midpop 25–50
+  - CorvaxAwesome
+  - CorvaxBagel
+  - CorvaxMascara
+  - CorvaxPaper
+
+  # Lowpop 0–25
+  - CorvaxMaus
+  - CorvaxOmega
+  - CorvaxPacked
+  - CorvaxSilly
+  - CorvaxTushkan
+  - CorvaxCluster
