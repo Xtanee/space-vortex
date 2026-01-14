@@ -452,5 +452,7 @@ Entries:
     type: Add
   - message: "Боргам добавлен барк."
     type: Tweak
+  - message: "Мышы больше не откладывают яиц."
+    type: Remove
   id: 44
   time: '2026-01-14T05:00:00.000Z'
