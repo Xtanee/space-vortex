@@ -6,12 +6,15 @@
   - CorvaxBox
   - CorvaxGlacier
   - VortexKerberos
+  - VortexGate
+  - VortexOrigin
 
   # Midpop 25–50
   - CorvaxAwesome
   - CorvaxBagel
   - CorvaxMascara
   - CorvaxPaper
+  - VortexKettle
 
   # Lowpop 0–25
   - CorvaxMaus
@@ -19,4 +22,5 @@
   - CorvaxPacked
   - CorvaxSilly
   - CorvaxTushkan
+  - VortexAtlas
   - CorvaxCluster
