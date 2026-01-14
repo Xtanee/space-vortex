@@ -2240,12 +2240,12 @@
     color: "#808080"
     activateSound: null
     deactivateSound: null
-  - type: EggLayer
-    eggSpawn:
-    - id: SpawnMobMouse
-    hungerUsage: 20
-    eggLayAction: MouseMultiply
-    hungerRequired: true
+  # - type: EggLayer <Vortex removed>
+  #   eggSpawn:
+  #   - id: SpawnMobMouse
+  #   hungerUsage: 20
+  #   eggLayAction: MouseMultiply
+  #   hungerRequired: true
   - type: SolutionRegeneration
     solution: melee
     generated:
