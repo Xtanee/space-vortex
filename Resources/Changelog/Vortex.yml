@@ -456,3 +456,17 @@ Entries:
     type: Remove
   id: 44
   time: '2026-01-14T05:00:00.000Z'
+- author: Neyran
+  changes:
+  - message: "Новая карта - Gate."
+    type: Add
+  - message: "Новая карта - Atlas."
+    type: Add
+  - message: "Новая карта - Kettle."
+    type: Add
+  - message: "Новая карта - Origin."
+    type: Add
+  - message: "Обновление пула карт."
+    type: Tweak
+  id: 45
+  time: '2026-01-14T09:30:00.000Z'
