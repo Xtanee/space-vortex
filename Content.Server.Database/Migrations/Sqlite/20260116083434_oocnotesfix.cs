@@ -5,7 +5,7 @@
 namespace Content.Server.Database.Migrations.Sqlite
 {
     /// <inheritdoc />
-    public partial class occnotesfix : Migration
+    public partial class oocnotesfix : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,7 +14,9 @@ namespace Content.Server.Database.Migrations.Sqlite
                 name: "oocnotes",
                 table: "profile",
                 type: "TEXT",
-                nullable: true);
+                nullable: false,
+                defaultValue: ""
+            );
         }
 
         /// <inheritdoc />
@@ -22,7 +24,8 @@ namespace Content.Server.Database.Migrations.Sqlite
         {
             migrationBuilder.DropColumn(
                 name: "oocnotes",
-                table: "profile");
+                table: "profile"
+			);
         }
     }
 }
