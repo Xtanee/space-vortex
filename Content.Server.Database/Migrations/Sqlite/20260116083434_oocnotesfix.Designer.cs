@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    [Migration("20260116083434_occnotesfix")]
+    [Migration("20260116083434_oocnotesfix")]
     partial class occnotesfix
     {
         /// <inheritdoc />
