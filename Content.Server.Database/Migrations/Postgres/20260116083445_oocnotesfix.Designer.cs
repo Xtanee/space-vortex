@@ -17,7 +17,7 @@ namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
     [Migration("20260116083445_oocnotesfix")]
-    partial class occnotesfix
+    partial class oocnotesfix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
