@@ -12,7 +12,7 @@ namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
     [Migration("20260116083434_oocnotesfix")]
-    partial class occnotesfix
+    partial class oocnotesfix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
