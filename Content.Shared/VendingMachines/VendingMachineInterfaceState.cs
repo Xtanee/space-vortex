@@ -8,6 +8,43 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.VendingMachines
 {
+    [NetSerializable, Serializable]
+    public sealed class VendingMachineInterfaceState : BoundUserInterfaceState
+    {
+        public List<VendingMachineInventoryEntry> Inventory;
+        //<Vortex Economy>
+        public double PriceMultiplier;
+        public int Credits;
+        //</Vortex Economy>
+        public VendingMachineInterfaceState(List<VendingMachineInventoryEntry> inventory, double priceMultiplier, int credits) //<Vortex Economy>
+        {
+            Inventory = inventory;
+            //<Vortex Economy>
+            PriceMultiplier = priceMultiplier;
+            Credits = credits;
+            //</Vortex Economy>
+        }
+    }
+    //<Vortex Economy>
+    [Serializable, NetSerializable]
+    public sealed class VendingMachineWithdrawMessage : BoundUserInterfaceMessage
+    {
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class VendingMachineEjectCountMessage : BoundUserInterfaceMessage
+    {
+        public readonly VendingMachineInventoryEntry Entry;
+        public readonly int Count;
+        public VendingMachineEjectCountMessage(VendingMachineInventoryEntry entry, int count)
+        {
+            Entry = entry;
+            Count = count;
+        }
+    }
+
+    //</Vortex Economy>
+
     [Serializable, NetSerializable]
     public sealed class VendingMachineEjectMessage : BoundUserInterfaceMessage
     {

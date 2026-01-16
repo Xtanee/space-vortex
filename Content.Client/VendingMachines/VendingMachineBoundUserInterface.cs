@@ -24,8 +24,8 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Client._Vortex.VendingMachines.UI;
 using Content.Client.UserInterface.Controls;
-using Content.Client.VendingMachines.UI;
 using Content.Shared.VendingMachines;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
@@ -36,7 +36,7 @@ namespace Content.Client.VendingMachines
     public sealed class VendingMachineBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
-        private VendingMachineMenu? _menu;
+        private FancyVendingMachineMenu? _menu; // <Vortex Tweak> - Новая панель
 
         [ViewVariables]
         private List<VendingMachineInventoryEntry> _cachedInventory = new();
@@ -49,29 +49,60 @@ namespace Content.Client.VendingMachines
         {
             base.Open();
 
-            _menu = this.CreateWindowCenteredLeft<VendingMachineMenu>();
+            _menu = new();  // <Vortex Tweak> - Новая панель
+            var component = EntMan.GetComponent<VendingMachineComponent>(Owner); // <Vortex Economy>
+            var system = EntMan.System<VendingMachineSystem>(); // <Vortex Economy>
+            _cachedInventory = system.GetAllInventory(Owner, component); // <Vortex Economy>
             _menu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+
+            // <Vortex Tweak start>
+            _menu.OnClose += Close;
             _menu.OnItemSelected += OnItemSelected;
-            Refresh();
+            _menu.OnWithdraw += () => SendMessage(new VendingMachineWithdrawMessage());
+            _menu.Populate(Owner, _cachedInventory, component.PriceMultiplier, component.Credits);
+            // <Vortex Tweak end>
+
+            _menu.OpenCentered();
         }
 
         public void Refresh()
         {
-            var enabled = EntMan.TryGetComponent(Owner, out VendingMachineComponent? bendy) && !bendy.Ejecting;
-
             var system = EntMan.System<VendingMachineSystem>();
+            var component = EntMan.GetComponent<VendingMachineComponent>(Owner); //<Vortex Economy>
             _cachedInventory = system.GetAllInventory(Owner);
 
-            _menu?.Populate(_cachedInventory, enabled);
+            _menu?.Populate(Owner, _cachedInventory, component.PriceMultiplier, component.Credits); //<Vortex Economy>-Tweak
         }
+
+
+        // START-TWEAK
+        protected override void UpdateState(BoundUserInterfaceState state)
+        {
+            base.UpdateState(state);
+
+            var system = EntMan.System<VendingMachineSystem>();
+
+            if (state is not VendingMachineInterfaceState newState)
+                return;
+
+            _cachedInventory = system.GetAllInventory(Owner);
+
+            _menu?.Populate(Owner, _cachedInventory, newState.PriceMultiplier, newState.Credits); //<Vortex Economy>-Tweak
+        }
+
+        private void OnItemSelected(VendingMachineInventoryEntry entry)
+        {
+            SendPredictedMessage(new VendingMachineEjectCountMessage(entry, 1));
+        }
+
+        // END-TWEAK
 
         public void UpdateAmounts()
         {
-            var enabled = EntMan.TryGetComponent(Owner, out VendingMachineComponent? bendy) && !bendy.Ejecting;
-
             var system = EntMan.System<VendingMachineSystem>();
+            var component = EntMan.GetComponent<VendingMachineComponent>(Owner);
             _cachedInventory = system.GetAllInventory(Owner);
-            _menu?.UpdateAmounts(_cachedInventory, enabled);
+            _menu?.Populate(Owner, _cachedInventory, component.PriceMultiplier, component.Credits);
         }
 
         private void OnItemSelected(GUIBoundKeyEventArgs args, ListData data)
@@ -102,7 +133,7 @@ namespace Content.Client.VendingMachines
             if (_menu == null)
                 return;
 
-            _menu.OnItemSelected -= OnItemSelected;
+            _menu.OnItemSelected -= OnItemSelected;    // <Vortex eject count>
             _menu.OnClose -= Close;
             _menu.Dispose();
         }

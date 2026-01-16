@@ -207,32 +207,37 @@ public sealed class PricingSystem : EntitySystem
     /// <summary>
     /// Get a rough price for an entityprototype. Does not consider contained entities.
     /// </summary>
-    public double GetEstimatedPrice(EntityPrototype prototype)
+    /// <summary>
+    /// Returns the estimated price for an entity prototype.
+    /// If isVending is true, returns ONLY vendingPrice from StaticPriceComponent (if set), else 10. Ignores all other calculations.
+    /// </summary>
+    //<Vortex Economy>
+    public double GetEstimatedPrice(EntityPrototype prototype, bool isVending = false)
     {
-        var ev = new EstimatedPriceCalculationEvent()
+        if (isVending)
         {
-            Prototype = prototype,
-        };
-
+            if (prototype.Components.TryGetValue(Factory.GetComponentName<StaticPriceComponent>(), out var staticProto))
+            {
+                var staticPrice = (StaticPriceComponent) staticProto.Component;
+                if (staticPrice.VendingPrice != null)
+                    return staticPrice.VendingPrice.Value;
+            }
+            return 10;
+        }
+        var ev = new EstimatedPriceCalculationEvent(prototype);
+    //</Vortex Economy>
         RaiseLocalEvent(ref ev);
-
         if (ev.Handled)
             return ev.Price;
-
         var price = ev.Price;
         price += GetMaterialsPrice(prototype);
         price += GetSolutionsPrice(prototype);
-        // Can't use static price with stackprice
         var oldPrice = price;
         price += GetStackPrice(prototype);
-
         if (oldPrice.Equals(price))
         {
-            price += GetStaticPrice(prototype);
+            price += GetStaticPrice(prototype, isVending);
         }
-
-        // TODO: Proper container support.
-
         return price;
     }
 
@@ -387,13 +392,16 @@ public sealed class PricingSystem : EntitySystem
         return price;
     }
 
-    private double GetStaticPrice(EntityPrototype prototype)
+    private double GetStaticPrice(EntityPrototype prototype, bool isVending = false)
     {
         var price = 0.0;
 
         if (prototype.Components.TryGetValue(Factory.GetComponentName<StaticPriceComponent>(), out var staticProto))
-        {
+        {   //<Vortex Economy>
             var staticPrice = (StaticPriceComponent) staticProto.Component;
+            if (isVending && staticPrice.VendingPrice != null)
+                return staticPrice.VendingPrice.Value;
+            //</Vortex Economy>
             price += staticPrice.Price;
         }
 
@@ -447,10 +455,8 @@ public record struct PriceCalculationEvent()
 /// Raised broadcast for an entity prototype to determine its estimated price.
 /// </summary>
 [ByRefEvent]
-public record struct EstimatedPriceCalculationEvent()
+public record struct EstimatedPriceCalculationEvent(EntityPrototype Prototype) //<Vortex Economy>
 {
-    public required EntityPrototype Prototype;
-
     /// <summary>
     /// The total price of the entity.
     /// </summary>

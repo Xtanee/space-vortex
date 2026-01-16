@@ -17,4 +17,9 @@ public sealed partial class StaticPriceComponent : Component
     /// </summary>
     [DataField("price", required: true)]
     public double Price;
+    //<Vortex Economy>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("vendingPrice")]
+    public double? VendingPrice { get; set; }
+    //</Vortex Economy>
 }
