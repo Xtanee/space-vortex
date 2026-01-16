@@ -340,6 +340,7 @@
     - NewsReaderCartridge
     - WantedListCartridge
     - NanoChatCartridge # DeltaV
+    - VORWalletCartridge # <Vortex Economy>
 
 - type: entity
   parent: BasePDA
@@ -355,6 +356,7 @@
       - NewsReaderCartridge
       - MedTekCartridge
       - NanoChatCartridge # DeltaV
+      - VORWalletCartridge # <Vortex Economy>
 
 - type: entity
   parent: BasePDA
@@ -672,6 +674,7 @@
     - AstroNavCartridge
     - MailMetricsCartridge
     - NanoChatCartridge # DeltaV
+    - VORWalletCartridge # <Vortex Economy>
 
 - type: entity
   parent: BasePDA
@@ -718,6 +721,7 @@
       - NewsReaderCartridge
       - AstroNavCartridge
       - NanoChatCartridge # DeltaV
+      - VORWalletCartridge # <Vortex Economy>
 
 - type: entity
   parent: BasePDA
@@ -1069,6 +1073,7 @@
     - WantedListCartridge
     - LogProbeCartridge
     - NanoChatCartridge # DeltaV
+    - VORWalletCartridge # <Vortex Economy>
 
 - type: entity
   parent: BaseSecurityPDA
@@ -1142,6 +1147,7 @@
       - LogProbeCartridge
       - AstroNavCartridge
       - NanoChatCartridge # DeltaV
+      - VORWalletCartridge # <Vortex Economy>
 
 - type: entity
   parent: CentcomPDA
@@ -1170,6 +1176,7 @@
       - MedTekCartridge
       - AstroNavCartridge
       - NanoChatCartridge # DeltaV
+      - VORWalletCartridge # <Vortex Economy>
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
@@ -1495,6 +1502,7 @@
     - WantedListCartridge
     - LogProbeCartridge
     - NanoChatCartridge # DeltaV
+    - VORWalletCartridge # <Vortex Economy>
 
 - type: entity
   parent: BaseMedicalPDA
@@ -1524,6 +1532,7 @@
     - WantedListCartridge
     - MedTekCartridge
     - NanoChatCartridge # DeltaV
+    - VORWalletCartridge # <Vortex Economy>
 
 - type: entity
   parent: ClownPDA
@@ -1670,6 +1679,7 @@
       - NanoTaskCartridge
       - MedTekCartridge
       - NanoChatCartridge # DeltaV
+      - VORWalletCartridge # <Vortex Economy>
 
 - type: entity
   parent: BasePDA
