@@ -83,37 +83,37 @@ public sealed class BankCardSystem : EntitySystem
     }
 
     private void PaySalary()
-{
-    var idCardQuery = EntityQuery<IdCardComponent, BankCardComponent>();
-    foreach (var (idCard, bankCard) in idCardQuery)
     {
-        if (!bankCard.AccountId.HasValue || !TryGetAccount(bankCard.AccountId.Value, out var account))
-            continue;
+        var idCardQuery = EntityQuery<IdCardComponent, BankCardComponent>();
+        foreach (var (idCard, bankCard) in idCardQuery)
+        {
+            if (!bankCard.AccountId.HasValue || !TryGetAccount(bankCard.AccountId.Value, out var account))
+                continue;
 
-        if (account.Mind is not { Comp.UserId: not null, Comp.CurrentEntity: not null })
-            continue;
+            if (account.Mind is not { Comp.UserId: not null, Comp.CurrentEntity: not null })
+                continue;
 
-        if (!_playerManager.TryGetSessionById(account.Mind.Value.Comp.UserId!.Value, out _) ||
-            _mobState.IsDead(account.Mind.Value.Comp.CurrentEntity!.Value))
-            continue;
+            if (!_playerManager.TryGetSessionById(account.Mind.Value.Comp.UserId!.Value, out _) ||
+                _mobState.IsDead(account.Mind.Value.Comp.CurrentEntity!.Value))
+                continue;
 
-        account.Balance += GetSalary(idCard);
+            account.Balance += GetSalary(idCard);
+        }
+
+        _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("salary-pay-announcement"),
+        colorOverride: Color.FromHex("#18abf5"));
     }
 
-    _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("salary-pay-announcement"),
-        colorOverride: Color.FromHex("#18abf5"));
-}
-
     private int GetSalary(IdCardComponent idCard)
-{
-    var jobIcon = $"{idCard.JobIcon}";
-    if (string.IsNullOrEmpty(jobIcon))
+    {
+        var jobIcon = $"{idCard.JobIcon}";
+        if (string.IsNullOrEmpty(jobIcon))
+            return 0;
+        var jobKey = jobIcon.StartsWith("JobIcon") ? jobIcon.Substring(7) : jobIcon;
+        if (_salaries.Salaries.TryGetValue(jobKey, out var salary))
+            return salary;
         return 0;
-    var jobKey = jobIcon.StartsWith("JobIcon") ? jobIcon.Substring(7) : jobIcon;
-    if (_salaries.Salaries.TryGetValue(jobKey, out var salary))
-        return salary;
-    return 0;
-}
+    }
 
     private void OnMapInit(EntityUid uid, BankCardComponent component, MapInitEvent args)
     {
