@@ -1,8 +1,8 @@
 - type: salary
   id: Salaries
   salaries:
-    ADTBlueShieldOfficer: 1000
-    IAA: 800
+    BlueshieldOfficer: 1000
+    NanotrasenRepresentative: 800
     Captain: 800
     ChiefEngineer: 600
     ChiefMedicalOfficer: 600
@@ -28,11 +28,14 @@
     Passenger: 100
     Reporter: 150
     Zookeeper: 150
+    RadioHost: 200
     ServiceWorker: 150
     AtmosphericTechnician: 400
     StationEngineer: 300
     TechnicalAssistant: 200
     Chemist: 400
+    Geneticist: 450
+    Virologist: 500
     Surgeon: 400
     MedicalDoctor: 300
     MedicalIntern: 200
@@ -43,4 +46,6 @@
     Detective: 400
     Warden: 500
     Scientist: 300
+    Roboticist: 300
     ResearchAssistant: 200
+    
