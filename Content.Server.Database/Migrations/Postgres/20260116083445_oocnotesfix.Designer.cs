@@ -16,7 +16,7 @@ using NpgsqlTypes;
 namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
-    [Migration("20260116083445_occnotesfix")]
+    [Migration("20260116083445_oocnotesfix")]
     partial class occnotesfix
     {
         /// <inheritdoc />
