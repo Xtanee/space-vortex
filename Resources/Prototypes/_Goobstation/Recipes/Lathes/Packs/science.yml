@@ -24,3 +24,8 @@
   - SlimeGrinderMachineCircuitboard
   - ClothingBackpackXenoBioTank
   - SlimeScannerXenobio
+
+- type: latheRecipePack
+  id: XenobagHoldingPack
+  recipes: 
+  - ClothingBeltChemBagXenobiologyHolding
