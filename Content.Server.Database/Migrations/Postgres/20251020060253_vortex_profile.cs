@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System.Text.Json;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Content.Server.Database.Migrations.Sqlite
+namespace Content.Server.Database.Migrations.Postgres
 {
     /// <inheritdoc />
-    public partial class vortexprofile : Migration
+    public partial class vortex_profile : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,11 +22,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                 name: "vortex_profile",
                 columns: table => new
                 {
-                    vortex_profile_id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    profile_id = table.Column<int>(type: "INTEGER", nullable: false),
-                    height = table.Column<float>(type: "REAL", nullable: false),
-                    width = table.Column<float>(type: "REAL", nullable: false)
+                    vortex_profile_id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    profile_id = table.Column<int>(type: "integer", nullable: false),
+                    height = table.Column<float>(type: "real", nullable: false),
+                    width = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,12 +56,12 @@ namespace Content.Server.Database.Migrations.Sqlite
                 name: "cdprofile",
                 columns: table => new
                 {
-                    cdprofile_id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    profile_id = table.Column<int>(type: "INTEGER", nullable: false),
-                    character_records = table.Column<byte[]>(type: "jsonb", nullable: true),
-                    height = table.Column<float>(type: "REAL", nullable: false),
-                    width = table.Column<float>(type: "REAL", nullable: false)
+                    cdprofile_id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    profile_id = table.Column<int>(type: "integer", nullable: false),
+                    character_records = table.Column<JsonDocument>(type: "jsonb", nullable: true),
+                    height = table.Column<float>(type: "real", nullable: false),
+                    width = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,13 +78,13 @@ namespace Content.Server.Database.Migrations.Sqlite
                 name: "cd_character_record_entries",
                 columns: table => new
                 {
-                    cd_character_record_entries_id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    cdprofile_id = table.Column<int>(type: "INTEGER", nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: false),
-                    involved = table.Column<string>(type: "TEXT", nullable: false),
-                    title = table.Column<string>(type: "TEXT", nullable: false),
-                    type = table.Column<byte>(type: "INTEGER", nullable: false)
+                    cd_character_record_entries_id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    cdprofile_id = table.Column<int>(type: "integer", nullable: false),
+                    description = table.Column<string>(type: "text", nullable: false),
+                    involved = table.Column<string>(type: "text", nullable: false),
+                    title = table.Column<string>(type: "text", nullable: false),
+                    type = table.Column<byte>(type: "smallint", nullable: false)
                 },
                 constraints: table =>
                 {

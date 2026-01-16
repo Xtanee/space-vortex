@@ -5,7 +5,7 @@
 namespace Content.Server.Database.Migrations.Postgres
 {
     /// <inheritdoc />
-    public partial class OOCNotes : Migration
+    public partial class occnotesfix : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -13,9 +13,8 @@ namespace Content.Server.Database.Migrations.Postgres
             migrationBuilder.AddColumn<string>(
                 name: "oocnotes",
                 table: "profile",
-                type: "text",
-                nullable: false,
-                defaultValue: "");
+                type: "TEXT",
+                nullable: true);
         }
 
         /// <inheritdoc />

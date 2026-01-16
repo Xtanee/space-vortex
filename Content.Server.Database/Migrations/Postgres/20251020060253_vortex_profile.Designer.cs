@@ -17,7 +17,7 @@ namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
     [Migration("20251020060253_vortexprofile")]
-    partial class vortexprofile
+    partial class vortex_profile
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

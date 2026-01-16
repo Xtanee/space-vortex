@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    [Migration("20260109050202_OOCNotes")]
-    partial class OOCNotes
+    [Migration("20251020060245_vortexprofile")]
+    partial class vortex_profile
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -828,11 +828,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Property<byte[]>("Markings")
                         .HasColumnType("jsonb")
                         .HasColumnName("markings");
-
-                    b.Property<string>("OOCNotes")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("oocnotes");
 
                     b.Property<int>("PreferenceId")
                         .HasColumnType("INTEGER")

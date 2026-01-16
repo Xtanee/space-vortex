@@ -16,8 +16,8 @@ using NpgsqlTypes;
 namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
-    [Migration("20260109050213_OOCNotes")]
-    partial class OOCNotes
+    [Migration("20260116083445_occnotesfix")]
+    partial class occnotesfix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -834,6 +834,15 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("integer")
                         .HasColumnName("age");
 
+                    b.Property<float>("BarkPitch")
+                        .HasColumnType("real")
+                        .HasColumnName("bark_pitch");
+
+                    b.Property<string>("BarkProto")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("bark_proto");
+
                     b.Property<string>("CharacterName")
                         .IsRequired()
                         .HasColumnType("text")
@@ -873,6 +882,14 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("hair_name");
+
+                    b.Property<float>("HighBarkVar")
+                        .HasColumnType("real")
+                        .HasColumnName("high_bark_var");
+
+                    b.Property<float>("LowBarkVar")
+                        .HasColumnType("real")
+                        .HasColumnName("low_bark_var");
 
                     b.Property<JsonDocument>("Markings")
                         .HasColumnType("jsonb")
