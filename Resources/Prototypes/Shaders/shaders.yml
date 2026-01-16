@@ -163,11 +163,6 @@
   path: "/Textures/_Wega/Shaders/colourblindness.swsl"
 
 - type: shader
-  id: NightVision
-  kind: source
-  path: "/Textures/_Wega/Shaders/night.swsl"
-
-- type: shader
   id: NaturalNightVision
   kind: source
   path: "/Textures/_Wega/Shaders/nightvision.swsl"
