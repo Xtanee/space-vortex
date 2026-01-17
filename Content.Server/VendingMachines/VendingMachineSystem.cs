@@ -304,17 +304,11 @@ namespace Content.Server.VendingMachines
         }
 
         /// <summary>
-        /// Returns the price for a vending machine entry. Uses ONLY VendingPrice if set, else 10. Ignores all other pricing logic.
+        /// Returns the price for a vending machine entry. Now uses default 5, as prices are set in inventory prototype.
         /// </summary>
         protected override int GetEntryPrice(EntityPrototype proto)
         {
-            if (proto.Components.TryGetValue(Factory.GetComponentName<StaticPriceComponent>(), out var staticProto))
-            {
-                var staticPrice = (StaticPriceComponent) staticProto.Component;
-                if (staticPrice.VendingPrice != null)
-                    return (int) staticPrice.VendingPrice.Value;
-            }
-            return 10;
+            return 5;
         }
 
         private int GetPrice(VendingMachineInventoryEntry entry, VendingMachineComponent comp, int count)

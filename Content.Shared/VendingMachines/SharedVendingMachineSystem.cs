@@ -66,9 +66,9 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         if (!PrototypeManager.TryIndex(component.PackPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
             return;
 
-        AddInventoryFromPrototype(uid, packPrototype.StartingInventory, InventoryType.Regular, component, restockQuality);
-        AddInventoryFromPrototype(uid, packPrototype.EmaggedInventory, InventoryType.Emagged, component, restockQuality);
-        AddInventoryFromPrototype(uid, packPrototype.ContrabandInventory, InventoryType.Contraband, component, restockQuality);
+        AddInventoryFromPrototype(uid, packPrototype.StartingInventory, InventoryType.Regular, packPrototype, component, restockQuality);
+        AddInventoryFromPrototype(uid, packPrototype.EmaggedInventory, InventoryType.Emagged, packPrototype, component, restockQuality);
+        AddInventoryFromPrototype(uid, packPrototype.ContrabandInventory, InventoryType.Contraband, packPrototype, component, restockQuality);
         Dirty(uid, component);
     }
 
@@ -118,6 +118,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
 
     private void AddInventoryFromPrototype(EntityUid uid, Dictionary<string, uint>? entries,
         InventoryType type,
+        VendingMachineInventoryPrototype packPrototype,
         VendingMachineComponent? component = null, float restockQuality = 1.0f)
     {
         if (!Resolve(uid, ref component) || entries == null)
@@ -166,7 +167,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
                     entry.Amount = Math.Min(entry.Amount + amount, 3 * amount);
                 else
                 {
-                    var price = GetEntryPrice(proto);
+                    var price = packPrototype.Prices.TryGetValue(id, out var p) ? p : 5;
                     inventory.Add(id, new VendingMachineInventoryEntry(type, id, amount, price));
                 }
                 //</Vortex Economy>

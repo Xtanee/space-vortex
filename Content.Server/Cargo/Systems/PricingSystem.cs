@@ -216,13 +216,7 @@ public sealed class PricingSystem : EntitySystem
     {
         if (isVending)
         {
-            if (prototype.Components.TryGetValue(Factory.GetComponentName<StaticPriceComponent>(), out var staticProto))
-            {
-                var staticPrice = (StaticPriceComponent) staticProto.Component;
-                if (staticPrice.VendingPrice != null)
-                    return staticPrice.VendingPrice.Value;
-            }
-            return 10;
+            return 5;
         }
         var ev = new EstimatedPriceCalculationEvent(prototype);
     //</Vortex Economy>
@@ -397,11 +391,8 @@ public sealed class PricingSystem : EntitySystem
         var price = 0.0;
 
         if (prototype.Components.TryGetValue(Factory.GetComponentName<StaticPriceComponent>(), out var staticProto))
-        {   //<Vortex Economy>
+        {
             var staticPrice = (StaticPriceComponent) staticProto.Component;
-            if (isVending && staticPrice.VendingPrice != null)
-                return staticPrice.VendingPrice.Value;
-            //</Vortex Economy>
             price += staticPrice.Price;
         }
 

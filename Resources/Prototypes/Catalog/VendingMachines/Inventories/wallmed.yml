@@ -28,3 +28,11 @@
     Tourniquet: 3 #Goobstation - ParamedHypo
   contrabandInventory:
     PowerCellSmall: 2
+  prices:
+    Gauze: 1
+    Brutepack: 2
+    Ointment: 2
+    Bloodpack: 2
+    ChemistryBottleEpinephrine: 1
+    Syringe: 0
+    Tourniquet: 2
