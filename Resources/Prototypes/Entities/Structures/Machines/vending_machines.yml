@@ -470,7 +470,6 @@
     brokenState: broken
     normalState: normal-unshaded
     ejectState: eject-unshaded
-    priceMultiplier: 0.2
   - type: DatasetVocalizer
     dataset: ChefvendAds
   - type: SpeakOnUIClosed
@@ -542,7 +541,6 @@
     brokenState: broken
     normalState: normal-unshaded
     denyState: deny-unshaded
-    priceMultiplier: 0.3
   - type: DatasetVocalizer
     dataset: ClothesMateAds
   - type: SpeakOnUIClosed
@@ -579,7 +577,6 @@
     brokenState: broken
     normalState: normal-unshaded
     denyState: deny-unshaded
-    priceMultiplier: 0.3
   - type: DatasetVocalizer
     dataset: ClothesMateAds
   - type: SpeakOnUIClosed
@@ -813,7 +810,6 @@
     pack: StarkistInventory
     offState: off
     normalState: normal-unshaded
-    priceMultiplier: 0.45
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/starkist.rsi
     layers:
@@ -994,7 +990,6 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-    priceMultiplier: 0.2
   - type: DatasetVocalizer
     dataset: DinnerwareAds
   - type: SpeakOnUIClosed
@@ -1154,7 +1149,6 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
     ejectDelay: 0.6
-    priceMultiplier: 0.1
   - type: DatasetVocalizer
     dataset: NanoMedAds
   - type: SpeakOnUIClosed
@@ -1200,7 +1194,6 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-    priceMultiplier: 0.3
   - type: DatasetVocalizer
     dataset: NutriMaxAds
   - type: SpeakOnUIClosed
@@ -1330,7 +1323,6 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-    priceMultiplier: 0.45
     initialStockQuality: 0.25 # Corvax-Next-VendomatsTweak
   - type: DatasetVocalizer
     dataset: GetmoreChocolateCorpAds
