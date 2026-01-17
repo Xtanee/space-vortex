@@ -81,3 +81,32 @@
   emaggedInventory: # Goobstation
     SarinGasGrenade: 1
     WeaponFlareGunSecurity: 2
+  prices:
+    SecurityWhistle: 5
+    Handcuffs: 0
+    GrenadeFlashBang: 10
+    TearGasGrenade: 10
+    ClusterBangFull: 28
+    GrenadeStinger: 9
+    Flash: 5
+    Tourniquet: 5
+    FlashlightSeclite: 7
+    ClothingEyesGlassesSunglasses: 5
+    ClothingEyesHudSecurity: 4
+    ClothingEyesEyepatchHudSecurity: 4
+    ClothingBeltSecurityWebbing: 3
+    Zipties: 0
+    RiotShield: 8
+    RiotLaserShield: 8
+    RiotBulletShield: 8
+    RadioHandheldSecurity: 4
+    CombatKnife: 13
+    PolymerBaton: 10
+    SpearTelescopic: 10
+    BolaEnergy: 12
+    PepperSpray: 5
+    SecHypo: 8
+    CartridgeEpinephrine: 15
+    CartridgeSaline: 15
+    CartridgeBicaridine: 15
+    CartridgeDermaline: 15

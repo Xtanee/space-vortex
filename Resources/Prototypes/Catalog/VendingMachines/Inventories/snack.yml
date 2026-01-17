@@ -34,4 +34,13 @@
     FoodSnackSyndi: 3
   emaggedInventory:
     FoodSnackLollypopWrappedMysteryEvil: 2 # Goobstation
-
+  prices:
+    FoodSnackRaisins: 6
+    FoodSnackChocolate: 8
+    FoodSnackCnDs: 6
+    FoodSnackPistachios: 6
+    FoodSnackSus: 6
+    FoodSnackSemki: 7
+    FoodSnackLollypopWrapped: 9
+    FoodSnackSwirlLollipop: 9
+    FoodSnackSyndi: 0

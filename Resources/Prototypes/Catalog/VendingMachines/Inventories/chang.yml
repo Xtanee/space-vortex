@@ -22,4 +22,12 @@
   contrabandInventory:
     FoodBakedDumplings: 2
     FoodSoupMiso: 2
+  prices:
+    FoodCondimentPacketSoy: 5
+    FoodSnackCookieFortune: 9
+    DrinkRamen: 15
+    DrinkHellRamen: 19
+    FoodSnackChowMein: 20
+    FoodSnackDanDanNoodles: 20
+    PairedChopsticks: 3
 # rice?

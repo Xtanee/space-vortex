@@ -200,7 +200,7 @@ namespace Content.Shared.VendingMachines
 
         //<Vortex Economy>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
-        public double PriceMultiplier = 0.75;
+        public double PriceMultiplier = 1;
 
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public bool AllForFree = false;

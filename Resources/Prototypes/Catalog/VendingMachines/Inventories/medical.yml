@@ -132,29 +132,33 @@
     FoodApple: 1
   prices:
     HandheldHealthAnalyzer: 0
-    Gauze: 1
-    Brutepack: 2
-    Ointment: 2
-    Bloodpack: 2
-    ChemistryBottleEpinephrine: 1
+    Gauze: 15
+    Brutepack: 20
+    Ointment: 20
+    Bloodpack: 20
+    ChemistryBottleEpinephrine: 9
     Syringe: 0
-    BoxBottle: 5
-    ClothingEyesHudMedical: 1
-    ClothingEyesEyepatchHudMedical: 1
-    Tourniquet: 2
-    MedicalPatchPrefilledBicaridine: 3
-    MedicalPatchPrefilledDermaline: 3
-    MedicalPatchBasic: 2
-    CigPackMedical: 3
+    BoxBottle: 15
+    ClothingEyesHudMedical: 5
+    ClothingEyesEyepatchHudMedical: 5
+    Tourniquet: 5
+    MedicalPatchPrefilledBicaridine: 12
+    MedicalPatchPrefilledDermaline: 12
+    MedicalPatchBasic: 10
+    CigPackMedical: 45
     ParamedHypo: 0
-    CartridgeSaline: 3
-    CartridgeBicaridine: 3
-    CartridgeDermaline: 3
-    CartridgeAtropine: 3
-    VehicleWheelchairFolded: 0
-    FoodSnackLollypopWrappedMystery: 3
-    FoodSnackLollypopWrappedTricordrazine: 4
-    NitrousOxideTankFilled: 10
+    CartridgeSaline: 20
+    CartridgeBicaridine: 20
+    CartridgeDermaline: 20
+    CartridgeAtropine: 20
+    VehicleWheelchairFolded: 50
+    FoodSnackLollypopWrappedMystery: 11
+    FoodSnackLollypopWrappedTricordrazine: 13
+    NitrousOxideTankFilled: 25
+    SyringeMicroplastics: 0
+    FoodSnackLollypopWrappedLexorin: 0
+    FoodSnackLollypopWrappedMysteryEvil: 0
+    FoodApple: 10
 
 
 

@@ -17,3 +17,11 @@
     FoodBagel: 2
     FoodBagelPoppy: 2
     FoodDonutPoison: 1
+  prices:
+    FoodDonutChocolate: 3
+    FoodDonutApple: 3
+    FoodDonutPink: 3
+    FoodDonutBungo: 3
+    FoodBagel: 3
+    FoodBagelPoppy: 3
+    FoodDonutPoison: 3

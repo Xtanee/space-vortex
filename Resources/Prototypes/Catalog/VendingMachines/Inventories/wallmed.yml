@@ -29,10 +29,11 @@
   contrabandInventory:
     PowerCellSmall: 2
   prices:
-    Gauze: 1
-    Brutepack: 2
-    Ointment: 2
-    Bloodpack: 2
-    ChemistryBottleEpinephrine: 1
+    HandheldHealthAnalyzer: 0
+    Gauze: 15
+    Brutepack: 20
+    Ointment: 20
+    Bloodpack: 20
     Syringe: 0
-    Tourniquet: 2
+    Tourniquet: 5
+    PowerCellSmall: 10

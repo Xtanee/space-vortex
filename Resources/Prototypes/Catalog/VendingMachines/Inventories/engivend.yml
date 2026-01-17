@@ -118,3 +118,18 @@
     DrinkBeerCan: 3
   emaggedInventory: #goob
     ToolboxSyndicateFilled: 1
+  prices:
+    ClothingEyesGlassesMeson: 30
+    ClothingEyesHudDiagnostic: 15
+    ClothingHeadHatWelding: 12
+    CrowbarYellow: 21
+    Multitool: 40
+    NetworkConfigurator: 29
+    Floodlight: 70
+    PowerCellMedium: 90
+    ClothingHandsGlovesColorYellow: 53
+    BoxInflatable: 28
+    ClothingHeadHatCone: 25
+    CowToolboxFilled: 40
+    DrinkBeerCan: 5
+    ToolboxSyndicateFilled: 0

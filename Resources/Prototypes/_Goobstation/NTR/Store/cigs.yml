@@ -11,6 +11,16 @@
     CigPackBlueshield: 1
   contrabandInventory:
     CentCommFlippo: 1
+  prices:
+    CigPackGreen: 50
+    CigPackBlue: 50
+    CigPackMixed: 50
+    CigarCase: 70
+    FlippoLighter: 60
+    NanotrasenFlippo: 100
+    FlippoEngravedLighter: 250
+    CigPackBlueshield: 230
+    CentCommFlippo: 250
 
 - type: localizedDataset
   id: CigaretteMachineAdsDLC
