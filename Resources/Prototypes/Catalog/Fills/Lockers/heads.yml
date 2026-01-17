@@ -301,6 +301,10 @@
     - id: ClothingEyesHudCommand
     - id: ServiceTechFabCircuitboard # Goobstation - Service Techfab
     - id: CommandMegaphone # goob - loudspeakers
+    - id: VORATMFlatpack # Vortex - Economy
+    - id: VORATMFlatpack # Vortex - Economy
+    - id: VOREftpos # Vortex - Economy
+    - id: VOREftpos # Vortex - Economy
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
