@@ -1,41 +1,46 @@
 - type: salary
   id: Salaries
   salaries:
+    CentCommChief: 3000
+    CentCommOSO: 2900
+    CentCommOperator: 1200
+    CentCommOfficial: 1200
+    CentCommServiceWorker: 600
     BlueshieldOfficer: 1000
-    NanotrasenRepresentative: 800
+    NanotrasenRepresentative: 850
     Captain: 800
-    ChiefEngineer: 600
-    ChiefMedicalOfficer: 600
-    HeadOfPersonnel: 600
-    HeadOfSecurity: 600
-    ResearchDirector: 600
-    Quartermaster: 600
-    CargoTechnician: 200
-    SalvageSpecialist: 300
-    Bartender: 200
-    Botanist: 200
+    ChiefEngineer: 650
+    ChiefMedicalOfficer: 650
+    HeadOfPersonnel: 670
+    HeadOfSecurity: 660
+    ResearchDirector: 650
+    Quartermaster: 650
+    CargoTechnician: 250
+    SalvageSpecialist: 350
+    Bartender: 230
+    Botanist: 230
     Boxer: 150
     Chaplain: 150
-    Chef: 200
+    Chef: 220
     Clown: 150
-    Janitor: 200
-    Pilot: 300
-    Brigmedic: 300
-    WardenHelper: 300
-    Librarian: 150
+    Janitor: 210
+    Pilot: 350
+    Brigmedic: 360
+    WardenHelper: 330
+    Librarian: 170
     Mime: 150
-    Musician: 150
+    Musician: 160
     Passenger: 100
-    Reporter: 150
-    Zookeeper: 150
+    Reporter: 160
+    Zookeeper: 170
     RadioHost: 200
     ServiceWorker: 150
     AtmosphericTechnician: 400
-    StationEngineer: 300
+    StationEngineer: 310
     TechnicalAssistant: 200
     Chemist: 400
     Geneticist: 450
-    Virologist: 500
+    Virologist: 450
     Surgeon: 400
     MedicalDoctor: 300
     MedicalIntern: 200
