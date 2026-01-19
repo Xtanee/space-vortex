@@ -122,8 +122,20 @@ internal sealed class BankAccountCreateCommand : IConsoleCommand
             shell.WriteLine("В КПК не найден катридж банка.");
             return;
         }
-        var account = bankCardSys.CreateAccount(accountNumber);
-        account.AccountPin = pin;
+
+        BankAccount account;
+        if (bankCard.AccountId.HasValue && bankCardSys.TryGetAccount(bankCard.AccountId.Value, out var existingAccount))
+        {
+            account = existingAccount;
+            account.AccountPin = pin;
+            shell.WriteLine("Обновлён существующий аккаунт.");
+        }
+        else
+        {
+            account = bankCardSys.CreateAccount(accountNumber);
+            account.AccountPin = pin;
+            shell.WriteLine("Создан новый аккаунт.");
+        }
 
         string? ownerName = null;
         if (entMan.TryGetComponent<IdCardComponent>(idCardUid, out var idCardComp) && !string.IsNullOrWhiteSpace(idCardComp.FullName))
