@@ -1,6 +1,7 @@
 - type: salary
   id: Salaries
   salaries:
+    NanotrasenTrainer: 3000
     CentCommChief: 3000
     CentCommOSO: 2900
     CentCommOperator: 1200
@@ -14,9 +15,9 @@
     HeadOfPersonnel: 670
     HeadOfSecurity: 660
     ResearchDirector: 650
-    Quartermaster: 650
+    QuarterMaster: 650
     CargoTechnician: 250
-    SalvageSpecialist: 350
+    ShaftMiner: 350
     Bartender: 230
     Botanist: 230
     Boxer: 150
@@ -53,4 +54,4 @@
     Scientist: 300
     Roboticist: 300
     ResearchAssistant: 200
-    
+    Lawyer: 240
