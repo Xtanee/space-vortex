@@ -110,6 +110,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Configuration;
+using Content.Shared.CCVar;
 using Content.Server.Cargo.Components;
 using Content.Server.GameTicking;
 
@@ -133,6 +135,7 @@ namespace Content.Server.VendingMachines
         //</Vortex Economy>
         [Dependency] private readonly SharedPointLightSystem _light = default!;
         [Dependency] private readonly EmagSystem _emag = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private const float WallVendEjectDistanceFromWall = 1f;
 
@@ -313,7 +316,7 @@ namespace Content.Server.VendingMachines
 
         private int GetPrice(VendingMachineInventoryEntry entry, VendingMachineComponent comp, int count)
         {
-            return (int)(entry.Price * count * comp.PriceMultiplier);
+            return (int)(entry.Price * count * comp.PriceMultiplier * _cfg.GetCVar(CCVars.VendingPriceMultiplier));
         }
 
         private void OnWithdrawMessage(EntityUid uid, VendingMachineComponent component, VendingMachineWithdrawMessage args)

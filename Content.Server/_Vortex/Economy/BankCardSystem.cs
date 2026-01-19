@@ -87,6 +87,9 @@ public sealed class BankCardSystem : EntitySystem
 
     private void PaySalary()
     {
+        if (!_cfg.GetCVar(CCVars.SalaryEnabled))
+            return;
+
         var idCardQuery = EntityQuery<IdCardComponent, BankCardComponent>();
         foreach (var (idCard, bankCard) in idCardQuery)
         {
@@ -114,7 +117,7 @@ public sealed class BankCardSystem : EntitySystem
             return 0;
         var jobKey = jobIcon.StartsWith("JobIcon") ? jobIcon.Substring(7) : jobIcon;
         if (_salaries.Salaries.TryGetValue(jobKey, out var salary))
-            return salary;
+            return (int)(salary * _cfg.GetCVar(CCVars.SalaryMultiplier));
         return 0;
     }
 
