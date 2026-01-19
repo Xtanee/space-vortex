@@ -54,20 +54,20 @@
   emaggedInventory: # goob
     ClothingHandsGlovesExplosiveShock: 1
   prices:
-    CableApcStack: 55
+    CableApcStack: 40
     Crowbar: 20
     Welder: 40
     Wirecutter: 30
     Wrench: 22
     Screwdriver: 29
-    trayScanner: 80
-    NetworkConfigurator: 50
-    GasAnalyzer: 75
+    trayScanner: 45
+    NetworkConfigurator: 29
+    GasAnalyzer: 50
     FlashlightLantern: 135
     ClothingHandsGlovesColorYellowBudget: 20
     SprayPainter: 40
     SprayPainterAmmo: 30
-    Multitool: 50
+    Multitool: 35
     ClothingBeltUtility: 29
     ClothingHandsGlovesColorYellow: 50
     ClothingHandsGlovesExplosiveShock: 0

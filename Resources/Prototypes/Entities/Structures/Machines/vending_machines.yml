@@ -398,6 +398,7 @@
     normalState: normal-unshaded
     denyState: deny-unshaded
     loopDeny: false
+    priceMultiplier: 0
   - type: DatasetVocalizer
     dataset: BruiseOMatAds
   - type: SpeakOnUIClosed
@@ -541,6 +542,7 @@
     brokenState: broken
     normalState: normal-unshaded
     denyState: deny-unshaded
+    priceMultiplier: 0
   - type: DatasetVocalizer
     dataset: ClothesMateAds
   - type: SpeakOnUIClosed
@@ -577,6 +579,7 @@
     brokenState: broken
     normalState: normal-unshaded
     denyState: deny-unshaded
+    priceMultiplier: 0
   - type: DatasetVocalizer
     dataset: ClothesMateAds
   - type: SpeakOnUIClosed
@@ -1149,6 +1152,7 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
     ejectDelay: 0.6
+    priceMultiplier: 0
   - type: DatasetVocalizer
     dataset: NanoMedAds
   - type: SpeakOnUIClosed
@@ -1230,6 +1234,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+    priceMultiplier: 0
   - type: DatasetVocalizer
     dataset: SecTechAds
   - type: SpeakOnUIClosed
@@ -1530,6 +1535,7 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
     screenState: screen
+    priceMultiplier: 0
   - type: DatasetVocalizer
     dataset: AutoDrobeAds
   - type: SpeakOnUIClosed
@@ -2597,6 +2603,7 @@
     offState: off
     brokenState: broken
     normalState: normal-unshaded
+    priceMultiplier: 0
   - type: DatasetVocalizer
     dataset: PrideDrobeAds
   - type: SpeakOnUIClosed

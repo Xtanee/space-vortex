@@ -28,12 +28,3 @@
     Tourniquet: 3 #Goobstation - ParamedHypo
   contrabandInventory:
     PowerCellSmall: 2
-  prices:
-    HandheldHealthAnalyzer: 0
-    Gauze: 15
-    Brutepack: 20
-    Ointment: 20
-    Bloodpack: 20
-    Syringe: 0
-    Tourniquet: 5
-    PowerCellSmall: 10

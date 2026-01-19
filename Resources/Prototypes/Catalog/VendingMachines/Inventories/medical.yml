@@ -130,38 +130,4 @@
     FoodSnackLollypopWrappedMysteryEvil: 5 # Goobstation - end
   contrabandInventory:
     FoodApple: 1
-  prices:
-    HandheldHealthAnalyzer: 0
-    Gauze: 15
-    Brutepack: 20
-    Ointment: 20
-    Bloodpack: 20
-    ChemistryBottleEpinephrine: 9
-    Syringe: 0
-    BoxBottle: 15
-    ClothingEyesHudMedical: 5
-    ClothingEyesEyepatchHudMedical: 5
-    Tourniquet: 5
-    MedicalPatchPrefilledBicaridine: 12
-    MedicalPatchPrefilledDermaline: 12
-    MedicalPatchBasic: 10
-    CigPackMedical: 45
-    ParamedHypo: 0
-    CartridgeSaline: 20
-    CartridgeBicaridine: 20
-    CartridgeDermaline: 20
-    CartridgeAtropine: 20
-    VehicleWheelchairFolded: 50
-    FoodSnackLollypopWrappedMystery: 11
-    FoodSnackLollypopWrappedTricordrazine: 13
-    NitrousOxideTankFilled: 25
-    SyringeMicroplastics: 0
-    FoodSnackLollypopWrappedLexorin: 0
-    FoodSnackLollypopWrappedMysteryEvil: 0
-    FoodApple: 10
-
-
-
-
-
     

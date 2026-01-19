@@ -150,51 +150,51 @@
   emaggedInventory:
     DrinkPoisonWinebottleFull: 2
   prices:
-    DrinkGlass: 3
+    DrinkGlass: 4
     DrinkShotGlass: 1
-    DrinkGlassCoupeShaped: 3
-    DrinkVacuumFlask: 5
-    DrinkFlaskBar: 5
-    DrinkShaker: 6
-    DrinkJigger: 4
-    DrinkIceBucket: 3
-    BarSpoon: 1
-    CustomDrinkJug: 5
-    DrinkCampariBottleFull: 10
-    DrinkAbsintheBottleFull: 10
-    DrinkAleBottleFull: 10
-    DrinkBeerBottleFull: 10
-    DrinkBlueCuracaoBottleFull: 10
-    DrinkCognacBottleFull: 10
-    DrinkCoconutWaterCarton: 10
-    DrinkColaBottleFull: 5
-    DrinkEnergyDrinkCan: 5
-    DrinkMilkCarton: 3
-    DrinkCreamCarton: 4
-    DrinkGinBottleFull: 10
-    DrinkGildlagerBottleFull: 10
-    DrinkGrenadineBottleFull: 10
-    DrinkJuiceLimeCarton: 3
-    DrinkJuiceLemonCarton: 3
-    DrinkJuicePineappleCarton: 3
-    DrinkJuiceOrangeCarton: 3
-    DrinkJuiceTomatoCarton: 3
-    DrinkCoffeeLiqueurBottleFull: 10
-    DrinkMelonLiquorBottleFull: 10
-    DrinkPatronBottleFull: 10
-    DrinkRumBottleFull: 10
-    DrinkSodaWaterCan: 2
-    DrinkSolDryCan: 2
+    DrinkGlassCoupeShaped: 4
+    DrinkVacuumFlask: 14
+    DrinkFlaskBar: 15
+    DrinkShaker: 15
+    DrinkJigger: 5
+    DrinkIceBucket: 6
+    BarSpoon: 2
+    CustomDrinkJug: 8
+    DrinkCampariBottleFull: 20
+    DrinkAbsintheBottleFull: 20
+    DrinkAleBottleFull: 20
+    DrinkBeerBottleFull: 17
+    DrinkBlueCuracaoBottleFull: 20
+    DrinkCognacBottleFull: 23
+    DrinkCoconutWaterCarton: 7
+    DrinkColaBottleFull: 10
+    DrinkEnergyDrinkCan: 6
+    DrinkMilkCarton: 7
+    DrinkCreamCarton: 8
+    DrinkGinBottleFull: 20
+    DrinkGildlagerBottleFull: 20
+    DrinkGrenadineBottleFull: 12
+    DrinkJuiceLimeCarton: 10
+    DrinkJuiceLemonCarton: 10
+    DrinkJuicePineappleCarton: 7
+    DrinkJuiceOrangeCarton: 7
+    DrinkJuiceTomatoCarton: 7
+    DrinkCoffeeLiqueurBottleFull: 20
+    DrinkMelonLiquorBottleFull: 20
+    DrinkPatronBottleFull: 20
+    DrinkRumBottleFull: 20
+    DrinkSodaWaterCan: 5
+    DrinkSolDryCan: 5
     DrinkSpaceMountainWindBottleFull: 5
     DrinkSpaceUpBottleFull: 5
     DrinkTequilaBottleFull: 10
     DrinkTonicWaterCan: 6
-    DrinkVermouthBottleFull: 10
-    DrinkVodkaBottleFull: 10
-    DrinkWhiskeyBottleFull: 13
-    DrinkWineBottleFull: 12
-    DrinkChampagneBottleFull: 10
-    DrinkSakeBottleFull: 10
+    DrinkVermouthBottleFull: 20
+    DrinkVodkaBottleFull: 20
+    DrinkWhiskeyBottleFull: 23
+    DrinkWineBottleFull: 25
+    DrinkChampagneBottleFull: 20
+    DrinkSakeBottleFull: 20
     DrinkBeerCan: 5
     DrinkWineCan: 5
     DrinkPoisonWinebottleFull: 0

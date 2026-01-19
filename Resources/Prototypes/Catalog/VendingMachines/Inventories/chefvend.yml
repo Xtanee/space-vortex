@@ -118,18 +118,18 @@
     ReagentContainerCornmeal: 15
     ReagentContainerSugar: 15
     ReagentContainerRice: 15
-    FoodCondimentPacketSalt: 5
-    FoodCondimentBottleEnzyme: 17
-    FoodCondimentBottleHotsauce: 17
-    FoodCondimentBottleKetchup: 17
-    FoodCondimentBottleBBQ: 17
-    FoodCondimentBottleVinegar: 17
-    ReagentContainerOliveoil: 20
-    ReagentContainerMayo: 17
+    FoodCondimentPacketSalt: 3
+    FoodCondimentBottleEnzyme: 15
+    FoodCondimentBottleHotsauce: 13
+    FoodCondimentBottleKetchup: 10
+    FoodCondimentBottleBBQ: 14
+    FoodCondimentBottleVinegar: 14
+    ReagentContainerOliveoil: 17
+    ReagentContainerMayo: 10
     VariantCubeBox: 30
     FoodContainerEgg: 10
-    DrinkMilkCarton: 13
-    DrinkSoyMilkCarton: 13
+    DrinkMilkCarton: 7
+    DrinkSoyMilkCarton: 7
     FoodButter: 10
     FoodCheese: 13
     FoodMeat: 15
