@@ -58,6 +58,9 @@ public sealed class BankCardSystem : EntitySystem
         if (!_consoleHost.AvailableCommands.ContainsKey("bankaccountcreate"))
             _consoleHost.RegisterCommand(new Content.Server.Commands.BankAccountCreateCommand());
 
+        if (!_consoleHost.AvailableCommands.ContainsKey("bankaccountlist"))
+            _consoleHost.RegisterCommand(new Content.Server.Commands.BankAccountListCommand());
+
         SubscribeLocalEvent<BankCardComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawned);
@@ -252,5 +255,10 @@ public sealed class BankCardSystem : EntitySystem
             _bankCartridge.UpdateUiState(account.CartridgeUid.Value);
 
         return true;
+    }
+
+    public IReadOnlyList<BankAccount> GetAllAccounts()
+    {
+        return _accounts.AsReadOnly();
     }
 }

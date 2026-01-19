@@ -9,6 +9,8 @@ namespace Content.Client._Vortex.Economy.UI;
 public sealed partial class EftposWindow : DefaultWindow
 {
     public Action<EftposLockMessage>? OnCardButtonPressed;
+    public Action<EftposConfirmMessage>? OnConfirmButtonPressed;
+    public Action? OnCancelButtonPressed;
 
     public EftposWindow()
     {
@@ -30,6 +32,19 @@ public sealed partial class EftposWindow : DefaultWindow
 
             OnCardButtonPressed?.Invoke(new EftposLockMessage(result));
         };
+
+        ConfirmButton.OnPressed += _ =>
+        {
+            if (!int.TryParse((string?)PinLineEdit.Text, out var pin))
+                pin = 0;
+
+            OnConfirmButtonPressed?.Invoke(new EftposConfirmMessage(pin));
+        };
+
+        CancelButton.OnPressed += _ =>
+        {
+            OnCancelButtonPressed?.Invoke();
+        };
     }
 
     public void UpdateState(BoundUserInterfaceState state)
@@ -37,22 +52,37 @@ public sealed partial class EftposWindow : DefaultWindow
         if (state is not EftposBuiState eftState)
             return;
 
-        AmountLineEdit.Text = eftState.Amount == 0 ? string.Empty : eftState.Amount.ToString();
-        if (eftState.Locked)
+        if (eftState.ConfirmMode)
         {
-            CardButton.Text = Loc.GetString("eftpos-ui-card-unlock-text");
-            CardButton.ToolTip = Loc.GetString("eftpos-ui-card-unlock-desc");
-            AmountLineEdit.Editable = false;
+            SetupContainer.Visible = false;
+            ConfirmContainer.Visible = true;
+
+            PayerLabel.Text = Loc.GetString("eftpos-ui-payer-text", ("payer", eftState.PayerName));
+            AmountConfirmLabel.Text = Loc.GetString("eftpos-ui-amount-confirm-text", ("amount", eftState.Amount));
+            PinLineEdit.Text = string.Empty;
         }
         else
         {
-            CardButton.Text = Loc.GetString("eftpos-ui-card-lock-text");
-            CardButton.ToolTip = Loc.GetString("eftpos-ui-card-lock-desc");
-            AmountLineEdit.Editable = true;
-        }
+            SetupContainer.Visible = true;
+            ConfirmContainer.Visible = false;
 
-        AccountLabel.Text = eftState.Owner == string.Empty
-            ? string.Empty
-            : Loc.GetString("eftpos-ui-account-text", ("owner", eftState.Owner));
+            AmountLineEdit.Text = eftState.Amount == 0 ? string.Empty : eftState.Amount.ToString();
+            if (eftState.Locked)
+            {
+                CardButton.Text = Loc.GetString("eftpos-ui-card-unlock-text");
+                CardButton.ToolTip = Loc.GetString("eftpos-ui-card-unlock-desc");
+                AmountLineEdit.Editable = false;
+            }
+            else
+            {
+                CardButton.Text = Loc.GetString("eftpos-ui-card-lock-text");
+                CardButton.ToolTip = Loc.GetString("eftpos-ui-card-lock-desc");
+                AmountLineEdit.Editable = true;
+            }
+
+            AccountLabel.Text = eftState.Owner == string.Empty
+                ? string.Empty
+                : Loc.GetString("eftpos-ui-account-text", ("owner", eftState.Owner));
+        }
     }
 }

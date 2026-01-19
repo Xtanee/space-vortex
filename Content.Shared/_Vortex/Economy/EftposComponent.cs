@@ -12,6 +12,18 @@ public sealed partial class EftposComponent : Component
     [ViewVariables]
     public int Amount;
 
+    [ViewVariables]
+    public int? PendingPayerAccountId;
+
+    [ViewVariables]
+    public string PendingPayerName = string.Empty;
+
+    [ViewVariables]
+    public int? PendingPin;
+
+    [ViewVariables]
+    public TimeSpan? PendingTimeout;
+
     [DataField("soundApply")]
     public SoundSpecifier SoundApply = new SoundPathSpecifier("/Audio/_Vortex/Machines/chime.ogg");
 

@@ -1,3 +1,4 @@
+using Content.Shared._Vortex.Economy;
 using JetBrains.Annotations;
 
 namespace Content.Client._Vortex.Economy.UI;
@@ -15,8 +16,10 @@ public sealed class EftposBui : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-        _window.OnClose += Close;
+        _window.OnClose += OnWindowClosed;
         _window.OnCardButtonPressed += SendMessage;
+        _window.OnConfirmButtonPressed += SendMessage;
+        _window.OnCancelButtonPressed += () => SendMessage(new EftposCancelMessage());
 
         if (State != null)
         {
@@ -24,6 +27,16 @@ public sealed class EftposBui : BoundUserInterface
         }
 
         _window.OpenCentered();
+    }
+
+    private void OnWindowClosed()
+    {
+        // If in confirm mode, cancel the payment
+        if (State is EftposBuiState eftState && eftState.ConfirmMode)
+        {
+            SendMessage(new EftposCancelMessage());
+        }
+        Close();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
