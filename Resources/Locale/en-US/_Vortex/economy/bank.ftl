@@ -33,3 +33,13 @@ bank-program-ui-transfer-amount = Amount
 bank-program-ui-transfer-pin = PIN code
 bank-program-ui-transfer-error-amount = [color=red]Error: Invalid transfer amount.[/color]
 bank-program-ui-transfer-error-nomoney = [color=red]Error: Not enough funds to transfer.[/color]
+
+# ATM
+atm-ui-balance = Balance: { $balance }
+
+# Transaction History
+bank-program-ui-refresh-tooltip = Refresh
+bank-program-ui-history-search-placeholder = Search history...
+bank-program-ui-exit-history = Exit History
+bank-program-ui-transaction-history = Transaction History
+bank-program-ui-transaction-comment = Comment: { $comment }

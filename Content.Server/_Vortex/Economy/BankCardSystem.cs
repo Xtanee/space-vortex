@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Console;
 using Content.Shared.CCVar;
@@ -13,6 +14,7 @@ using Content.Server.Roles.Jobs;
 using Content.Server.Station.Systems;
 using Content.Shared._Vortex.Economy;
 using Content.Shared.Access.Components;
+using Content.Shared.Mind;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.Mind;
@@ -53,13 +55,19 @@ public sealed class BankCardSystem : EntitySystem
 
     public override void Initialize()
     {
-        _salaries = _protoMan.Index<SalaryPrototype>("Salaries");
+        _salaries = _protoMan.Index<SalaryPrototype>(_cfg.GetCVar(CCVars.SalaryPrototypeId));
 
         if (!_consoleHost.AvailableCommands.ContainsKey("bankaccountcreate"))
             _consoleHost.RegisterCommand(new Content.Server.Commands.BankAccountCreateCommand());
 
         if (!_consoleHost.AvailableCommands.ContainsKey("bankaccountlist"))
             _consoleHost.RegisterCommand(new Content.Server.Commands.BankAccountListCommand());
+
+        if (!_consoleHost.AvailableCommands.ContainsKey("bankaccountdelete"))
+            _consoleHost.RegisterCommand(new Content.Server.Commands.BankAccountDeleteCommand());
+
+        if (!_consoleHost.AvailableCommands.ContainsKey("bankaccountadjust"))
+            _consoleHost.RegisterCommand(new Content.Server.Commands.BankAccountAdjustCommand());
 
         SubscribeLocalEvent<BankCardComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
@@ -263,5 +271,36 @@ public sealed class BankCardSystem : EntitySystem
     public IReadOnlyList<BankAccount> GetAllAccounts()
     {
         return _accounts.AsReadOnly();
+    }
+
+    public bool DeleteAccount(int accountId)
+    {
+        var account = _accounts.FirstOrDefault(x => x.AccountId == accountId);
+        if (account == null)
+            return false;
+
+        _accounts.Remove(account);
+        return true;
+    }
+
+    public bool AdminChangeBalance(int accountId, int amount, string description)
+    {
+        if (!TryGetAccount(accountId, out var account))
+            return false;
+
+        if (!TryChangeBalance(accountId, amount))
+            return false;
+
+        var type = amount >= 0 ? TransactionRecord.TransactionType.Deposit : TransactionRecord.TransactionType.Withdraw;
+        var color = amount >= 0 ? Robust.Shared.Maths.Color.Lime : Robust.Shared.Maths.Color.Red;
+        account.AddTransaction(new TransactionRecord(
+            type,
+            description,
+            amount,
+            color,
+            DateTime.MinValue.Add(_gameTicker.RoundStartTimeSpan)
+        ));
+
+        return true;
     }
 }

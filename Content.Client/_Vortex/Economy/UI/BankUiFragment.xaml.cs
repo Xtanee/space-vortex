@@ -45,11 +45,11 @@ public sealed partial class BankUiFragment : BoxContainer
             return;
         foreach (var rec in records)
         {
-            var text = $"[{rec.Timestamp:HH:mm:ss}] {rec.Description} ({rec.Amount})";
+            var color = rec.Amount >= 0 ? "green" : "red";
+            var text = $"[color={color}]{rec.Amount}$[/color] - {rec.Description} ({rec.Timestamp:HH:mm:ss})";
             if (!string.IsNullOrWhiteSpace(rec.Comment))
-                text += "\nКомментарий: " + rec.Comment;
+                text += "\n" + Loc.GetString("bank-program-ui-transaction-comment", ("comment", rec.Comment));
             var label = new RichTextLabel {Text = text, SetWidth = 520};
-            label.Modulate = rec.Color;
             HistoryList.AddChild(label);
         }
     }

@@ -32,7 +32,7 @@ internal sealed class BankAccountListCommand : IConsoleCommand
         }
 
         shell.WriteLine("Список банковских аккаунтов:");
-        shell.WriteLine("Номер аккаунта | PIN | Баланс | Владелец");
+        shell.WriteLine("Номер | PIN | Баланс | Владелец");
         shell.WriteLine("---------------------------------------");
 
         foreach (var account in accounts)

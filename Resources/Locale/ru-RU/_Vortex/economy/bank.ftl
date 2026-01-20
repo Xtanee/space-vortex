@@ -39,3 +39,10 @@ bank-program-ui-transfer-error-no-to = [color=red]Ошибка: не найде�
 bank-program-ui-transfer-error-amount = [color=red]Ошибка: некорректная сумма перевода.[/color]
 bank-program-ui-transfer-error-nomoney = [color=red]Ошибка: недостаточно средств для перевода.[/color]
 bank-program-ui-transfer-error-pin = [color=red]Неверный PIN-код.[/color]
+
+# История транзакций
+bank-program-ui-refresh-tooltip = Обновить
+bank-program-ui-history-search-placeholder = Поиск по истории...
+bank-program-ui-exit-history = Выйти из истории
+bank-program-ui-transaction-history = История транзакций
+bank-program-ui-transaction-comment = Комментарий: { $comment }

@@ -27,4 +27,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<float> SalaryMultiplier =
         CVarDef.Create("economy.salary_multiplier", 1.0f, CVar.SERVER | CVar.ARCHIVE);
+
+    /// <summary>
+    /// ID прототипа зарплат.
+    /// </summary>
+    public static readonly CVarDef<string> SalaryPrototypeId =
+        CVarDef.Create("economy.salary_prototype_id", "Salaries", CVar.SERVER | CVar.ARCHIVE);
 }

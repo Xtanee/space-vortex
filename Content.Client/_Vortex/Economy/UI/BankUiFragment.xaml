@@ -6,7 +6,7 @@
             <BoxContainer Orientation="Vertical" Margin="8" VerticalExpand="True" MinSize="315 150" HorizontalExpand="True">
                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="False">
             <Control HorizontalExpand="True" />
-            <Button Name="RefreshButton" ToolTip="Обновить" MinWidth="30" MinHeight="30" Margin="0 0 4 0">
+            <Button Name="RefreshButton" ToolTip="{Loc 'bank-program-ui-refresh-tooltip'}" MinWidth="30" MinHeight="30" Margin="0 0 4 0">
                 <Control HorizontalExpand="True" VerticalExpand="True">
                     <TextureRect Name="RefreshIcon"
                                 StyleClasses="ButtonSquare"
@@ -17,8 +17,8 @@
             </Button>
             </BoxContainer>
             <!-- История транзакций: поиск и выход, только в режиме истории -->
-            <LineEdit Name="HistorySearchLineEdit" PlaceHolder="Поиск по истории..." Visible="False" HorizontalExpand="True" />
-            <Button Name="ExitHistoryButton" Text="Выйти из истории" Visible="False" HorizontalExpand="True" HorizontalAlignment="Center" />
+            <LineEdit Name="HistorySearchLineEdit" PlaceHolder="{Loc 'bank-program-ui-history-search-placeholder'}" Visible="False" HorizontalExpand="True" />
+            <Button Name="ExitHistoryButton" Text="{Loc 'bank-program-ui-exit-history'}" Visible="False" HorizontalExpand="True" HorizontalAlignment="Center" />
             <!-- История транзакций -->
             <BoxContainer Name="HistoryScroll" Visible="False" HorizontalExpand="True">
                 <BoxContainer Name="HistoryList" Orientation="Vertical" HorizontalExpand="True" />
@@ -47,7 +47,7 @@
                 <!-- Transfer Section Toggle Button -->
                 <Button Name="TransferShowButton" Text="{Loc 'bank-program-ui-transfer-title'}" HorizontalExpand="True" HorizontalAlignment="Center" />
                 <!-- История транзакций: Кнопка под переводом -->
-                <Button Name="HistoryButton" ToolTip="История транзакций" Text="История транзакций" HorizontalExpand="True" HorizontalAlignment="Center" />
+                <Button Name="HistoryButton" ToolTip="{Loc 'bank-program-ui-transaction-history'}" Text="{Loc 'bank-program-ui-transaction-history'}" HorizontalExpand="True" HorizontalAlignment="Center" />
                 <!-- Transfer Section (hidden by default) -->
                 <PanelContainer Name="TransferPanel" StyleClasses="BackgroundLight" Margin="5 5 5 5" Visible="False">
                     <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="False" Margin="5">
