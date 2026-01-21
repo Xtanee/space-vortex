@@ -183,14 +183,15 @@ public sealed class BankCartridgeSystem : EntitySystem
         if (account.Mind != null)
         {
             var mindComponent = account.Mind.Value.Comp;
-            
+
             var oldPinMemory = mindComponent.Memories.FirstOrDefault(m => m.Name == "PIN");
             if (oldPinMemory != null)
             {
                 mindComponent.Memories.Remove(oldPinMemory);
             }
 
-            mindComponent.AddMemory(new Memory("PIN", args.NewPin.ToString()));
+            var netEntity = EntityManager.GetNetEntity(mindComponent.CurrentEntity);
+            mindComponent.AddMemory(new Memory("PIN", args.NewPin.ToString(), netEntity));
         }
 
         component.AccountLinkResult = Loc.GetString("bank-program-ui-change-pin-success");

@@ -74,10 +74,12 @@ public sealed class CharacterInfoSystem : EntitySystem
             // Get briefing
             briefing = _roles.MindGetBriefing(mindId);
 
+            var netEntity = EntityManager.GetNetEntity(entity);
             //<Vortex Economy> || Get memories
             foreach (var memory in mind.Memories)
             {
-                memories[memory.Name] = memory.Value;
+                if (memory.EntityId == null || memory.EntityId == netEntity)
+                    memories[memory.Name] = memory.Value;
             }
             //</Vortex Economy>
         }
