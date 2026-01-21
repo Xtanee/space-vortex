@@ -49,6 +49,24 @@ public sealed partial class IdCardConsoleComponent : Component
         }
     }
 
+    // <Vortex Economy>
+    [Serializable, NetSerializable]
+    public sealed class CreateBankAccountMessage : BoundUserInterfaceMessage
+    {
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class SetBankPinMessage : BoundUserInterfaceMessage
+    {
+        public readonly int Pin;
+
+        public SetBankPinMessage(int pin)
+        {
+            Pin = pin;
+        }
+    }
+    // </Vortex Economy>
+
     // Put this on shared so we just send the state once in PVS range rather than every time the UI updates.
 
     [DataField, AutoNetworkedField]
@@ -104,6 +122,12 @@ public sealed partial class IdCardConsoleComponent : Component
         public readonly List<ProtoId<AccessLevelPrototype>>? TargetIdAccessList;
         public readonly List<ProtoId<AccessLevelPrototype>>? AllowedModifyAccessList;
         public readonly ProtoId<AccessLevelPrototype> TargetIdJobPrototype;
+        // <Vortex Economy>
+        public readonly bool HasBankCard;
+        public readonly int? BankAccountId;
+        public readonly int? BankPin;
+        public readonly bool PinLocked;
+        // </Vortex Economy>
 
         public IdCardConsoleBoundUserInterfaceState(bool isPrivilegedIdPresent,
             bool isPrivilegedIdAuthorized,
@@ -114,7 +138,11 @@ public sealed partial class IdCardConsoleComponent : Component
             List<ProtoId<AccessLevelPrototype>>? allowedModifyAccessList,
             ProtoId<AccessLevelPrototype> targetIdJobPrototype,
             string privilegedIdName,
-            string targetIdName)
+            string targetIdName,
+            bool hasBankCard,
+            int? bankAccountId,
+            int? bankPin,
+            bool pinLocked)
         {
             IsPrivilegedIdPresent = isPrivilegedIdPresent;
             IsPrivilegedIdAuthorized = isPrivilegedIdAuthorized;
@@ -126,6 +154,12 @@ public sealed partial class IdCardConsoleComponent : Component
             TargetIdJobPrototype = targetIdJobPrototype;
             PrivilegedIdName = privilegedIdName;
             TargetIdName = targetIdName;
+            // <Vortex Economy>
+            HasBankCard = hasBankCard;
+            BankAccountId = bankAccountId;
+            BankPin = bankPin;
+            PinLocked = pinLocked;
+            // </Vortex Economy>
         }
     }
 

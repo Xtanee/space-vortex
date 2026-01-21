@@ -17,6 +17,10 @@ id-card-console-window-job-title-label = Job title:
 id-card-console-window-eject-button = Eject
 id-card-console-window-insert-button = Insert
 id-card-console-window-job-selection-label = Job presets (sets department and job icon):
+id-card-console-window-banking-section = Banking Account
+id-card-console-window-account-id = Account ID:
+id-card-console-window-pin = PIN:
+id-card-console-window-create-account = Create Account
 
 access-id-card-console-component-no-hands-error = You have no hands.
 id-card-console-privileged-id = Privileged ID

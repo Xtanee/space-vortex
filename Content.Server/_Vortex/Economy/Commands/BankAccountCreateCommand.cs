@@ -148,17 +148,13 @@ internal sealed class BankAccountCreateCommand : IConsoleCommand
         bankCartridge.AccountId = account.AccountId;
         bankCard.AccountId = account.AccountId;
         bankCard.Pin = pin;
+        bankCard.IsPayrollEnabled = salary;
 
-        if (salary && entMan.TryGetComponent<MindContainerComponent>(mob, out var mind) && mind.Mind != null && entMan.TryGetComponent<Content.Shared.Mind.MindComponent>(mind.Mind.Value, out var mindComp))
+        if (entMan.TryGetComponent<MindContainerComponent>(mob, out var mind) && mind.Mind != null && entMan.TryGetComponent<Content.Shared.Mind.MindComponent>(mind.Mind.Value, out var mindComp))
         {
             account.Mind = (mind.Mind.Value, mindComp);
             mindComp.AddMemory(new Memory("PIN", pin.ToString()));
             mindComp.AddMemory(new Memory("Аккаунт №", account.AccountId.ToString()));
-        }
-        else if (!salary && entMan.TryGetComponent<MindContainerComponent>(mob, out var mind2) && mind2.Mind != null && entMan.TryGetComponent<Content.Shared.Mind.MindComponent>(mind2.Mind.Value, out var mindComp2))
-        {
-            mindComp2.AddMemory(new Memory("PIN", pin.ToString()));
-            mindComp2.AddMemory(new Memory("Аккаунт №", account.AccountId.ToString()));
         }
         shell.WriteLine($"Банковский аккаунт {account.AccountId} с PIN {pin} создан и привязан к ID-карте и катриджу банка игрока с _netId {args[0]}.");
     }

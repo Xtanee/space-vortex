@@ -36,6 +36,8 @@ using Content.Shared.Database;
 using Content.Shared.Roles;
 using Content.Shared.StationRecords;
 using Content.Shared.Throwing;
+using Content.Server._Vortex.Economy;
+using Content.Shared._Vortex.Economy;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -58,12 +60,17 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly BankCardSystem _bankCard = default!; // <Vortex Economy>
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<IdCardConsoleComponent, WriteToTargetIdMessage>(OnWriteToTargetIdMessage);
+        // <Vortex Economy>
+        SubscribeLocalEvent<IdCardConsoleComponent, CreateBankAccountMessage>(OnCreateBankAccountMessage);
+        SubscribeLocalEvent<IdCardConsoleComponent, SetBankPinMessage>(OnSetBankPinMessage);
+        // </Vortex Economy>
 
         // one day, maybe bound user interfaces can be shared too.
         SubscribeLocalEvent<IdCardConsoleComponent, ComponentStartup>(UpdateUserInterface);
@@ -85,6 +92,53 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         UpdateUserInterface(uid, component, args);
     }
+
+    // <Vortex Economy>
+    private void OnCreateBankAccountMessage(EntityUid uid, IdCardConsoleComponent component, CreateBankAccountMessage args)
+    {
+        if (args.Actor is not { Valid: true } player)
+            return;
+
+        if (component.TargetIdSlot.Item is not { Valid: true } targetId)
+            return;
+
+        if (component.PrivilegedIdSlot.Item is not { Valid: true } privilegedId ||
+            !_accessReader.FindAccessTags(privilegedId).Contains("Command"))
+            return;
+
+        if (HasComp<BankCardComponent>(targetId))
+            return;
+
+        var account = _bankCard.CreateAccount();
+        var bankCard = AddComp<BankCardComponent>(targetId);
+        bankCard.AccountId = account.AccountId;
+        bankCard.PINLocked = false;
+        bankCard.IsPayrollEnabled = false;
+
+        UpdateUserInterface(uid, component, args);
+    }
+
+    private void OnSetBankPinMessage(EntityUid uid, IdCardConsoleComponent component, SetBankPinMessage args)
+    {
+        if (args.Actor is not { Valid: true } player)
+            return;
+
+        if (component.TargetIdSlot.Item is not { Valid: true } targetId)
+            return;
+
+        if (component.PrivilegedIdSlot.Item is not { Valid: true } privilegedId ||
+            !_accessReader.FindAccessTags(privilegedId).Contains("Command"))
+            return;
+
+        if (!TryComp<BankCardComponent>(targetId, out var bankCard) || bankCard.PINLocked)
+            return;
+
+        bankCard.Pin = args.Pin;
+        bankCard.PINLocked = true;
+
+        UpdateUserInterface(uid, component, args);
+    }
+    // </Vortex Economy>
 
     private void UpdateUserInterface(EntityUid uid, IdCardConsoleComponent component, EntityEventArgs args)
     {
@@ -113,7 +167,13 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 possibleAccess,
                 string.Empty,
                 privilegedIdName,
-                string.Empty);
+                string.Empty,
+                // <Vortex Economy>
+                false,
+                null,
+                null,
+                true);
+                // </Vortex Economy>
         }
         else
         {
@@ -128,6 +188,13 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 jobProto = record.JobPrototype;
             }
 
+            // <Vortex Economy>
+            var hasBankCard = TryComp<BankCardComponent>(targetId, out var bankCard);
+            var bankAccountId = bankCard?.AccountId;
+            var bankPin = bankCard?.Pin;
+            var pinLocked = bankCard?.PINLocked ?? true;
+            // </Vortex Economy>
+
             newState = new IdCardConsoleBoundUserInterfaceState(
                 component.PrivilegedIdSlot.HasItem,
                 PrivilegedIdIsAuthorized(uid, component),
@@ -138,7 +205,13 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
                 possibleAccess,
                 jobProto,
                 privilegedIdName,
-                Name(targetId));
+                Name(targetId),
+                // <Vortex Economy>
+                hasBankCard,
+                bankAccountId,
+                bankPin,
+                pinLocked);
+                // </Vortex Economy>
         }
 
         _userInterface.SetUiState(uid, IdCardConsoleUiKey.Key, newState);

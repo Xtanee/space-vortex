@@ -129,6 +129,19 @@ namespace Content.Client.Access.UI
             {
                 button.OnPressed += _ => SubmitData();
             }
+            // <Vortex Economy>
+            CreateAccountButton.OnPressed += _ => _owner.CreateBankAccount();
+            PinLineEdit.OnTextChanged += _ =>
+            {
+                var text = PinLineEdit.Text;
+                PinSaveButton.Disabled = text.Length != 4 || !int.TryParse(text, out var dummy);
+            };
+            PinSaveButton.OnPressed += _ =>
+            {
+                if (int.TryParse(PinLineEdit.Text, out var pin))
+                    _owner.SetBankPin(pin);
+            };
+            // </Vortex Economy>
         }
 
         private void ClearAllAccess()
@@ -237,6 +250,20 @@ namespace Content.Client.Access.UI
             }
 
             JobPresetOptionButton.SelectId(jobIndex);
+
+            // <Vortex Economy>
+            BankingContainer.Visible = state.HasBankCard;
+            PinContainer.Visible = state.HasBankCard;
+            CreateAccountButton.Visible = state.IsTargetIdPresent && !state.HasBankCard;
+
+            if (state.HasBankCard)
+            {
+                AccountIdLabel.Text = state.BankAccountId?.ToString() ?? string.Empty;
+                PinLineEdit.Text = string.Empty;
+                PinLineEdit.Editable = !state.PinLocked;
+                PinSaveButton.Disabled = state.PinLocked || PinLineEdit.Text.Length != 4 || !int.TryParse(PinLineEdit.Text, out _);
+            }
+            // </Vortex Economy>
 
             _lastFullName = state.TargetIdFullName;
             _lastJobTitle = state.TargetIdJobTitle;

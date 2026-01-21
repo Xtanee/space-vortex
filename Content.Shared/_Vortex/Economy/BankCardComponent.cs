@@ -15,7 +15,13 @@ public sealed partial class BankCardComponent : Component, IEftposPinProvider
     public bool CommandBudgetCard;
 
     [DataField]
+    public bool IsPayrollEnabled = true;
+
+    [DataField]
     public int? Pin;
+
+    [DataField]
+    public bool PINLocked = true;
 
     int? IEftposPinProvider.Pin => Pin;
 }

@@ -107,5 +107,16 @@ namespace Content.Client.Access.UI
                 newAccessList,
                 newJobPrototype));
         }
+        // <Vortex Economy>
+        public void CreateBankAccount()
+        {
+            SendMessage(new CreateBankAccountMessage());
+        }
+
+        public void SetBankPin(int pin)
+        {
+            SendMessage(new SetBankPinMessage(pin));
+        }
+        // </Vortex Economy>
     }
 }

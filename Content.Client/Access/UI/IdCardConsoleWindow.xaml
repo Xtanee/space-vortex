@@ -55,5 +55,19 @@ SPDX-License-Identifier: AGPL-3.0-or-later
         </GridContainer>
         <Control Name="AccessLevelControlContainer" />
         <!-- Goobstation End -->
+        <!-- Vortex Banking Section -->
+        <Control MinSize="0 16" />
+        <Label Text="{Loc 'id-card-console-window-banking-section'}" />
+        <GridContainer Columns="2" Name="BankingContainer">
+            <Label Text="{Loc 'id-card-console-window-account-id'}" />
+            <Label Name="AccountIdLabel" />
+        </GridContainer>
+        <GridContainer Columns="3" Name="PinContainer">
+            <Label Text="{Loc 'id-card-console-window-pin'}" />
+            <LineEdit Name="PinLineEdit" HorizontalExpand="True" />
+            <Button Name="PinSaveButton" Text="{Loc 'id-card-console-window-save-button'}" Disabled="True" />
+        </GridContainer>
+        <Button Name="CreateAccountButton" Text="{Loc 'id-card-console-window-create-account'}" />
+        <!-- Vortex End -->
     </BoxContainer>
 </DefaultWindow>

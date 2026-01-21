@@ -104,6 +104,9 @@ public sealed class BankCardSystem : EntitySystem
             if (!bankCard.AccountId.HasValue || !TryGetAccount(bankCard.AccountId.Value, out var account))
                 continue;
 
+            if (!bankCard.IsPayrollEnabled)
+                continue;
+
             if (account.Mind is not { Comp.UserId: not null, Comp.CurrentEntity: not null })
                 continue;
 
