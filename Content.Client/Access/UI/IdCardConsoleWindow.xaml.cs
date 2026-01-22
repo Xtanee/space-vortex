@@ -254,7 +254,8 @@ namespace Content.Client.Access.UI
             // <Vortex Economy>
             BankingContainer.Visible = state.HasBankCard;
             PinContainer.Visible = state.HasBankCard;
-            CreateAccountButton.Visible = state.IsTargetIdPresent && !state.HasBankCard;
+            CreateAccountButton.Visible = !state.HasBankCard;
+            CreateAccountButton.Disabled = !state.IsTargetIdPresent;
 
             if (state.HasBankCard)
             {

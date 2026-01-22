@@ -10,6 +10,7 @@ id-card-console-window-banking-section = Банковский аккаунт
 id-card-console-window-account-id = Номер аккаунта:
 id-card-console-window-pin = PIN:
 id-card-console-window-create-account = Создать аккаунт
+id-card-console-window-no-command-access = У Основной ID-карты нет доступа "Командование".
 access-id-card-console-component-no-hands-error = У вас нет рук.
 id-card-console-privileged-id = Основная ID
 id-card-console-target-id = Целевая ID

@@ -38,6 +38,7 @@ using Content.Shared.StationRecords;
 using Content.Shared.Throwing;
 using Content.Server._Vortex.Economy;
 using Content.Shared._Vortex.Economy;
+using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -61,6 +62,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly BankCardSystem _bankCard = default!; // <Vortex Economy>
+    [Dependency] private readonly SharedPopupSystem _popup = default!; // <Vortex Economy>
 
     public override void Initialize()
     {
@@ -104,7 +106,10 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         if (component.PrivilegedIdSlot.Item is not { Valid: true } privilegedId ||
             !_accessReader.FindAccessTags(privilegedId).Contains("Command"))
+        {
+            _popup.PopupEntity(Loc.GetString("id-card-console-window-no-command-access"), uid, args.Actor);
             return;
+        }
 
         if (HasComp<BankCardComponent>(targetId))
             return;
@@ -128,7 +133,10 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         if (component.PrivilegedIdSlot.Item is not { Valid: true } privilegedId ||
             !_accessReader.FindAccessTags(privilegedId).Contains("Command"))
+        {
+            _popup.PopupEntity(Loc.GetString("id-card-console-window-no-command-access"), uid, args.Actor);
             return;
+        }
 
         if (!TryComp<BankCardComponent>(targetId, out var bankCard) || bankCard.PINLocked)
             return;

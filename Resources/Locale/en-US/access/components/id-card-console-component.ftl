@@ -21,6 +21,7 @@ id-card-console-window-banking-section = Banking Account
 id-card-console-window-account-id = Account ID:
 id-card-console-window-pin = PIN:
 id-card-console-window-create-account = Create Account
+id-card-console-window-no-command-access = Privileged ID does not have Command access.
 
 access-id-card-console-component-no-hands-error = You have no hands.
 id-card-console-privileged-id = Privileged ID
