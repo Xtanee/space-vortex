@@ -11,6 +11,7 @@ id-card-console-window-account-id = Номер аккаунта:
 id-card-console-window-pin = PIN:
 id-card-console-window-create-account = Создать аккаунт
 id-card-console-window-no-command-access = У Основной ID-карты нет доступа "Командование".
+id-card-console-window-pin-locked = PIN Уже установлен! Изменить можно только через приложение НаноБанк.
 access-id-card-console-component-no-hands-error = У вас нет рук.
 id-card-console-privileged-id = Основная ID
 id-card-console-target-id = Целевая ID

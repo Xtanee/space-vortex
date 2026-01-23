@@ -66,6 +66,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
             <Label Text="{Loc 'id-card-console-window-pin'}" />
             <LineEdit Name="PinLineEdit" HorizontalExpand="True" />
             <Button Name="PinSaveButton" Text="{Loc 'id-card-console-window-save-button'}" Disabled="True" />
+            <Label Name="PinLockedLabel" Text="{Loc 'id-card-console-window-pin-locked'}" Visible="False" />
         </GridContainer>
         <Button Name="CreateAccountButton" Text="{Loc 'id-card-console-window-create-account'}" />
         <!-- Vortex End -->

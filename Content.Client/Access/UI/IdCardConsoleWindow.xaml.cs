@@ -263,6 +263,9 @@ namespace Content.Client.Access.UI
                 PinLineEdit.Text = string.Empty;
                 PinLineEdit.Editable = !state.PinLocked;
                 PinSaveButton.Disabled = state.PinLocked || PinLineEdit.Text.Length != 4 || !int.TryParse(PinLineEdit.Text, out _);
+                PinLockedLabel.Visible = state.PinLocked;
+                PinLineEdit.Visible = !state.PinLocked;
+                PinSaveButton.Visible = !state.PinLocked;
             }
             // </Vortex Economy>
 
