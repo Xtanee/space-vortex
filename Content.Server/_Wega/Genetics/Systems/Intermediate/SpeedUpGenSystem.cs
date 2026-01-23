@@ -1,8 +1,8 @@
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Genetics;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
-// using Content.Shared.Vampire.Components; // Vortex remove
 
 namespace Content.Server.Genetics.System;
 
@@ -22,9 +22,6 @@ public sealed class SpeedUpGenSystem : EntitySystem
 
     private void OnInit(Entity<SpeedUpGenComponent> ent, ref ComponentInit args)
     {
-        // if (HasComp<VampireComponent>(ent))
-        //     return; // Vortex remove
-
         if (TryComp<MovementSpeedModifierComponent>(ent, out var speed))
         {
             var originalWalkSpeed = speed.BaseWalkSpeed;
@@ -35,8 +32,6 @@ public sealed class SpeedUpGenSystem : EntitySystem
 
     private void OnShutdown(Entity<SpeedUpGenComponent> ent, ref ComponentShutdown args)
     {
-        // if (HasComp<VampireComponent>(ent))
-        //     return; // Vortex remove
 
         if (TryComp<MovementSpeedModifierComponent>(ent, out var speed))
         {
@@ -52,7 +47,7 @@ public sealed class SpeedUpGenSystem : EntitySystem
             return;
 
         var bonusDamage = args.DamageDelta * 0.2f;
-        _damageable.TryChangeDamage(ent, bonusDamage, true);
+        _damageable.TryChangeDamage(ent.Owner, bonusDamage, true);
     }
 
     private bool IsNegativeDamage(DamageSpecifier damage)

@@ -1,7 +1,7 @@
-using Content.Server.Atmos.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Genetics;
+using Content.Server.Atmos.Components;
 
 namespace Content.Server.Genetics.System;
 
@@ -36,4 +36,3 @@ public sealed class ColdResistanceGenSystem : EntitySystem
             RemComp<PressureImmunityComponent>(ent);
     }
 }
-

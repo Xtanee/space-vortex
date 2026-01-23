@@ -15,7 +15,7 @@ public sealed class SharedDnaModifier
 public sealed class DnaModifierBoundUserInterfaceState : BoundUserInterfaceState
 {
     public readonly NetEntity Console;
-    public readonly UniqueIdentifiersPrototype? Unique;
+    public readonly UniqueIdentifiersData? Unique;
     public readonly List<EnzymesPrototypeInfo>? Enzymes;
     public readonly EnzymeInfo? Enzyme;
     public readonly string? ScannerBodyInfo;
@@ -32,7 +32,7 @@ public sealed class DnaModifierBoundUserInterfaceState : BoundUserInterfaceState
     public readonly TimeSpan SubjectInjectCooldownRemaining;
     public DnaModifierBoundUserInterfaceState(
         NetEntity console,
-        UniqueIdentifiersPrototype?
+        UniqueIdentifiersData?
         unique, List<EnzymesPrototypeInfo>?
         enzymes, EnzymeInfo? enzyme,
         string? scannerBodyInfo,
@@ -83,20 +83,3 @@ public enum DnaModifierReagentAmount
     U100 = 100,
     All,
 }
-
-// Vortex added
-[Serializable, NetSerializable]
-public sealed class DnaModifierInjectUIBlockEvent : EntityEventArgs
-{
-    public NetEntity Uid { get; }
-    public int Index { get; }
-    public int CurrentBlock { get; }
-
-    public DnaModifierInjectUIBlockEvent(NetEntity uid, int index, int currentBlock)
-    {
-        Uid = uid;
-        Index = index;
-        CurrentBlock = currentBlock;
-    }
-}
-// Vortex end

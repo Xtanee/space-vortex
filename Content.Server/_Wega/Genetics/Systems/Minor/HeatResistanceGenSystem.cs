@@ -1,7 +1,6 @@
-using Content.Server.Atmos.Components;
 using Content.Server.Temperature.Components;
-using Content.Shared.Atmos.Components;
 using Content.Shared.Genetics;
+using Content.Server.Atmos.Components;
 
 namespace Content.Server.Genetics.System;
 
@@ -17,7 +16,7 @@ public sealed class HeatResistanceGenSystem : EntitySystem
 
     private void OnInit(Entity<HeatResistanceGenComponent> ent, ref ComponentInit args)
     {
-        if (TryComp<FlammableComponent>(ent, out _))
+        if (HasComp<FlammableComponent>(ent))
         {
             RemComp<FlammableComponent>(ent);
             ent.Comp.RemFlammable = true;
@@ -39,4 +38,3 @@ public sealed class HeatResistanceGenSystem : EntitySystem
         }
     }
 }
-

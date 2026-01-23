@@ -243,4 +243,3 @@ public abstract partial class SharedDnaModifierSystem : EntitySystem
         };
     }
 }
-

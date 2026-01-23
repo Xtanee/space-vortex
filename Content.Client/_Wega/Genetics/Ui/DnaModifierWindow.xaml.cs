@@ -442,36 +442,6 @@ public sealed partial class DnaModifierWindow : FancyWindow
             buttonsContainer.AddChild(blockSelectButton);
             buttonsContainer.AddChild(injectBlockButton);
         }
-        // Vortex added
-        // UI Block Inject Button
-        if (hasUniqueIdentifiers)
-        {
-            var uiBlockSelectButton = new OptionButton
-            {
-                MinWidth = 40,
-                StyleClasses = { StyleNano.ButtonOpenRight }
-            };
-            uiBlockSelectButton.AddItem(Loc.GetString("dna-modifier-ui-block-all"), 0);
-            var uiBlocks = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38 };
-            foreach (int block in uiBlocks)
-            {
-                uiBlockSelectButton.AddItem($"{block}", block);
-            }
-            uiBlockSelectButton.SelectId(0); // Default to "All"
-            uiBlockSelectButton.OnItemSelected += args => uiBlockSelectButton.SelectId(args.Id);
-
-            var injectUIBlockButton = new Button
-            {
-                Text = Loc.GetString("dna-modifier-button-inject-ui-block"),
-                StyleClasses = { StyleNano.ButtonOpenLeft },
-                Disabled = _injectorCooldown.HasValue && _gameTiming.CurTime < _injectorCooldown
-            };
-            injectUIBlockButton.OnPressed += _ => OnInjectUIBlockPressed(bufferIndex, injectUIBlockButton, uiBlockSelectButton.SelectedId);
-
-            buttonsContainer.AddChild(uiBlockSelectButton);
-            buttonsContainer.AddChild(injectUIBlockButton);
-        }
-        // Vortex end
 
         // Subject Inject Button
         var subjectInjectButton = new Button
@@ -598,16 +568,6 @@ public sealed partial class DnaModifierWindow : FancyWindow
             new DnaModifierInjectBlockEvent(_console, bufferIndex, blockId));
     }
 
-    // Vortex added
-    private void OnInjectUIBlockPressed(int bufferIndex, Button button, int blockId)
-    {
-        _updateBuffer = true;
-        button.Disabled = true;
-        _entNetworkManager.SendSystemNetworkMessage(
-            new DnaModifierInjectUIBlockEvent(_console, bufferIndex, blockId));
-    }
-    // Vortex end
-
     private void OnSubjectInjectPressed(int index, Button button)
     {
         _updateBuffer = true;
@@ -660,7 +620,7 @@ public sealed partial class DnaModifierWindow : FancyWindow
     }
 
     #region Initilize U.I.
-    private void InitilizeUniqueIdentifiers(UniqueIdentifiersPrototype unique)
+    private void InitilizeUniqueIdentifiers(UniqueIdentifiersData unique)
     {
         _initializedUi = true;
         var blocks = new List<(string BlockName, string[] Values)>
@@ -674,11 +634,7 @@ public sealed partial class DnaModifierWindow : FancyWindow
             ("7", unique.BeardColorR),
             ("8", unique.BeardColorG),
             ("9", unique.BeardColorB),
-            // Vortex edited
-            ("11", unique.SkinColorR),
-            ("12", unique.SkinColorG),
-            ("13", unique.SkinColorB),
-            // Vortex end
+            ("13", unique.SkinTone),
             ("14", unique.FurColorR),
             ("15", unique.FurColorG),
             ("16", unique.FurColorB),
@@ -745,7 +701,6 @@ public sealed partial class DnaModifierWindow : FancyWindow
         {
             Text = blockName,
             MinWidth = 25,
-            StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
         };
 
         blockContainer.AddChild(blockLabel);
@@ -848,7 +803,6 @@ public sealed partial class DnaModifierWindow : FancyWindow
         {
             Text = blockName,
             MinWidth = 25,
-            StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
         };
 
         blockContainer.AddChild(blockLabel);
@@ -981,8 +935,7 @@ public sealed partial class DnaModifierWindow : FancyWindow
                 new Label { Text = $"{info.DisplayName}: " },
                 new Label
                 {
-                    Text = $"{info.CurrentVolume}/{info.MaxVolume}",
-                    StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
+                    Text = $"{info.CurrentVolume}/{info.MaxVolume}"
                 }
             }
         });
@@ -1021,8 +974,7 @@ public sealed partial class DnaModifierWindow : FancyWindow
                 new Label { Text = $"{name}: " },
                 new Label
                 {
-                    Text = $"{quantity}u",
-                    StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
+                    Text = $"{quantity}u"
                 },
                 new Control { HorizontalExpand = true },
                 new PanelContainer
@@ -1055,21 +1007,21 @@ public sealed partial class DnaModifierWindow : FancyWindow
     {
         if (!addReagentButtons) return new List<ReagentButton>();
 
-        var buttonConfigs = new (string text, DnaModifierReagentAmount amount, string styleClass)[]
+        var buttonConfigs = new (string text, DnaModifierReagentAmount amount, string StyleNano)[]
         {
-            ("1", DnaModifierReagentAmount.U1, StyleBase.ButtonOpenBoth),
-            ("5", DnaModifierReagentAmount.U5, StyleBase.ButtonOpenBoth),
-            ("10", DnaModifierReagentAmount.U10, StyleBase.ButtonOpenBoth),
-            ("25", DnaModifierReagentAmount.U25, StyleBase.ButtonOpenBoth),
-            ("50", DnaModifierReagentAmount.U50, StyleBase.ButtonOpenBoth),
-            ("100", DnaModifierReagentAmount.U100, StyleBase.ButtonOpenBoth),
-            ("All", DnaModifierReagentAmount.All, StyleBase.ButtonOpenLeft),
+            ("1", DnaModifierReagentAmount.U1, StyleNano.ButtonOpenBoth),
+            ("5", DnaModifierReagentAmount.U5, StyleNano.ButtonOpenBoth),
+            ("10", DnaModifierReagentAmount.U10, StyleNano.ButtonOpenBoth),
+            ("25", DnaModifierReagentAmount.U25, StyleNano.ButtonOpenBoth),
+            ("50", DnaModifierReagentAmount.U50, StyleNano.ButtonOpenBoth),
+            ("100", DnaModifierReagentAmount.U100, StyleNano.ButtonOpenBoth),
+            ("All", DnaModifierReagentAmount.All, StyleNano.ButtonOpenLeft),
         };
 
         var buttons = new List<ReagentButton>();
-        foreach (var (text, amount, styleClass) in buttonConfigs)
+        foreach (var (text, amount, StyleNano) in buttonConfigs)
         {
-            var reagentTransferButton = new ReagentButton(text, amount, reagent, styleClass);
+            var reagentTransferButton = new ReagentButton(text, amount, reagent, StyleNano);
             reagentTransferButton.OnPressed += args =>
             {
                 _entNetworkManager.SendSystemNetworkMessage(
@@ -1086,9 +1038,9 @@ public sealed partial class DnaModifierWindow : FancyWindow
         public DnaModifierReagentAmount Amount { get; set; }
         public ReagentId Id { get; set; }
 
-        public ReagentButton(string text, DnaModifierReagentAmount amount, ReagentId id, string styleClass)
+        public ReagentButton(string text, DnaModifierReagentAmount amount, ReagentId id, string StyleNano)
         {
-            AddStyleClass(styleClass);
+            AddStyleClass(StyleNano);
             Text = text;
             Amount = amount;
             Id = id;

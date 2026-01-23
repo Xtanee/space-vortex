@@ -9,7 +9,9 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Goobstation.Maths.FixedPoint;
@@ -52,10 +54,8 @@ namespace Content.Server.Genetics.System
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
-        [ValidatePrototypeId<EntityPrototype>]
-        private const string Injector = "DnaInjector";
-        [ValidatePrototypeId<DamageTypePrototype>]
-        private const string RadDamage = "Radiation";
+        private static readonly EntProtoId Injector = "DnaInjector";
+        private static readonly ProtoId<DamageTypePrototype> RadDamage = "Radiation";
 
         public override void Initialize()
         {
@@ -79,7 +79,6 @@ namespace Content.Server.Genetics.System
             SubscribeNetworkEvent<DnaModifierConsoleRenameBufferEvent>(OnRenameBufferPressed);
             SubscribeNetworkEvent<DnaModifierConsoleInjectorEvent>(OnInjectorPressed);
             SubscribeNetworkEvent<DnaModifierInjectBlockEvent>(OnInjectBlockPressed);
-            SubscribeNetworkEvent<DnaModifierInjectUIBlockEvent>(OnInjectUIBlockPressed); // Vortex added
             SubscribeNetworkEvent<DnaModifierConsoleSubjectInjectEvent>(OnSubjectInjectPressed);
 
             SubscribeNetworkEvent<DnaModifierConsoleExportOnDiskEvent>(OnExportOnDiskPressed);
@@ -230,7 +229,7 @@ namespace Content.Server.Genetics.System
             bool scannerInRange = ent.Comp.GeneticScannerInRange;
 
             EnzymeInfo? enzyme = null;
-            UniqueIdentifiersPrototype? uniqueIdentifiers = null;
+            UniqueIdentifiersData? uniqueIdentifiers = null;
             List<EnzymesPrototypeInfo>? enzymesPrototypes = null;
 
             var currentTime = _timing.CurTime;
@@ -318,7 +317,7 @@ namespace Content.Server.Genetics.System
                 buffer,
                 currentTime < injectorCooldown ? injectorCooldown - currentTime : TimeSpan.Zero,
                 currentTime < subjectInjectCooldown ? subjectInjectCooldown - currentTime : TimeSpan.Zero
-                );
+            );
         }
 
         private string GetStatus(MobState mobState)
@@ -599,37 +598,6 @@ namespace Content.Server.Genetics.System
             UpdateUserInterface(clientEntity, console);
         }
 
-        // Vortex added
-        private void OnInjectUIBlockPressed(DnaModifierInjectUIBlockEvent args)
-        {
-            var clientEntity = GetEntity(args.Uid);
-            if (!TryComp<DnaModifierConsoleComponent>(clientEntity, out var console) || console.GeneticScanner == null
-                || !TryComp<DnaClientComponent>(clientEntity, out var client))
-                return;
-
-            if (!_dnaClient.TryGetBufferData((clientEntity, client), args.Index, out var data) || data.Identifier == null)
-                return;
-
-            UniqueIdentifiersPrototype uiToInject;
-            if (args.CurrentBlock == 0)
-            {
-                uiToInject = _dnaModifier.CloneUniqueIdentifiers(data.Identifier)!;
-            }
-            else
-            {
-                uiToInject = CreatePartialUniqueIdentifiers(data.Identifier, args.CurrentBlock);
-            }
-
-            _dnaModifier.OnFillingInjector(_entManager.SpawnEntity(Injector, Transform(clientEntity).Coordinates),
-                uiToInject, null);
-
-            console.LastInjectorTime = _timing.CurTime;
-
-            PlayClickSound((clientEntity, console));
-            UpdateUserInterface(clientEntity, console);
-        }
-        // Vortex end
-
         private void OnSubjectInjectPressed(DnaModifierConsoleSubjectInjectEvent args)
         {
             var clientEntity = GetEntity(args.Uid);
@@ -653,7 +621,7 @@ namespace Content.Server.Genetics.System
             console.LastSubjectInjectTime = _timing.CurTime;
 
             var damage = new DamageSpecifier { DamageDict = { { RadDamage, 20 } } };
-            _damage.TryChangeDamage(scanBody, damage, true);
+            _damage.TryChangeDamage(scanBody.Value, damage, true);
         }
 
         private void OnExportOnDiskPressed(DnaModifierConsoleExportOnDiskEvent args)
@@ -771,7 +739,7 @@ namespace Content.Server.Genetics.System
             UpdateUserInterface(GetEntity(args.Uid), console);
         }
 
-        private void ModifyUniqueIdentifiers(UniqueIdentifiersPrototype uniqueIdentifiers, string block, int value, float intensity)
+        private void ModifyUniqueIdentifiers(UniqueIdentifiersData uniqueIdentifiers, string block, int value, float intensity)
         {
             var fields = new List<(string[] Field, string Name)>
             {
@@ -784,11 +752,7 @@ namespace Content.Server.Genetics.System
                 (uniqueIdentifiers.BeardColorR, nameof(uniqueIdentifiers.BeardColorR)),
                 (uniqueIdentifiers.BeardColorG, nameof(uniqueIdentifiers.BeardColorG)),
                 (uniqueIdentifiers.BeardColorB, nameof(uniqueIdentifiers.BeardColorB)),
-                // Vortex edited
-                (uniqueIdentifiers.SkinColorR, nameof(uniqueIdentifiers.SkinColorR)),
-                (uniqueIdentifiers.SkinColorG, nameof(uniqueIdentifiers.SkinColorG)),
-                (uniqueIdentifiers.SkinColorB, nameof(uniqueIdentifiers.SkinColorB)),
-                // Vortex end
+                (uniqueIdentifiers.SkinTone, nameof(uniqueIdentifiers.SkinTone)),
                 (uniqueIdentifiers.FurColorR, nameof(uniqueIdentifiers.FurColorR)),
                 (uniqueIdentifiers.FurColorG, nameof(uniqueIdentifiers.FurColorG)),
                 (uniqueIdentifiers.FurColorB, nameof(uniqueIdentifiers.FurColorB)),
@@ -820,7 +784,14 @@ namespace Content.Server.Genetics.System
             {
                 var randomField = fields[_random.Next(fields.Count)];
                 int randomIndex = _random.Next(0, randomField.Field.Length);
-                randomField.Field[randomIndex] = GenerateRandomHexValue(randomField.Field[randomIndex], intensity, 1.0f); // Vortex edited
+                if (randomField.Name == nameof(uniqueIdentifiers.SkinTone))
+                {
+                    randomField.Field[randomIndex] = GenerateSkinToneComponent(randomIndex, intensity, 1.0f);
+                }
+                else
+                {
+                    randomField.Field[randomIndex] = GenerateRandomHexValue(randomField.Field[randomIndex], intensity, 1.0f);
+                }
                 return;
             }
 
@@ -828,17 +799,15 @@ namespace Content.Server.Genetics.System
                 return;
 
             var blockMap = new Dictionary<int, int>
-            // Vortex edited
             {
                 { 1, 0 }, { 2, 1 }, { 3, 2 }, { 4, 3 }, { 5, 4 }, { 6, 5 }, { 7, 6 },
-                { 8, 7 }, { 9, 8 }, { 11, 9 }, { 12, 10 }, { 13, 11 },
-                { 14, 12 }, { 15, 13 }, { 16, 14 }, { 17, 15 }, { 18, 16 }, { 19, 17 },
-                { 20, 18 }, { 21, 19 }, { 22, 20 }, { 23, 21 }, { 24, 22 }, { 25, 23 },
-                { 26, 24 }, { 27, 25 }, { 28, 26 }, { 29, 27 }, { 30, 28 }, { 31, 29 },
-                { 32, 30 }, { 33, 31 }, { 34, 32 }, { 35, 33 }, { 36, 34 }, { 37, 35 },
-                { 38, 36 }
+                { 8, 7 }, { 9, 8 }, { 13, 9 },
+                { 14, 10 }, { 15, 11 }, { 16, 12 }, { 17, 13 }, { 18, 14 }, { 19, 15 },
+                { 20, 16 }, { 21, 17 }, { 22, 18 }, { 23, 19 }, { 24, 20 }, { 25, 21 },
+                { 26, 22 }, { 27, 23 }, { 28, 24 }, { 29, 25 }, { 30, 26 }, { 31, 27 },
+                { 32, 28 }, { 33, 29 }, { 34, 30 }, { 35, 31 }, { 36, 32 }, { 37, 33 },
+                { 38, 34 }
             };
-            // Vortex end
 
             if (!blockMap.ContainsKey(blockNumber))
                 return;
@@ -851,11 +820,20 @@ namespace Content.Server.Genetics.System
             if (value < 0 || value >= field.Length)
                 return;
 
+            if (blockNumber == 13)
+            {
+                if (value >= 0 && value < uniqueIdentifiers.SkinTone.Length)
+                {
+                    uniqueIdentifiers.SkinTone[value] =
+                        GenerateSkinToneComponent(value, intensity, 1.0f);
+                }
+                return;
+            }
 
             field[value] = GenerateRandomHexValue(field[value], intensity, 1.0f);
         }
 
-        private void ModifyUniqueIdentifiers(UniqueIdentifiersPrototype uniqueIdentifiers, float intensity, float duration)
+        private void ModifyUniqueIdentifiers(UniqueIdentifiersData uniqueIdentifiers, float intensity, float duration)
         {
             var fields = new List<(string[] Field, string Name)>
             {
@@ -868,11 +846,7 @@ namespace Content.Server.Genetics.System
                 (uniqueIdentifiers.BeardColorR, nameof(uniqueIdentifiers.BeardColorR)),
                 (uniqueIdentifiers.BeardColorG, nameof(uniqueIdentifiers.BeardColorG)),
                 (uniqueIdentifiers.BeardColorB, nameof(uniqueIdentifiers.BeardColorB)),
-                // Vortex edited
-                (uniqueIdentifiers.SkinColorR, nameof(uniqueIdentifiers.SkinColorR)),
-                (uniqueIdentifiers.SkinColorG, nameof(uniqueIdentifiers.SkinColorG)),
-                (uniqueIdentifiers.SkinColorB, nameof(uniqueIdentifiers.SkinColorB)),
-                // Vortex end
+                (uniqueIdentifiers.SkinTone, nameof(uniqueIdentifiers.SkinTone)),
                 (uniqueIdentifiers.FurColorR, nameof(uniqueIdentifiers.FurColorR)),
                 (uniqueIdentifiers.FurColorG, nameof(uniqueIdentifiers.FurColorG)),
                 (uniqueIdentifiers.FurColorB, nameof(uniqueIdentifiers.FurColorB)),
@@ -907,11 +881,11 @@ namespace Content.Server.Genetics.System
                 var fieldName = fields[fieldIndex].Name;
                 var field = fields[fieldIndex].Field;
 
-                if (fieldName.Contains("SkinTone")) // Vortex edited
+                if (fieldName == nameof(uniqueIdentifiers.SkinTone))
                 {
                     for (int j = 0; j < field.Length; j++)
                     {
-                        field[j] = GenerateRandomHexValue(field[j], intensity, duration); // Vortex edited
+                        field[j] = GenerateSkinToneComponent(j, intensity, duration);
                     }
                     continue;
                 }
@@ -994,154 +968,6 @@ namespace Content.Server.Genetics.System
                 default: return "0";
             }
         }
-
-        // Vortex added
-        private UniqueIdentifiersPrototype CreatePartialUniqueIdentifiers(UniqueIdentifiersPrototype source, int blockNumber)
-        {
-            if (blockNumber == 0)
-            {
-                return _dnaModifier.CloneUniqueIdentifiers(source)!;
-            }
-
-            var type = typeof(UniqueIdentifiersPrototype);
-            var partialUI = (UniqueIdentifiersPrototype)Activator.CreateInstance(type)!;
-            var emptyArray = new[] { "-", "-", "-" };
-
-            var properties = type.GetProperties();
-
-            foreach (var prop in properties)
-            {
-                if (prop.PropertyType == typeof(string[]))
-                {
-                    string[] value = emptyArray;
-
-                    switch (prop.Name)
-                    {
-                        case "HairColorR":
-                            if (blockNumber == 1) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "HairColorG":
-                            if (blockNumber == 1 || blockNumber == 2) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "HairColorB":
-                            if (blockNumber == 1 || blockNumber == 3) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "SecondaryHairColorR":
-                            if (blockNumber == 4) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "SecondaryHairColorG":
-                            if (blockNumber == 5) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "SecondaryHairColorB":
-                            if (blockNumber == 6) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "BeardColorR":
-                            if (blockNumber == 7) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "BeardColorG":
-                            if (blockNumber == 8) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "BeardColorB":
-                            if (blockNumber == 9) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "SkinColorR":
-                            if (blockNumber == 11) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "SkinColorG":
-                            if (blockNumber == 12) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "SkinColorB":
-                            if (blockNumber == 13) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "FurColorR":
-                            if (blockNumber == 14) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "FurColorG":
-                            if (blockNumber == 15) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "FurColorB":
-                            if (blockNumber == 16) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "HeadAccessoryColorR":
-                            if (blockNumber == 17) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "HeadAccessoryColorG":
-                            if (blockNumber == 18) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "HeadAccessoryColorB":
-                            if (blockNumber == 19) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "HeadMarkingColorR":
-                            if (blockNumber == 20) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "HeadMarkingColorG":
-                            if (blockNumber == 21) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "HeadMarkingColorB":
-                            if (blockNumber == 22) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "BodyMarkingColorR":
-                            if (blockNumber == 23) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "BodyMarkingColorG":
-                            if (blockNumber == 24) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "BodyMarkingColorB":
-                            if (blockNumber == 25) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "TailMarkingColorR":
-                            if (blockNumber == 26) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "TailMarkingColorG":
-                            if (blockNumber == 27) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "TailMarkingColorB":
-                            if (blockNumber == 28) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "EyeColorR":
-                            if (blockNumber == 29) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "EyeColorG":
-                            if (blockNumber == 30) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "EyeColorB":
-                            if (blockNumber == 31) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "Gender":
-                            if (blockNumber == 32) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "BeardStyle":
-                            if (blockNumber == 33) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "HairStyle":
-                            if (blockNumber == 34) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "HeadAccessoryStyle":
-                            if (blockNumber == 35) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "HeadMarkingStyle":
-                            if (blockNumber == 36) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "BodyMarkingStyle":
-                            if (blockNumber == 37) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "TailMarkingStyle":
-                            if (blockNumber == 38) value = (string[])prop.GetValue(source)!;
-                            break;
-                        case "ID":
-                            value = (string[])prop.GetValue(source)!;
-                            break;
-                        default:
-                            break;
-                    }
-
-                    prop.SetValue(partialUI, value);
-                }
-            }
-
-            return partialUI;
-        }
-        // Vortex end
 
         private void AddRadiationDamage(EntityUid uid, float intensity)
         {
