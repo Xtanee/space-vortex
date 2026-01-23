@@ -20,6 +20,8 @@ using Content.Shared.StatusIcon; // Goobstation
 using Content.Shared.VoiceMask;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
+using Robust.Client.GameObjects;
+
 
 namespace Content.Client.VoiceMask;
 
@@ -72,8 +74,8 @@ public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
         {
             return;
         }
-
-        _window.UpdateState(cast.Name, cast.Voice, cast.Bark ?? "Human1", cast.Pitch, cast.Verb); // Corvax-TTS && ADT Barks
+         _window.UpdateState(cast.Name, cast.Voice, cast.Bark ?? "Human1", cast.Pitch, cast.Verb); // Corvax-TTS && ADT Barks
+        // _window.UpdateState(cast.Name, cast.Voice, cast.Verb); // Corvax-TTS && ADT Barks
     }
 
     protected override void Dispose(bool disposing)

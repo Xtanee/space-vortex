@@ -1,12 +1,4 @@
-using Content.Shared.Actions;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using Robust.Shared.Serialization;
-using Robust.Shared.Containers;
-using Robust.Shared.Audio;
-using Robust.Shared.Network;
-using Content.Shared.Hands.EntitySystems;
-using System.Linq;
 using Content.Shared.ADT.SpeechBarks;
 using Content.Server.Chat.Systems;
 using Robust.Shared.Configuration;
@@ -41,15 +33,11 @@ public sealed class SpeechBarksSystem : EntitySystem
         if (!_isEnabled)
             return;
 
-        var ev = new TransformSpeakerBarkEvent(uid, component.Data.Sound?.ToString() ?? string.Empty, component.Data.Pitch);
+        var ev = new TransformSpeakerBarkEvent(uid, component.Data.Copy());
         RaiseLocalEvent(uid, ev);
 
         var message = args.Message;
-        var soundSpecifier = component.Data.Sound;
-        if (soundSpecifier == null && !string.IsNullOrEmpty(ev.Sound) && _proto.TryIndex<BarkPrototype>(ev.Sound, out var barkPrototype))
-        {
-            soundSpecifier = barkPrototype.Sound;
-        }
+        var soundSpecifier = ev.Data.Sound ?? _proto.Index(ev.Data.Proto).Sound;
 
         foreach (var ent in _lookup.GetEntitiesInRange(Transform(uid).Coordinates, 10f))
         {
@@ -59,10 +47,10 @@ public sealed class SpeechBarksSystem : EntitySystem
             RaiseNetworkEvent(new PlaySpeechBarksEvent(
                         GetNetEntity(uid),
                         message,
-                        soundSpecifier ?? new SoundPathSpecifier("/Audio/Voice/Human/male1.ogg"),
-                        ev.Pitch,
-                        component.Data.MinVar,
-                        component.Data.MaxVar,
+                        soundSpecifier,
+                        ev.Data.Pitch,
+                        ev.Data.MinVar,
+                        ev.Data.MaxVar,
                         args.IsWhisper), session);
         }
     }

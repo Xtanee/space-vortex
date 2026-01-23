@@ -62,6 +62,14 @@ public sealed partial class VoiceMaskComponent : Component
     [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public float BarkPitch = 1f;
+
+    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float MinVar = 0.1f;
+
+    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float MaxVar = 0.5f;
     // ADT Barks end
 
     /// <summary>

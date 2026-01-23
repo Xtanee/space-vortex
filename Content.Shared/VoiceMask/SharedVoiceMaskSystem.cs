@@ -28,25 +28,18 @@ public sealed class VoiceMaskBuiState : BoundUserInterfaceState
     public readonly string Name;
     public readonly string? Verb;
     public readonly string Voice; // CorvaxGoob-TTS
+    public readonly string Bark; // ADT Barks
+    public readonly float Pitch; // ADT Barks
     public ProtoId<JobIconPrototype>? JobIcon { get; } // GabyStation -> Radio icons
 
-    public VoiceMaskBuiState(string name, string voice, string? verb, ProtoId<JobIconPrototype>? jobIcon) // CorvaxGoob-TTS & GabyStation -> Radio icons
+    public VoiceMaskBuiState(string name, string voice, string? verb, string bark, float pitch, ProtoId<JobIconPrototype>? jobIcon) // CorvaxGoob-TTS & GabyStation -> Radio icons
     {
         Name = name;
         Verb = verb;
         Voice = voice;  // CorvaxGoob-TTS
-        JobIcon = jobIcon; // GabyStation -> Radio icons
-    }
-    public readonly string? Bark; // ADT Barks
-    public readonly float Pitch; // ADT Barks
-
-    public VoiceMaskBuiState(string name, string voice, string bark, float pitch, string? verb)
-    {
-        Name = name;
-        Verb = verb;
-        Voice = voice;  // Corvax-TTS
         Bark = bark; // ADT Barks
         Pitch = pitch; // ADT Barks
+        JobIcon = jobIcon; // GabyStation -> Radio icons
     }
 }
 
