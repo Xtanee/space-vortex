@@ -202,7 +202,6 @@
   showInVote: true
   rules:
     - SecretPlusLow
-    - LavalandStormScheduler
 
 - type: gamePreset
   id: SecretPlusMid
