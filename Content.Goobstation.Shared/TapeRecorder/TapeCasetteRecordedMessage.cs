@@ -6,6 +6,7 @@
 
 using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
+using Content.Shared.ADT.SpeechBarks;
 
 namespace Content.Goobstation.Shared.TapeRecorder;
 
@@ -33,17 +34,21 @@ public sealed partial class TapeCassetteRecordedMessage : IComparable<TapeCasset
     [DataField]
     public ProtoId<SpeechVerbPrototype>? Verb;
 
+    [DataField]
+    public BarkData? Bark;
+
     /// <summary>
     /// What was spoken
     /// </summary>
     [DataField]
     public string Message = string.Empty;
 
-    public TapeCassetteRecordedMessage(float timestamp, string name, ProtoId<SpeechVerbPrototype> verb, string message)
+    public TapeCassetteRecordedMessage(float timestamp, string name, ProtoId<SpeechVerbPrototype> verb, BarkData? bark, string message)
     {
         Timestamp = timestamp;
         Name = name;
         Verb = verb;
+        Bark = bark;
         Message = message;
     }
 

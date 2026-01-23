@@ -14,6 +14,7 @@ using Content.Shared.Speech;
 using Content.Goobstation.Shared.TapeRecorder;
 using Robust.Shared.Prototypes;
 using System.Text;
+using Content.Shared.ADT.SpeechBarks;
 
 namespace Content.Goobstation.Server.TapeRecorder;
 
@@ -38,7 +39,6 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
     /// </summary>
     protected override void ReplayMessagesInSegment(Entity<TapeRecorderComponent> ent, TapeCassetteComponent tape, float segmentStart, float segmentEnd)
     {
-        var voice = EnsureComp<VoiceOverrideComponent>(ent);
         var speech = EnsureComp<SpeechComponent>(ent);
 
         foreach (var message in tape.RecordedData)
@@ -46,13 +46,22 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
             if (message.Timestamp < tape.CurrentPosition || message.Timestamp >= segmentEnd)
                 continue;
 
+
+            if (!TryGetTapeCassette(ent, out var cassette))
+                return;
             //Change the voice to match the speaker
-            voice.NameOverride = message.Name ?? ent.Comp.DefaultName;
+            if (message.Bark != null)
+            {
+                var barkOverride = EnsureComp<SpeechBarksComponent>(ent);
+                barkOverride.Data = message.Bark;
+            }
             // TODO: mimic the exact string chosen when the message was recorded
             var verb = message.Verb ?? SharedChatSystem.DefaultSpeechVerb;
-            speech.SpeechVerb = _proto.Index<SpeechVerbPrototype>(verb);
+            speech.SpeechVerb = _proto.Index(verb);
             //Play the message
-            _chat.TrySendInGameICMessage(ent, message.Message, InGameICChatType.Speak, false);
+            _chat.TrySendInGameICMessage(ent, message.Message, InGameICChatType.Speak, false, nameOverride: message.Name ?? ent.Comp.DefaultName);
+
+            RemComp<SpeechBarksComponent>(ent);
         }
     }
 
@@ -73,15 +82,24 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
             return;
 
         // TODO: Handle "Someone" when whispering from far away, needs chat refactor
-
+        
         //Handle someone using a voice changer
         var nameEv = new TransformSpeakerNameEvent(args.Source, Name(args.Source));
         RaiseLocalEvent(args.Source, nameEv);
 
         //Add a new entry to the tape
-        var verb = _chat.GetSpeechVerb(args.Source, args.Message);
         var name = nameEv.VoiceName;
-        cassette.Comp.Buffer.Add(new TapeCassetteRecordedMessage(cassette.Comp.CurrentPosition, name, verb, args.Message));
+        var verb = _chat.GetSpeechVerb(args.Source, args.Message);
+
+        BarkData? bark = null;
+        if (TryComp<SpeechBarksComponent>(args.Source, out var barksComponent))
+        {
+            var barkEv = new TransformSpeakerBarkEvent(args.Source, barksComponent.Data.Copy());
+            RaiseLocalEvent(args.Source, barkEv);
+            bark = barkEv.Data;
+        }
+
+        cassette.Comp.Buffer.Add(new TapeCassetteRecordedMessage(cassette.Comp.CurrentPosition, name, verb, bark, args.Message));
     }
 
     private void OnPrintMessage(Entity<TapeRecorderComponent> ent, ref PrintTapeRecorderMessage args)
