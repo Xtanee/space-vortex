@@ -1,6 +1,7 @@
 - type: salary
   id: Salaries
   salaries:
+    Nanotrasen: 1000
     NanotrasenTrainer: 3000
     CentCommChief: 3000
     CentCommOSO: 2900
