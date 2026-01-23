@@ -167,7 +167,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
                     entry.Amount = Math.Min(entry.Amount + amount, 3 * amount);
                 else
                 {
-                    var price = packPrototype.Prices.TryGetValue(id, out var p) ? p : 5;
+                    var price = packPrototype.Prices.TryGetValue(id, out var p) ? p : GetEntryPrice(proto, component);
                     inventory.Add(id, new VendingMachineInventoryEntry(type, id, amount, price));
                 }
                 //</Vortex Economy>
@@ -175,10 +175,10 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         }
     }
 
-    //<Vortex Economy>-Stat
-    protected virtual int GetEntryPrice(EntityPrototype proto)
+    //<Vortex Economy>
+    protected virtual int GetEntryPrice(EntityPrototype proto, VendingMachineComponent component)
     {
-        return 25;
+        return 5;
     }
     //</Vortex Economy>
 }

@@ -145,6 +145,13 @@ namespace Content.Shared.VendingMachines
         [DataField("nextEmpEject", customTypeSerializer: typeof(TimeOffsetSerializer))]
         public TimeSpan NextEmpEject = TimeSpan.Zero;
 
+        /// <summary>
+        /// If true, the vending machine will use the StaticPrice component's Price field for pricing items.
+        /// Manual prices set in the inventory will override this.
+        /// </summary>
+        [DataField("useStaticPrice")]
+        public bool UseStaticPrice = false;
+
         #region Client Visuals
         /// <summary>
         /// RSI state for when the vending machine is unpowered.

@@ -187,6 +187,18 @@ namespace Content.Server.VendingMachines
             args.Price += price;
         }
 
+        // <Vortex Economy>
+        protected override int GetEntryPrice(EntityPrototype proto, VendingMachineComponent component)
+        {
+            if (component.UseStaticPrice && proto.Components.TryGetValue(EntityManager.ComponentFactory.GetComponentName<StaticPriceComponent>(), out var staticProto))
+            {
+                var staticPrice = (StaticPriceComponent)staticProto.Component;
+                return (int)staticPrice.Price;
+            }
+            return 5;
+        }
+        // </Vortex Economy>
+
         protected override void OnMapInit(EntityUid uid, VendingMachineComponent component, MapInitEvent args)
         {
             base.OnMapInit(uid, component, args);
@@ -306,13 +318,6 @@ namespace Content.Server.VendingMachines
             args.Handled = true;
         }
 
-        /// <summary>
-        /// Returns the price for a vending machine entry. Now uses default 5, as prices are set in inventory prototype.
-        /// </summary>
-        protected override int GetEntryPrice(EntityPrototype proto)
-        {
-            return 5;
-        }
 
         private int GetPrice(VendingMachineInventoryEntry entry, VendingMachineComponent comp, int count)
         {
